@@ -1,0 +1,20 @@
+# fcscopendata-js:
+#   filter: rjsmin
+#   output: ckanext-fcscopendata/%(version)s-fcscopendata.js
+#   contents:
+#     - js/fcscopendata.js
+#   extra:
+#     preload:
+#       - base/main
+
+# fcscopendata-css:
+#   filter: cssrewrite
+#   output: ckanext-fcscopendata/%(version)s-fcscopendata.css
+#   contents:
+#     - css/fcscopendata.css
+
+home_css:
+  filter: cssrewrite
+  output: ckanext-fcscopendata/%(version)s-home.css
+  contents:
+    - home.css
