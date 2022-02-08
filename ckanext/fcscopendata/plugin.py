@@ -1,5 +1,7 @@
 import ckan.plugins as plugins
 import ckan.plugins.toolkit as toolkit
+from ckanext.fcscopendata.logic import action
+
 from flask import Blueprint, render_template
 
 
@@ -10,6 +12,8 @@ def hello_plugin():
 class FcscopendataPlugin(plugins.SingletonPlugin):
     plugins.implements(plugins.IConfigurer)
     plugins.implements(plugins.IBlueprint)
+    plugins.implements(plugins.IActions)
+
 
     # IConfigurer
 
@@ -29,3 +33,7 @@ class FcscopendataPlugin(plugins.SingletonPlugin):
         # Add plugin url rules to Blueprint object
         blueprint.add_url_rule('/hello_plugin', '/hello_plugin', hello_plugin)
         return blueprint
+
+    def get_actions(self):
+        return action.get_actions()
+
