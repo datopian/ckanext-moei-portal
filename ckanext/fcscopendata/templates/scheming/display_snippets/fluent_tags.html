@@ -6,10 +6,11 @@
      <ul class="tag-list">
        {% for tag in value %}
          <li>
-           <a class="{% block tag_list_item_class %}tag{% endblock %}" href="{% url_for 'dataset.search', tags=tag.name %}">{{
+           <a class="{% block tag_list_item_class %}tag{% endblock %}" href="{% url_for 'dataset.search', tags=tag %}">{{
                h.truncate(tag, 22) }}</a>
          </li>
        {% endfor %}
      </ul>
    {% endblock %}
    <section class="tags">
+   
