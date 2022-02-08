@@ -34,8 +34,7 @@ def package_update(up_func, context, data_dict):
                 for tag in data_dict.get('keywords-en', '').split(',') \
                 if tag.strip()]
     tags = [{ 'name': word, 'state': 'active'} for word in keywords ]
-    if tags:
-        data_dict['tags'] = tags 
+    data_dict['tags'] = tags
     result = up_func(context, data_dict)
     return result
 
