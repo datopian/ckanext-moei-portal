@@ -30,7 +30,7 @@ def package_update(up_func, context, data_dict):
     if data_dict.get('title_translated-en', False):
         data_dict['title'] =  data_dict.get('title_translated-en', '')
         
-    if data_dict.get('title_translated-en', False):
+    if data_dict.get('notes_translated-en', False):
         data_dict['notes'] =  data_dict.get('notes_translated-en', '')
 
     if data_dict.get('keywords-en', False):
