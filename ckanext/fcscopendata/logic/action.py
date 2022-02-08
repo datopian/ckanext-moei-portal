@@ -39,9 +39,9 @@ def package_update(up_func, context, data_dict):
                     if tag.strip()]
         tags = [{ 'name': word, 'state': 'active'} for word in keywords ]
         data_dict['tags'] = tags
-
-    for resources in data_dict['resources']:
-        resources['description'] =  resources.get('notes_translated-en', '')
+    if data_dict.get('resources', False):
+        for resources in data_dict['resources']:
+            resources['description'] =  resources.get('notes_translated-en', '')
     result = up_func(context, data_dict)
     return result
 
