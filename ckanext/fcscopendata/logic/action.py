@@ -27,14 +27,21 @@ def package_create(up_func, context, data_dict):
 def package_update(up_func, context, data_dict):
     # Get the translated title field value in the original title field so that 
     # core features do not break. eg. solr search with title 
-    data_dict['title'] =  data_dict.get('title_translated-en', '')
-    data_dict['notes'] =  data_dict.get('notes_translated-en', '')
+    if data_dict.get('title_translated-en', False):
+        data_dict['title'] =  data_dict.get('title_translated-en', '')
+        
+    if data_dict.get('title_translated-en', False):
+        data_dict['notes'] =  data_dict.get('notes_translated-en', '')
 
-    keywords =  [tag.strip() \
-                for tag in data_dict.get('keywords-en', '').split(',') \
-                if tag.strip()]
-    tags = [{ 'name': word, 'state': 'active'} for word in keywords ]
-    data_dict['tags'] = tags
+    if data_dict.get('keywords-en', False):
+        keywords =  [tag.strip() \
+                    for tag in data_dict.get('keywords-en', '').split(',') \
+                    if tag.strip()]
+        tags = [{ 'name': word, 'state': 'active'} for word in keywords ]
+        data_dict['tags'] = tags
+
+    for resources in data_dict['resources']:
+        resources['description'] =  resources.get('notes_translated-en', '')
     result = up_func(context, data_dict)
     return result
 
