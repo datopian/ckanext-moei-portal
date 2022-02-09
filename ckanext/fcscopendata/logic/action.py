@@ -47,7 +47,7 @@ def package_update(up_func, context, data_dict):
 
 @p.toolkit.chained_action                                                                                                                                                    
 def organization_create(up_func,context,data_dict): 
-    data_dict['display_name'] = data_dict.get('title_translated-en', '') 
+    data_dict['title'] = data_dict.get('title_translated-en', '') 
 
     if data_dict['notes_translated-en']:                                                                                                                         
         data_dict['description'] = data_dict.get('notes_translated-en', '')  
@@ -57,7 +57,7 @@ def organization_create(up_func,context,data_dict):
 
 @p.toolkit.chained_action                                                                                                                                                    
 def organization_update(up_func,context,data_dict):
-    data_dict['display_name'] = data_dict.get('title_translated-en', '') 
+    data_dict['title'] = data_dict.get('title_translated-en', '') 
 
     if data_dict['notes_translated-en']:                                                                                                                         
         data_dict['description'] = data_dict.get('notes_translated-en', '')  
