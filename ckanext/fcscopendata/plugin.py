@@ -1,6 +1,7 @@
 import ckan.plugins as plugins
 import ckan.plugins.toolkit as toolkit
 from ckanext.fcscopendata.logic import action
+from ckan.lib.plugins import DefaultTranslation
 
 from flask import Blueprint, render_template
 
@@ -9,10 +10,11 @@ def hello_plugin():
     return u'Hello from the fcscopendata Theme extension'
 
 
-class FcscopendataPlugin(plugins.SingletonPlugin):
+class FcscopendataPlugin(plugins.SingletonPlugin, DefaultTranslation):
     plugins.implements(plugins.IConfigurer)
     plugins.implements(plugins.IBlueprint)
     plugins.implements(plugins.IActions)
+    plugins.implements(plugins.ITranslation)
 
 
     # IConfigurer
