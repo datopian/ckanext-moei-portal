@@ -131,7 +131,7 @@ msgstr ""
 #: ckanext/fcscopendata/templates/package/group_list.html:5
 #: ckanext/fcscopendata/templates/package/read_base.html:22
 msgid "Groups"
-msgstr "Theme"
+msgstr "Themes"
 
 #: ckanext/fcscopendata/templates/admin/config.html:25
 #: ckanext/fcscopendata/templates/group/about.html:3
