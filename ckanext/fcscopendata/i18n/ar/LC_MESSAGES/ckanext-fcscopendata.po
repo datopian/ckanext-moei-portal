@@ -1,0 +1,2802 @@
+# Arabic translations for ckanext-fcscopendata.
+# Copyright (C) 2022 ORGANIZATION
+# This file is distributed under the same license as the
+# ckanext-fcscopendata
+# project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: ckanext-fcscopendata 0.0.1\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2022-02-23 12:06+0545\n"
+"PO-Revision-Date: 2022-02-24 15:18+0545\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ar\n"
+"Language-Team: ar <LL@li.org>\n"
+"Plural-Forms: nplurals=6; plural=(n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n>=3 "
+"&& n<=10 ? 3 : n>=11 && n<=99 ? 4 : 5)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.3.4\n"
+
+#: ckanext/fcscopendata/templates/error_document_template.html:3
+#, python-format
+msgid "Error %(error_code)s"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/footer.html:11
+msgid "CKAN API"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/footer.html:19
+msgid ""
+"<strong>Powered by</strong> <a class=\"hide-text ckan-footer-logo\" "
+"href=\"http://ckan.org\">CKAN</a>"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/header.html:9
+msgid "Sysadmin settings"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/header.html:11
+msgid "Admin"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/header.html:16
+msgid "View profile"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/header.html:23
+#, python-format
+msgid "Dashboard (%(num)d new item)"
+msgid_plural "Dashboard (%(num)d new items)"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+msgstr[3] ""
+msgstr[4] ""
+msgstr[5] ""
+
+#: ckanext/fcscopendata/templates/header.html:27
+#: ckanext/fcscopendata/templates/user/dashboard.html:6
+msgid "Dashboard"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/header.html:33
+#: ckanext/fcscopendata/templates/header.html:35
+#: ckanext/fcscopendata/templates/user/dashboard.html:16
+msgid "Profile settings"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/header.html:40
+#: ckanext/fcscopendata/templates/header.html:42
+msgid "Log out"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/header.html:49
+msgid "Account"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/header.html:52
+#: ckanext/fcscopendata/templates/user/logout_first.html:14
+msgid "Log in"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/header.html:54
+#: ckanext/fcscopendata/templates/user/new.html:3
+msgid "Register"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/header.html:69
+msgid "Toggle navigation"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/group/read_base.html:17
+#: ckanext/fcscopendata/templates/group/snippets/info.html:38
+#: ckanext/fcscopendata/templates/header.html:90
+#: ckanext/fcscopendata/templates/organization/bulk_process.html:20
+#: ckanext/fcscopendata/templates/organization/edit_base.html:23
+#: ckanext/fcscopendata/templates/organization/read_base.html:17
+#: ckanext/fcscopendata/templates/package/snippets/new_package_breadcrumb.html:1
+#: ckanext/fcscopendata/templates/snippets/context/group.html:17
+#: ckanext/fcscopendata/templates/snippets/context/user.html:19
+#: ckanext/fcscopendata/templates/snippets/organization.html:61
+#: ckanext/fcscopendata/templates/user/read.html:11
+#: ckanext/fcscopendata/templates/user/read_base.html:19
+#: ckanext/fcscopendata/templates/user/read_base.html:56
+msgid "Datasets"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/header.html:91
+#: ckanext/fcscopendata/templates/organization/base_form_page.html:4
+#: ckanext/fcscopendata/templates/organization/edit_base.html:5
+#: ckanext/fcscopendata/templates/organization/edit_base.html:8
+#: ckanext/fcscopendata/templates/organization/index.html:3
+#: ckanext/fcscopendata/templates/organization/index.html:6
+#: ckanext/fcscopendata/templates/organization/index.html:18
+#: ckanext/fcscopendata/templates/organization/read_base.html:3
+#: ckanext/fcscopendata/templates/organization/read_base.html:6
+#: ckanext/fcscopendata/templates/package/base.html:16
+msgid "Organizations"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/group/base_form_page.html:4
+#: ckanext/fcscopendata/templates/group/edit.html:4
+#: ckanext/fcscopendata/templates/group/edit_base.html:3
+#: ckanext/fcscopendata/templates/group/edit_base.html:8
+#: ckanext/fcscopendata/templates/group/index.html:3
+#: ckanext/fcscopendata/templates/group/index.html:6
+#: ckanext/fcscopendata/templates/group/index.html:18
+#: ckanext/fcscopendata/templates/group/members.html:3
+#: ckanext/fcscopendata/templates/group/read_base.html:3
+#: ckanext/fcscopendata/templates/group/read_base.html:6
+#: ckanext/fcscopendata/templates/header.html:92
+#: ckanext/fcscopendata/templates/package/group_list.html:5
+#: ckanext/fcscopendata/templates/package/read_base.html:22
+msgid "Groups"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/admin/config.html:25
+#: ckanext/fcscopendata/templates/group/about.html:3
+#: ckanext/fcscopendata/templates/group/read_base.html:19
+#: ckanext/fcscopendata/templates/header.html:93
+#: ckanext/fcscopendata/templates/home/about.html:3
+#: ckanext/fcscopendata/templates/home/about.html:6
+#: ckanext/fcscopendata/templates/home/about.html:16
+#: ckanext/fcscopendata/templates/organization/about.html:3
+#: ckanext/fcscopendata/templates/organization/read_base.html:19
+#: ckanext/fcscopendata/templates/user/edit_user_form.html:14
+msgid "About"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/header.html:100
+msgid "Search Datasets"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/header.html:101
+#: ckanext/fcscopendata/templates/home/snippets/search.html:11
+#: ckanext/fcscopendata/templates/snippets/simple_search.html:5
+#: ckanext/fcscopendata/templates/user/snippets/user_search.html:6
+msgid "Search"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/header.html:101
+#: ckanext/fcscopendata/templates/home/snippets/search.html:8
+msgid "Search datasets"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/header.html:102
+#: ckanext/fcscopendata/templates/snippets/search_form.html:16
+msgid "Submit"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/page.html:6
+msgid "Skip to content"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/page.html:36
+msgid "Breadcrumb"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/activity_streams/activity_stream_items.html:9
+msgid "Load less"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/activity_streams/activity_stream_items.html:17
+msgid "Load more"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/activity_streams/activity_stream_items.html:23
+msgid "No activities are within this activity stream"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/admin/base.html:3
+msgid "Administration"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/admin/base.html:8
+msgid "Sysadmins"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/admin/base.html:9
+msgid "Config"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/admin/base.html:10
+#: ckanext/fcscopendata/templates/admin/trash.html:27
+msgid "Trash"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/admin/config.html:14
+msgid "Site Title"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/admin/config.html:16
+msgid "Style"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/admin/config.html:18
+msgid "Site Tag Line"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/admin/config.html:23
+#: ckanext/fcscopendata/templates/macros/autoform.html:62
+msgid "Site logo"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/admin/config.html:25
+msgid "About page text"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/admin/config.html:27
+msgid "Intro Text"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/admin/config.html:27
+msgid "Text on home page"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/admin/config.html:29
+msgid "Custom CSS"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/admin/config.html:29
+msgid "Customisable css inserted into the page header"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/admin/config.html:31
+msgid "Homepage"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/admin/config.html:35
+#: ckanext/fcscopendata/templates/admin/confirm_reset.html:7
+msgid "Are you sure you want to reset the config?"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/admin/config.html:35
+msgid "Reset"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/admin/config.html:36
+msgid "Update Config"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/admin/config.html:45
+msgid "CKAN config options"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/admin/config.html:52
+#, python-format
+msgid ""
+"<p><strong>Site Title:</strong> This is the title of this CKAN instance "
+"It appears in various places throughout CKAN.</p> "
+"<p><strong>Style:</strong> Choose from a list of simple variations of the"
+" main colour scheme to get a very quick custom theme working.</p> "
+"<p><strong>Site Tag Logo:</strong> This is the logo that appears in the "
+"header of all the CKAN instance templates.</p> <p><strong>About:</strong>"
+" This text will appear on this CKAN instances <a "
+"href=\"%(about_url)s\">about page</a>.</p> <p><strong>Intro "
+"Text:</strong> This text will appear on this CKAN instances <a "
+"href=\"%(home_url)s\">home page</a> as a welcome to visitors.</p> "
+"<p><strong>Custom CSS:</strong> This is a block of CSS that appears in "
+"<code>&lt;head&gt;</code> tag of every page. If you wish to customize the"
+" templates more fully we recommend <a href=\"%(docs_url)s\" "
+"target=\"_blank\">reading the documentation</a>.</p> "
+"<p><strong>Homepage:</strong> This is for choosing a predefined layout "
+"for the modules that appear on your homepage.</p>"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/admin/confirm_reset.html:3
+#: ckanext/fcscopendata/templates/admin/confirm_reset.html:10
+msgid "Confirm Reset"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/admin/confirm_reset.html:9
+#: ckanext/fcscopendata/templates/group/confirm_delete.html:14
+#: ckanext/fcscopendata/templates/group/confirm_delete_member.html:15
+#: ckanext/fcscopendata/templates/organization/confirm_delete.html:14
+#: ckanext/fcscopendata/templates/organization/confirm_delete_member.html:15
+#: ckanext/fcscopendata/templates/package/confirm_delete.html:15
+#: ckanext/fcscopendata/templates/package/confirm_delete_resource.html:14
+msgid "Cancel"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/admin/index.html:15
+msgid "Administer CKAN"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/admin/index.html:20
+#, python-format
+msgid ""
+"<p>As a sysadmin user you have full control over this CKAN instance. "
+"Proceed with care!</p> <p>For guidance on using sysadmin features, see "
+"the CKAN  <a href=\"%(docs_url)s\" target=\"_blank\">sysadmin "
+"guide</a></p>"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/admin/trash.html:12
+msgid "Are you sure you want to purge everything?"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/admin/trash.html:13
+msgid "Purge all"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/admin/trash.html:31
+msgid "Purge deleted datasets, organizations or groups forever and irreversibly."
+msgstr ""
+
+#: ckanext/fcscopendata/templates/admin/snippets/confirm_delete.html:3
+#: ckanext/fcscopendata/templates/admin/snippets/confirm_delete.html:17
+#: ckanext/fcscopendata/templates/group/confirm_delete.html:3
+#: ckanext/fcscopendata/templates/group/confirm_delete.html:15
+#: ckanext/fcscopendata/templates/group/confirm_delete_member.html:3
+#: ckanext/fcscopendata/templates/group/confirm_delete_member.html:16
+#: ckanext/fcscopendata/templates/organization/confirm_delete.html:3
+#: ckanext/fcscopendata/templates/organization/confirm_delete.html:15
+#: ckanext/fcscopendata/templates/organization/confirm_delete_member.html:3
+#: ckanext/fcscopendata/templates/organization/confirm_delete_member.html:16
+#: ckanext/fcscopendata/templates/package/confirm_delete.html:3
+#: ckanext/fcscopendata/templates/package/confirm_delete.html:16
+#: ckanext/fcscopendata/templates/package/confirm_delete_resource.html:3
+#: ckanext/fcscopendata/templates/package/confirm_delete_resource.html:15
+msgid "Confirm Delete"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/admin/snippets/data_type.html:7
+msgid "Deleted datasets"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/admin/snippets/data_type.html:9
+msgid "Deleted organizations"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/admin/snippets/data_type.html:11
+msgid "Deleted groups"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/admin/snippets/data_type.html:41
+msgid "Purge"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/dataviewer/snippets/data_preview.html:9
+msgid "This resource can not be previewed at the moment."
+msgstr ""
+
+#: ckanext/fcscopendata/templates/dataviewer/snippets/data_preview.html:11
+#: ckanext/fcscopendata/templates/package/resource_read.html:145
+#: ckanext/fcscopendata/templates/package/snippets/resource_view.html:34
+msgid "Click here for more information."
+msgstr ""
+
+#: ckanext/fcscopendata/templates/dataviewer/snippets/data_preview.html:18
+#: ckanext/fcscopendata/templates/package/snippets/resource_view.html:41
+msgid "Download resource"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/dataviewer/snippets/data_preview.html:23
+#: ckanext/fcscopendata/templates/package/snippets/resource_view.html:62
+msgid "Your browser does not support iframes."
+msgstr ""
+
+#: ckanext/fcscopendata/templates/dataviewer/snippets/no_preview.html:3
+msgid "No preview available."
+msgstr ""
+
+#: ckanext/fcscopendata/templates/dataviewer/snippets/no_preview.html:5
+msgid "More details..."
+msgstr ""
+
+#: ckanext/fcscopendata/templates/dataviewer/snippets/no_preview.html:12
+#, python-format
+msgid "No handler defined for data type: %(type)s."
+msgstr ""
+
+#: ckanext/fcscopendata/templates/development/snippets/form.html:5
+msgid "Standard"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/development/snippets/form.html:5
+msgid "Standard Input"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/development/snippets/form.html:6
+msgid "Medium"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/development/snippets/form.html:6
+msgid "Medium Width Input"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/development/snippets/form.html:7
+msgid "Full"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/development/snippets/form.html:7
+msgid "Full Width Input"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/development/snippets/form.html:8
+msgid "Large"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/development/snippets/form.html:8
+msgid "Large Input"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/development/snippets/form.html:9
+msgid "Prepend"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/development/snippets/form.html:9
+msgid "Prepend Input"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/development/snippets/form.html:13
+msgid "Custom Field (empty)"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/development/snippets/form.html:19
+#: ckanext/fcscopendata/templates/snippets/custom_form_fields.html:20
+#: ckanext/fcscopendata/templates/snippets/custom_form_fields.html:37
+msgid "Custom Field"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/development/snippets/form.html:22
+msgid "Markdown"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/development/snippets/form.html:23
+msgid "Textarea"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/development/snippets/form.html:24
+msgid "Select"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/group/activity_stream.html:3
+#: ckanext/fcscopendata/templates/group/activity_stream.html:8
+#: ckanext/fcscopendata/templates/group/read_base.html:18
+#: ckanext/fcscopendata/templates/organization/activity_stream.html:3
+#: ckanext/fcscopendata/templates/organization/activity_stream.html:8
+#: ckanext/fcscopendata/templates/organization/read_base.html:18
+#: ckanext/fcscopendata/templates/package/activity.html:3
+#: ckanext/fcscopendata/templates/package/activity.html:8
+#: ckanext/fcscopendata/templates/package/read_base.html:23
+#: ckanext/fcscopendata/templates/user/activity_stream.html:3
+#: ckanext/fcscopendata/templates/user/activity_stream.html:8
+#: ckanext/fcscopendata/templates/user/read_base.html:20
+msgid "Activity Stream"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/group/admins.html:3
+#: ckanext/fcscopendata/templates/group/admins.html:6
+#: ckanext/fcscopendata/templates/organization/admins.html:3
+#: ckanext/fcscopendata/templates/organization/admins.html:6
+msgid "Administrators"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/group/base_form_page.html:5
+msgid "Add a Group"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/group/base_form_page.html:10
+msgid "Group Form"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/group/confirm_delete.html:11
+msgid "Are you sure you want to delete group - {name}?"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/group/confirm_delete_member.html:11
+#: ckanext/fcscopendata/templates/organization/confirm_delete_member.html:11
+msgid "Are you sure you want to delete member - {name}?"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/group/edit.html:7
+#: ckanext/fcscopendata/templates/group/edit_base.html:3
+#: ckanext/fcscopendata/templates/group/edit_base.html:11
+#: ckanext/fcscopendata/templates/group/read_base.html:12
+#: ckanext/fcscopendata/templates/organization/edit_base.html:11
+#: ckanext/fcscopendata/templates/organization/read_base.html:12
+#: ckanext/fcscopendata/templates/package/read_base.html:15
+#: ckanext/fcscopendata/templates/package/resource_read.html:31
+#: ckanext/fcscopendata/templates/user/edit.html:8
+#: ckanext/fcscopendata/templates/user/edit_base.html:3
+#: ckanext/fcscopendata/templates/user/read_base.html:14
+msgid "Manage"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/group/edit.html:12
+msgid "Edit Group"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/group/edit_base.html:16
+#: ckanext/fcscopendata/templates/organization/edit_base.html:17
+#: ckanext/fcscopendata/templates/package/resource_read.html:38
+#: ckanext/fcscopendata/templates/package/resource_views.html:4
+msgid "View"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/group/edit_base.html:20
+#: ckanext/fcscopendata/templates/group/members.html:28
+#: ckanext/fcscopendata/templates/organization/bulk_process.html:75
+#: ckanext/fcscopendata/templates/organization/edit.html:3
+#: ckanext/fcscopendata/templates/organization/edit_base.html:22
+#: ckanext/fcscopendata/templates/organization/members.html:33
+#: ckanext/fcscopendata/templates/package/collaborators/collaborators.html:33
+#: ckanext/fcscopendata/templates/package/edit_base.html:8
+#: ckanext/fcscopendata/templates/package/resource_edit.html:3
+#: ckanext/fcscopendata/templates/package/resource_edit_base.html:12
+#: ckanext/fcscopendata/templates/package/snippets/resource_item.html:70
+msgid "Edit"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/group/edit_base.html:21
+#: ckanext/fcscopendata/templates/group/members.html:3
+#: ckanext/fcscopendata/templates/organization/edit_base.html:24
+#: ckanext/fcscopendata/templates/organization/members.html:3
+msgid "Members"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/group/followers.html:3
+#: ckanext/fcscopendata/templates/group/followers.html:6
+#: ckanext/fcscopendata/templates/group/snippets/info.html:34
+#: ckanext/fcscopendata/templates/package/followers.html:3
+#: ckanext/fcscopendata/templates/package/followers.html:6
+#: ckanext/fcscopendata/templates/package/snippets/info.html:24
+#: ckanext/fcscopendata/templates/snippets/context/group.html:13
+#: ckanext/fcscopendata/templates/snippets/context/user.html:15
+#: ckanext/fcscopendata/templates/snippets/organization.html:57
+#: ckanext/fcscopendata/templates/user/followers.html:3
+#: ckanext/fcscopendata/templates/user/followers.html:7
+#: ckanext/fcscopendata/templates/user/read_base.html:52
+msgid "Followers"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/group/index.html:13
+#: ckanext/fcscopendata/templates/user/dashboard_groups.html:7
+msgid "Add Group"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/group/index.html:20
+msgid "Search groups..."
+msgstr ""
+
+#: ckanext/fcscopendata/templates/group/index.html:20
+#: ckanext/fcscopendata/templates/group/read.html:14
+#: ckanext/fcscopendata/templates/organization/bulk_process.html:27
+#: ckanext/fcscopendata/templates/organization/index.html:20
+#: ckanext/fcscopendata/templates/organization/read.html:20
+#: ckanext/fcscopendata/templates/package/search.html:30
+#: ckanext/fcscopendata/templates/snippets/search_form.html:4
+#: ckanext/fcscopendata/templates/snippets/simple_search.html:10
+#: ckanext/fcscopendata/templates/snippets/sort_by.html:15
+msgid "Name Ascending"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/group/index.html:20
+#: ckanext/fcscopendata/templates/group/read.html:15
+#: ckanext/fcscopendata/templates/organization/bulk_process.html:28
+#: ckanext/fcscopendata/templates/organization/index.html:20
+#: ckanext/fcscopendata/templates/organization/read.html:21
+#: ckanext/fcscopendata/templates/package/search.html:31
+#: ckanext/fcscopendata/templates/snippets/search_form.html:4
+#: ckanext/fcscopendata/templates/snippets/simple_search.html:10
+#: ckanext/fcscopendata/templates/snippets/sort_by.html:16
+msgid "Name Descending"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/group/index.html:29
+msgid "There are currently no groups for this site"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/group/index.html:31
+#: ckanext/fcscopendata/templates/organization/index.html:31
+msgid "How about creating one?"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/group/member_new.html:8
+#: ckanext/fcscopendata/templates/organization/member_new.html:10
+msgid "Back to all members"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/group/member_new.html:10
+#: ckanext/fcscopendata/templates/organization/member_new.html:7
+#: ckanext/fcscopendata/templates/organization/member_new.html:12
+msgid "Edit Member"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/group/member_new.html:10
+#: ckanext/fcscopendata/templates/group/member_new.html:77
+#: ckanext/fcscopendata/templates/group/members.html:6
+#: ckanext/fcscopendata/templates/organization/member_new.html:7
+#: ckanext/fcscopendata/templates/organization/member_new.html:12
+#: ckanext/fcscopendata/templates/organization/member_new.html:79
+#: ckanext/fcscopendata/templates/organization/members.html:8
+msgid "Add Member"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/group/member_new.html:19
+#: ckanext/fcscopendata/templates/organization/member_new.html:21
+#: ckanext/fcscopendata/templates/package/collaborators/collaborator_new.html:19
+msgid "Existing User"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/group/member_new.html:22
+#: ckanext/fcscopendata/templates/organization/member_new.html:24
+#: ckanext/fcscopendata/templates/package/collaborators/collaborator_new.html:22
+msgid "If you wish to add an existing user, search for their username below."
+msgstr ""
+
+#: ckanext/fcscopendata/templates/group/member_new.html:41
+#: ckanext/fcscopendata/templates/organization/member_new.html:43
+msgid "or"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/group/member_new.html:47
+#: ckanext/fcscopendata/templates/organization/member_new.html:49
+msgid "New User"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/group/member_new.html:50
+#: ckanext/fcscopendata/templates/organization/member_new.html:52
+msgid "If you wish to invite a new user, enter their email address."
+msgstr ""
+
+#: ckanext/fcscopendata/templates/group/member_new.html:62
+#: ckanext/fcscopendata/templates/group/member_new.html:66
+#: ckanext/fcscopendata/templates/group/members.html:15
+#: ckanext/fcscopendata/templates/organization/member_new.html:64
+#: ckanext/fcscopendata/templates/organization/member_new.html:68
+#: ckanext/fcscopendata/templates/organization/members.html:20
+#: ckanext/fcscopendata/templates/package/collaborators/collaborator_new.html:41
+#: ckanext/fcscopendata/templates/package/collaborators/collaborators.html:20
+msgid "Role"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/group/member_new.html:71
+#: ckanext/fcscopendata/templates/group/members.html:31
+#: ckanext/fcscopendata/templates/organization/member_new.html:73
+#: ckanext/fcscopendata/templates/organization/members.html:36
+msgid "Are you sure you want to delete this member?"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/group/member_new.html:71
+#: ckanext/fcscopendata/templates/group/members.html:31
+#: ckanext/fcscopendata/templates/group/snippets/group_form.html:38
+#: ckanext/fcscopendata/templates/organization/bulk_process.html:57
+#: ckanext/fcscopendata/templates/organization/member_new.html:73
+#: ckanext/fcscopendata/templates/organization/members.html:36
+#: ckanext/fcscopendata/templates/organization/snippets/organization_form.html:38
+#: ckanext/fcscopendata/templates/package/collaborators/collaborator_new.html:44
+#: ckanext/fcscopendata/templates/package/collaborators/collaborators.html:36
+#: ckanext/fcscopendata/templates/package/edit_view.html:19
+#: ckanext/fcscopendata/templates/package/snippets/package_form.html:39
+#: ckanext/fcscopendata/templates/package/snippets/resource_form.html:67
+#: ckanext/fcscopendata/templates/user/edit_user_form.html:50
+msgid "Delete"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/group/member_new.html:73
+msgid "Save"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/group/member_new.html:90
+#: ckanext/fcscopendata/templates/organization/member_new.html:92
+msgid "What are roles?"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/group/member_new.html:93
+msgid ""
+"<p><strong>Admin:</strong> Can edit group information, as well as manage "
+"organization members.</p> <p><strong>Member:</strong> Can add/remove "
+"datasets from groups</p>"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/group/members.html:14
+#: ckanext/fcscopendata/templates/organization/members.html:19
+#: ckanext/fcscopendata/templates/package/collaborators/collaborators.html:19
+msgid "User"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/group/new.html:3
+#: ckanext/fcscopendata/templates/group/new.html:5
+#: ckanext/fcscopendata/templates/group/new.html:7
+msgid "Create a Group"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/group/new_group_form.html:17
+msgid "Update Group"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/group/new_group_form.html:19
+msgid "Create Group"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/group/read.html:13
+#: ckanext/fcscopendata/templates/organization/read.html:19
+#: ckanext/fcscopendata/templates/package/search.html:29
+#: ckanext/fcscopendata/templates/snippets/sort_by.html:14
+msgid "Relevance"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/group/read.html:16
+#: ckanext/fcscopendata/templates/organization/bulk_process.html:29
+#: ckanext/fcscopendata/templates/organization/read.html:22
+#: ckanext/fcscopendata/templates/package/search.html:32
+#: ckanext/fcscopendata/templates/package/snippets/resource_form.html:53
+#: ckanext/fcscopendata/templates/snippets/sort_by.html:17
+msgid "Last Modified"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/group/read.html:17
+#: ckanext/fcscopendata/templates/organization/read.html:23
+#: ckanext/fcscopendata/templates/package/search.html:33
+#: ckanext/fcscopendata/templates/snippets/package_item.html:50
+#: ckanext/fcscopendata/templates/snippets/popular.html:3
+#: ckanext/fcscopendata/templates/snippets/sort_by.html:19
+msgid "Popular"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/group/read.html:19
+#: ckanext/fcscopendata/templates/organization/read.html:25
+#: ckanext/fcscopendata/templates/snippets/search_form.html:3
+msgid "Search datasets..."
+msgstr ""
+
+#: ckanext/fcscopendata/templates/group/snippets/feeds.html:2
+msgid "Datasets in group: {group}"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/group/snippets/group_form.html:10
+#: ckanext/fcscopendata/templates/organization/snippets/organization_form.html:10
+#: ckanext/fcscopendata/templates/package/snippets/resource_form.html:30
+msgid "Name"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/group/snippets/group_form.html:10
+msgid "My Group"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/group/snippets/group_form.html:18
+#: ckanext/fcscopendata/templates/organization/snippets/organization_form.html:18
+#: ckanext/fcscopendata/templates/package/snippets/package_basic_fields.html:13
+#: ckanext/fcscopendata/templates/package/snippets/resource_form.html:26
+msgid "URL"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/group/snippets/group_form.html:20
+#: ckanext/fcscopendata/templates/organization/snippets/organization_form.html:20
+#: ckanext/fcscopendata/templates/package/snippets/package_basic_fields.html:19
+#: ckanext/fcscopendata/templates/package/snippets/resource_form.html:34
+#: ckanext/fcscopendata/templates/package/snippets/view_form.html:9
+msgid "Description"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/group/snippets/group_form.html:20
+msgid "A little information about my group..."
+msgstr ""
+
+#: ckanext/fcscopendata/templates/group/snippets/group_form.html:38
+msgid "Are you sure you want to delete this Group?"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/group/snippets/group_form.html:41
+msgid "Save Group"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/group/snippets/group_item.html:32
+#: ckanext/fcscopendata/templates/organization/snippets/organization_item.html:31
+msgid "{num} Dataset"
+msgid_plural "{num} Datasets"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+msgstr[3] ""
+msgstr[4] ""
+msgstr[5] ""
+
+#: ckanext/fcscopendata/templates/group/snippets/group_item.html:34
+#: ckanext/fcscopendata/templates/organization/snippets/organization_item.html:33
+msgid "0 Datasets"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/group/snippets/group_item.html:38
+#: ckanext/fcscopendata/templates/group/snippets/group_item.html:39
+msgid "View {name}"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/group/snippets/group_item.html:43
+#: ckanext/fcscopendata/templates/macros/form.html:251
+#: ckanext/fcscopendata/templates/snippets/search_form.html:69
+msgid "Remove"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/group/snippets/group_item.html:43
+msgid "Remove dataset from this group"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/group/snippets/helper.html:4
+msgid "What are Groups?"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/group/snippets/helper.html:8
+msgid ""
+"You can use CKAN Groups to create and manage collections of datasets. "
+"This could be to catalogue datasets for a particular project or team, or "
+"on a particular theme, or as a very simple way to help people find and "
+"search your own published datasets."
+msgstr ""
+
+#: ckanext/fcscopendata/templates/group/snippets/info.html:16
+#: ckanext/fcscopendata/templates/organization/bulk_process.html:82
+#: ckanext/fcscopendata/templates/package/read.html:29
+#: ckanext/fcscopendata/templates/package/snippets/package_basic_fields.html:121
+#: ckanext/fcscopendata/templates/snippets/organization.html:37
+#: ckanext/fcscopendata/templates/snippets/package_item.html:42
+msgid "Deleted"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/group/snippets/info.html:26
+#: ckanext/fcscopendata/templates/snippets/organization.html:47
+msgid "read more"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/home/index.html:4
+msgid "Welcome"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/home/snippets/about_text.html:1
+msgid ""
+"<p>CKAN is the world’s leading open-source data portal platform.</p> "
+"<p>CKAN is a complete out-of-the-box software solution that makes data "
+"accessible and usable – by providing tools to streamline publishing, "
+"sharing, finding and using data (including storage of data and provision "
+"of robust data APIs). CKAN is aimed at data publishers (national and "
+"regional governments, companies and organizations) wanting to make their "
+"data open and available.</p> <p>CKAN is used by governments and user "
+"groups worldwide and powers a variety of official and community data "
+"portals including portals for local, national and international "
+"government, such as the UK’s <a "
+"href=\"http://data.gov.uk\">data.gov.uk</a> and the European Union’s <a "
+"href=\"http://publicdata.eu/\">publicdata.eu</a>, the Brazilian <a "
+"href=\"http://dados.gov.br/\">dados.gov.br</a>, Dutch and Netherland "
+"government portals, as well as city and municipal sites in the US, UK, "
+"Argentina, Finland and elsewhere.</p> <p>CKAN: <a "
+"href=\"http://ckan.org/\">http://ckan.org/</a><br /> CKAN Tour: <a "
+"href=\"http://ckan.org/tour/\">http://ckan.org/tour/</a><br /> Features "
+"overview: <a "
+"href=\"http://ckan.org/features/\">http://ckan.org/features/</a></p>"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/home/snippets/promoted.html:8
+msgid "Welcome to CKAN"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/home/snippets/promoted.html:10
+msgid ""
+"This is a nice introductory paragraph about CKAN or the site in general. "
+"We don't have any copy to go here yet but soon we will"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/home/snippets/promoted.html:19
+msgid "This is a featured section"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/home/snippets/search.html:2
+msgid "E.g. environment"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/home/snippets/search.html:6
+msgid "Welcome to UAE Open Data"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/home/snippets/search.html:16
+msgid "Popular tags"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/home/snippets/stats.html:5
+msgid "{0} statistics"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/home/snippets/stats.html:11
+msgid "dataset"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/home/snippets/stats.html:11
+msgid "datasets"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/home/snippets/stats.html:17
+msgid "organization"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/home/snippets/stats.html:17
+msgid "organizations"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/home/snippets/stats.html:23
+msgid "group"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/home/snippets/stats.html:23
+msgid "groups"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/macros/form.html:54
+#: ckanext/fcscopendata/templates/macros/form.html:287
+msgid "This field is required"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/macros/form.html:136
+#, python-format
+msgid ""
+"You can use <a href=\"#markdown\" title=\"Markdown quick reference\" "
+"data-target=\"popover\" data-content=\"%(markdown_tooltip)s\" data-"
+"html=\"true\">Markdown formatting</a> here"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/macros/form.html:243
+msgid "Key"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/macros/form.html:255
+#: ckanext/fcscopendata/templates/package/resource_read.html:180
+#: ckanext/fcscopendata/templates/package/snippets/additional_info.html:7
+#: ckanext/fcscopendata/templates/snippets/additional_info.html:12
+msgid "Value"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/macros/form.html:287
+msgid "Custom"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/macros/form.html:312
+msgid "The form contains invalid entries:"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/macros/form.html:417
+msgid "Required field"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/macros/form.html:432
+msgid "http://example.com/my-image.jpg"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/macros/form.html:433
+msgid "Image URL"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/macros/form.html:434
+msgid "Image"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/macros/form.html:459
+msgid "Clear Upload"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/organization/base_form_page.html:5
+msgid "Add an Organization"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/organization/base_form_page.html:10
+msgid "Organization Form"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/organization/bulk_process.html:3
+#: ckanext/fcscopendata/templates/organization/bulk_process.html:11
+msgid "Edit datasets"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/organization/bulk_process.html:16
+msgid " found for \"{query}\""
+msgstr ""
+
+#: ckanext/fcscopendata/templates/organization/bulk_process.html:18
+msgid "Sorry no datasets found for \"{query}\""
+msgstr ""
+
+#: ckanext/fcscopendata/templates/organization/bulk_process.html:47
+msgid "Make public"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/organization/bulk_process.html:51
+msgid "Make private"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/organization/bulk_process.html:80
+#: ckanext/fcscopendata/templates/package/read.html:26
+#: ckanext/fcscopendata/templates/snippets/package_item.html:40
+msgid "Draft"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/organization/bulk_process.html:85
+#: ckanext/fcscopendata/templates/package/read.html:9
+#: ckanext/fcscopendata/templates/package/snippets/package_basic_fields.html:101
+#: ckanext/fcscopendata/templates/snippets/package_item.html:31
+#: ckanext/fcscopendata/templates/snippets/private.html:2
+#: ckanext/fcscopendata/templates/user/read_base.html:81
+#: ckanext/fcscopendata/templates/user/read_base.html:95
+msgid "Private"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/organization/bulk_process.html:98
+msgid "This organization has no datasets associated to it"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/organization/confirm_delete.html:11
+msgid "Are you sure you want to delete organization - {name}?"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/organization/edit.html:6
+#: ckanext/fcscopendata/templates/organization/snippets/info.html:13
+#: ckanext/fcscopendata/templates/organization/snippets/info.html:16
+msgid "Edit Organization"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/organization/index.html:13
+#: ckanext/fcscopendata/templates/user/dashboard_organizations.html:7
+msgid "Add Organization"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/organization/index.html:20
+msgid "Search organizations..."
+msgstr ""
+
+#: ckanext/fcscopendata/templates/organization/index.html:29
+msgid "There are currently no organizations for this site"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/organization/member_new.html:33
+#: ckanext/fcscopendata/templates/package/collaborators/collaborator_new.html:31
+#: ckanext/fcscopendata/templates/user/edit_user_form.html:8
+#: ckanext/fcscopendata/templates/user/logout_first.html:10
+#: ckanext/fcscopendata/templates/user/new_user_form.html:5
+#: ckanext/fcscopendata/templates/user/perform_reset.html:22
+#: ckanext/fcscopendata/templates/user/read_base.html:75
+#: ckanext/fcscopendata/templates/user/snippets/login_form.html:20
+msgid "Username"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/organization/member_new.html:55
+msgid "Email address"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/organization/member_new.html:75
+msgid "Update Member"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/organization/member_new.html:95
+msgid ""
+"<p><strong>Admin:</strong> Can add/edit and delete datasets, as well as "
+"manage organization members.</p> <p><strong>Editor:</strong> Can add and "
+"edit datasets, but not manage organization members.</p> "
+"<p><strong>Member:</strong> Can view the organization's private datasets,"
+" but not add new datasets.</p>"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/organization/members.html:14
+msgid "{count} member"
+msgid_plural "{count} members"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+msgstr[3] ""
+msgstr[4] ""
+msgstr[5] ""
+
+#: ckanext/fcscopendata/templates/organization/new.html:3
+#: ckanext/fcscopendata/templates/organization/new.html:5
+#: ckanext/fcscopendata/templates/organization/new.html:7
+msgid "Create an Organization"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/organization/new_organization_form.html:17
+msgid "Update Organization"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/organization/new_organization_form.html:19
+msgid "Create Organization"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/organization/snippets/feeds.html:2
+msgid "Datasets in organization: {group}"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/organization/snippets/help.html:4
+#: ckanext/fcscopendata/templates/organization/snippets/helper.html:4
+msgid "What are Organizations?"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/organization/snippets/help.html:7
+msgid ""
+"<p>Organizations act like publishing departments for datasets (for "
+"example, the Department of Health). This means that datasets can be "
+"published by and belong to a department instead of an individual "
+"user.</p> <p>Within organizations, admins can assign roles and authorise "
+"its members, giving individual users the right to publish datasets from "
+"that particular organisation (e.g. Office of National Statistics).</p>"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/organization/snippets/helper.html:8
+msgid ""
+"CKAN Organizations are used to create, manage and publish collections of "
+"datasets. Users can have different roles within an Organization, "
+"depending on their level of authorisation to create, edit and publish."
+msgstr ""
+
+#: ckanext/fcscopendata/templates/organization/snippets/organization_form.html:10
+msgid "My Organization"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/organization/snippets/organization_form.html:20
+msgid "A little information about my organization..."
+msgstr ""
+
+#: ckanext/fcscopendata/templates/organization/snippets/organization_form.html:38
+msgid ""
+"Are you sure you want to delete this Organization? Note*: Deleting cannot"
+" be performed while public or private datasets belong to this "
+"organization."
+msgstr ""
+
+#: ckanext/fcscopendata/templates/organization/snippets/organization_form.html:41
+msgid "Save Organization"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/organization/snippets/organization_item.html:42
+#: ckanext/fcscopendata/templates/organization/snippets/organization_item.html:43
+msgid "View {organization_name}"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/base.html:24
+#: ckanext/fcscopendata/templates/package/new.html:9
+#: ckanext/fcscopendata/templates/package/snippets/new_package_breadcrumb.html:2
+msgid "Create Dataset"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/base_form_page.html:22
+msgid "What are datasets?"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/base_form_page.html:25
+msgid ""
+"A CKAN Dataset is a collection of data resources (such as files), "
+"together with a description and other information, at a fixed URL. "
+"Datasets are what users see when searching for data."
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/changes.html:9
+#: ckanext/fcscopendata/templates/package/changes.html:17
+#: ckanext/fcscopendata/templates/snippets/activities/changed_package.html:20
+msgid "Changes"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/confirm_delete.html:12
+msgid "Are you sure you want to delete dataset - {name}?"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/confirm_delete_resource.html:11
+msgid "Are you sure you want to delete resource - {name}?"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/edit_base.html:13
+msgid "View dataset"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/edit_base.html:17
+msgid "Edit metadata"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/edit_base.html:18
+#: ckanext/fcscopendata/templates/package/resources.html:5
+#: ckanext/fcscopendata/templates/package/snippets/resources.html:21
+#: ckanext/fcscopendata/templates/snippets/context/dataset.html:13
+msgid "Resources"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/collaborators/collaborators.html:3
+#: ckanext/fcscopendata/templates/package/edit_base.html:20
+msgid "Collaborators"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/edit_view.html:3
+#: ckanext/fcscopendata/templates/package/edit_view.html:4
+#: ckanext/fcscopendata/templates/package/edit_view.html:8
+#: ckanext/fcscopendata/templates/package/edit_view.html:12
+msgid "Edit view"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/edit_view.html:20
+#: ckanext/fcscopendata/templates/package/new_view.html:28
+#: ckanext/fcscopendata/templates/package/snippets/resource_item.html:46
+msgid "Preview"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/edit_view.html:21
+msgid "Update"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/group_list.html:14
+msgid "Associate this group with this dataset"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/group_list.html:14
+msgid "Add to group"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/group_list.html:23
+msgid "There are no groups associated with this dataset"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/new_package_form.html:13
+msgid "Update Dataset"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/new_resource.html:5
+msgid "Add data to the dataset"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/new_resource.html:11
+#: ckanext/fcscopendata/templates/package/new_resource_not_draft.html:8
+msgid "Add New Resource"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/new_resource_not_draft.html:3
+#: ckanext/fcscopendata/templates/package/new_resource_not_draft.html:4
+msgid "Add resource"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/new_resource_not_draft.html:16
+msgid "New resource"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/new_view.html:3
+#: ckanext/fcscopendata/templates/package/new_view.html:4
+#: ckanext/fcscopendata/templates/package/new_view.html:8
+#: ckanext/fcscopendata/templates/package/new_view.html:12
+msgid "Add view"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/new_view.html:19
+msgid ""
+"Data Explorer views may be slow and unreliable unless the DataStore "
+"extension is enabled. For more information, please see the <a "
+"href='http://docs.ckan.org/en/latest/maintaining/data-viewer.html"
+"#viewing-structured-data-the-data-explorer' target='_blank'>Data Explorer"
+" documentation</a>."
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/new_view.html:29
+#: ckanext/fcscopendata/templates/package/snippets/resource_form.html:85
+msgid "Add"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/read.html:15
+#: ckanext/fcscopendata/templates/package/resource_read.html:77
+#, python-format
+msgid ""
+"You're currently viewing an old version of this dataset. To see the "
+"current version, click <a href=\"%(url)s\">here</a>."
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/read_base.html:21
+msgid "Dataset"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/resource_edit_base.html:17
+msgid "All resources"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/resource_edit_base.html:19
+msgid "View resource"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/resource_edit_base.html:24
+#: ckanext/fcscopendata/templates/package/resource_edit_base.html:30
+msgid "Edit resource"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/resource_edit_base.html:26
+msgid "Views"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/resource_read.html:40
+msgid "API Endpoint"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/resource_read.html:42
+#: ckanext/fcscopendata/templates/package/snippets/resource_item.html:61
+msgid "Go to resource"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/resource_read.html:44
+#: ckanext/fcscopendata/templates/package/snippets/resource_item.html:58
+msgid "Download"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/resource_read.html:87
+#: ckanext/fcscopendata/templates/package/resource_read.html:89
+msgid "URL:"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/resource_read.html:97
+msgid "Dataset description:"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/resource_read.html:99
+#, python-format
+msgid "Source: <a href=\"%(url)s\">%(dataset)s</a>"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/resource_read.html:139
+msgid "There are no views created for this resource yet."
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/resource_read.html:143
+msgid "Not seeing the views you were expecting?"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/resource_read.html:148
+msgid "Here are some reasons you may not be seeing expected views:"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/resource_read.html:150
+msgid "No view has been created that is suitable for this resource"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/resource_read.html:151
+msgid "The site administrators may not have enabled the relevant view plugins"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/resource_read.html:152
+msgid ""
+"If a view requires the DataStore, the DataStore plugin may not be "
+"enabled, or the data may not have been pushed to the DataStore, or the "
+"DataStore hasn't finished processing the data yet"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/resource_read.html:175
+msgid "Additional Information"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/resource_read.html:179
+#: ckanext/fcscopendata/templates/package/snippets/additional_info.html:6
+#: ckanext/fcscopendata/templates/snippets/additional_info.html:11
+msgid "Field"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/resource_read.html:185
+msgid "Data last updated"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/resource_read.html:186
+#: ckanext/fcscopendata/templates/package/resource_read.html:190
+#: ckanext/fcscopendata/templates/package/resource_read.html:194
+#: ckanext/fcscopendata/templates/package/resource_read.html:198
+#: ckanext/fcscopendata/templates/snippets/activity_stream.html:10
+#: ckanext/fcscopendata/templates/snippets/activity_stream.html:17
+#: ckanext/fcscopendata/templates/snippets/activity_stream.html:30
+msgid "unknown"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/resource_read.html:189
+msgid "Metadata last updated"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/resource_read.html:193
+#: ckanext/fcscopendata/templates/package/snippets/additional_info.html:70
+msgid "Created"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/resource_read.html:197
+#: ckanext/fcscopendata/templates/package/snippets/resource_form.html:39
+#: ckanext/fcscopendata/templates/package/snippets/resource_info.html:19
+msgid "Format"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/resource_read.html:201
+#: ckanext/fcscopendata/templates/package/snippets/package_basic_fields.html:30
+#: ckanext/fcscopendata/templates/snippets/license.html:20
+msgid "License"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/resource_views.html:10
+msgid "New view"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/resource_views.html:27
+msgid "This resource has no views"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/resources.html:8
+msgid "Add new resource"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/resources.html:20
+#: ckanext/fcscopendata/templates/package/snippets/resources_list.html:27
+#, python-format
+msgid ""
+"<p class=\"empty\">This dataset has no data, <a href=\"%(url)s\">why not "
+"add some?</a></p>"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/search.html:52
+msgid "API"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/search.html:53
+msgid "API Docs"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/search.html:55
+msgid "full {format} dump"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/search.html:56
+#, python-format
+msgid ""
+"You can also access this registry using the %(api_link)s (see "
+"%(api_doc_link)s) or download a %(dump_link)s."
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/search.html:60
+#, python-format
+msgid ""
+"You can also access this registry using the %(api_link)s (see "
+"%(api_doc_link)s)."
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/view_edit_base.html:9
+msgid "All views"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/view_edit_base.html:12
+msgid "View view"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/view_edit_base.html:37
+msgid "View preview"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/collaborators/collaborator_new.html:5
+#: ckanext/fcscopendata/templates/package/collaborators/collaborator_new.html:10
+msgid "Edit Collaborator"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/collaborators/collaborator_new.html:5
+#: ckanext/fcscopendata/templates/package/collaborators/collaborator_new.html:10
+#: ckanext/fcscopendata/templates/package/collaborators/collaborator_new.html:50
+msgid "Add Collaborator"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/collaborators/collaborator_new.html:8
+msgid "Back to all collaborators"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/collaborators/collaborator_new.html:44
+#: ckanext/fcscopendata/templates/package/collaborators/collaborators.html:36
+msgid "Are you sure you want to delete this collaborator?"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/collaborators/collaborator_new.html:46
+msgid "Update Collaborator"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/collaborators/collaborator_new.html:63
+msgid "What are the available roles?"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/collaborators/collaborator_new.html:67
+msgid ""
+"<p><strong>Admin:</strong> In addition to managing the dataset, admins "
+"can add and remove collaborators from a dataset.</p>"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/collaborators/collaborator_new.html:71
+msgid ""
+"<p><strong>Editor:</strong> Editors can edit the dataset and its "
+"resources, as well accessing the dataset if private.</p> "
+"<p><strong>Member:</strong> Members can access the dataset if private, "
+"but not edit it.</p>"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/collaborators/collaborators.html:7
+msgid "Add Collaborators"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/collaborators/collaborators.html:14
+msgid "{count} collaborator"
+msgid_plural "{count} collaborators"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+msgstr[3] ""
+msgstr[4] ""
+msgstr[5] ""
+
+#: ckanext/fcscopendata/templates/package/snippets/additional_info.html:2
+#: ckanext/fcscopendata/templates/snippets/additional_info.html:7
+msgid "Additional Info"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/snippets/additional_info.html:14
+#: ckanext/fcscopendata/templates/package/snippets/package_metadata_fields.html:6
+msgid "Source"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/snippets/additional_info.html:25
+#: ckanext/fcscopendata/templates/package/snippets/additional_info.html:30
+#: ckanext/fcscopendata/templates/package/snippets/package_metadata_fields.html:14
+msgid "Author"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/snippets/additional_info.html:37
+#: ckanext/fcscopendata/templates/package/snippets/additional_info.html:42
+#: ckanext/fcscopendata/templates/package/snippets/package_metadata_fields.html:20
+msgid "Maintainer"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/snippets/additional_info.html:49
+#: ckanext/fcscopendata/templates/package/snippets/package_metadata_fields.html:10
+msgid "Version"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/snippets/additional_info.html:56
+#: ckanext/fcscopendata/templates/package/snippets/package_basic_fields.html:117
+#: ckanext/fcscopendata/templates/user/read_base.html:90
+msgid "State"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/snippets/additional_info.html:62
+msgid "Last Updated"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/snippets/cannot_create_package.html:10
+msgid "Before you can create a dataset you need to create an organization."
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/snippets/cannot_create_package.html:13
+msgid "Create a new organization"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/snippets/cannot_create_package.html:18
+msgid "There are no organizations to which you can assign this dataset."
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/snippets/cannot_create_package.html:19
+msgid ""
+"Ask a system administrator to create an organization before you can "
+"continue."
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/snippets/change_item.html:1
+#, python-format
+msgid "On %(timestamp)s, %(username)s:"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/snippets/package_basic_fields.html:4
+#: ckanext/fcscopendata/templates/package/snippets/view_form.html:8
+msgid "Title"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/snippets/package_basic_fields.html:4
+msgid "eg. A descriptive title"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/snippets/package_basic_fields.html:13
+msgid "eg. my-dataset"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/snippets/package_basic_fields.html:19
+msgid "eg. Some useful notes about the data"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/snippets/package_basic_fields.html:24
+#: ckanext/fcscopendata/templates/snippets/context/dataset.html:17
+#: ckanext/fcscopendata/templates/tag/index.html:3
+#: ckanext/fcscopendata/templates/tag/index.html:6
+#: ckanext/fcscopendata/templates/tag/index.html:12
+msgid "Tags"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/snippets/package_basic_fields.html:24
+msgid "eg. economy, mental health, government"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/snippets/package_basic_fields.html:36
+msgid "Please select the license"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/snippets/package_basic_fields.html:47
+msgid ""
+"License definitions and additional information can be found at <a "
+"href=\"http://opendefinition.org/licenses/\">opendefinition.org</a>"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/snippets/package_basic_fields.html:79
+#: ckanext/fcscopendata/templates/snippets/organization.html:23
+msgid "Organization"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/snippets/package_basic_fields.html:83
+msgid "No organization"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/snippets/package_basic_fields.html:98
+msgid "Visibility"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/snippets/package_basic_fields.html:101
+msgid "Public"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/snippets/package_basic_fields.html:120
+msgid "Active"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/snippets/package_form.html:28
+msgid ""
+"The <i>data license</i> you select above only applies to the contents of "
+"any resource files that you add to this dataset. By submitting this form,"
+" you agree to release the <i>metadata</i> values that you enter into the "
+"form under the <a "
+"href=\"http://opendatacommons.org/licenses/odbl/1-0/\">Open Database "
+"License</a>."
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/snippets/package_form.html:39
+msgid "Are you sure you want to delete this dataset?"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/snippets/package_form.html:43
+msgid "Next: Add Data"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/snippets/package_metadata_fields.html:6
+msgid "http://example.com/dataset.json"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/snippets/package_metadata_fields.html:10
+msgid "1.0"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/snippets/package_metadata_fields.html:14
+#: ckanext/fcscopendata/templates/package/snippets/package_metadata_fields.html:20
+#: ckanext/fcscopendata/templates/user/new_user_form.html:6
+msgid "Joe Bloggs"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/snippets/package_metadata_fields.html:16
+msgid "Author Email"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/snippets/package_metadata_fields.html:16
+#: ckanext/fcscopendata/templates/package/snippets/package_metadata_fields.html:22
+#: ckanext/fcscopendata/templates/user/new_user_form.html:7
+msgid "joe@example.com"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/snippets/package_metadata_fields.html:22
+msgid "Maintainer Email"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/snippets/resource_edit_form.html:12
+msgid "Update Resource"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/snippets/resource_form.html:26
+msgid "Data"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/snippets/resource_form.html:26
+msgid "http://example.com/external-data.csv"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/snippets/resource_form.html:30
+msgid "eg. January 2011 Gold Prices"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/snippets/resource_form.html:34
+msgid "Some useful notes about the data"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/snippets/resource_form.html:39
+msgid "eg. CSV, XML or JSON"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/snippets/resource_form.html:42
+msgid "This will be guessed automatically. Leave blank if you wish"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/snippets/resource_form.html:53
+msgid "eg. 2012-06-05"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/snippets/resource_form.html:55
+msgid "File Size"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/snippets/resource_form.html:55
+msgid "eg. 1024"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/snippets/resource_form.html:57
+#: ckanext/fcscopendata/templates/package/snippets/resource_form.html:59
+msgid "MIME Type"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/snippets/resource_form.html:57
+#: ckanext/fcscopendata/templates/package/snippets/resource_form.html:59
+msgid "eg. application/json"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/snippets/resource_form.html:67
+msgid "Are you sure you want to delete this resource?"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/snippets/resource_form.html:73
+msgid "Previous"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/snippets/resource_form.html:77
+msgid "Save & add another"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/snippets/resource_form.html:81
+msgid "Finish"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/snippets/resource_help.html:2
+msgid "What's a resource?"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/snippets/resource_help.html:4
+msgid "A resource can be any file or link to a file containing useful data."
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/snippets/resource_item.html:37
+msgid "Explore"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/snippets/resource_item.html:49
+msgid "More information"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/snippets/resource_view.html:10
+msgid "Fullscreen"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/snippets/resource_view.html:18
+msgid "Embed"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/snippets/resource_view.html:32
+msgid "This resource view is not available at the moment."
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/snippets/resource_view.html:72
+msgid "Embed resource view"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/snippets/resource_view.html:75
+msgid ""
+"You can copy and paste the embed code into a CMS or blog software that "
+"supports raw HTML"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/snippets/resource_view.html:78
+msgid "Width"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/snippets/resource_view.html:81
+msgid "Height"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/snippets/resource_view.html:84
+msgid "Code"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/snippets/resource_views_list.html:8
+msgid "Resource Preview"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/snippets/resources_list.html:14
+msgid "Data and Resources"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/snippets/resources_list.html:31
+msgid "This dataset has no data"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/snippets/stages.html:23
+#: ckanext/fcscopendata/templates/package/snippets/stages.html:25
+msgid "Create dataset"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/snippets/stages.html:30
+#: ckanext/fcscopendata/templates/package/snippets/stages.html:34
+#: ckanext/fcscopendata/templates/package/snippets/stages.html:36
+msgid "Add data"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/snippets/view_form.html:8
+msgid "eg. My View"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/snippets/view_form.html:9
+msgid "eg. Information about my view"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/snippets/view_form_filters.html:16
+msgid "Add Filter"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/snippets/view_form_filters.html:28
+msgid "Remove Filter"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/snippets/view_form_filters.html:46
+msgid "Filters"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/snippets/view_help.html:2
+msgid "What's a view?"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/package/snippets/view_help.html:4
+msgid "A view is a representation of the data held against a resource"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/snippets/add_dataset.html:6
+msgid "Add Dataset"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/snippets/datapusher_status.html:8
+msgid "Datapusher status: {status}."
+msgstr ""
+
+#: ckanext/fcscopendata/templates/snippets/disqus_trackback.html:2
+msgid "Trackback URL"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/snippets/facet_list.html:85
+msgid "Show More {facet_type}"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/snippets/facet_list.html:88
+msgid "Show Only Popular {facet_type}"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/snippets/facet_list.html:92
+msgid "There are no {facet_type} that match this search"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/snippets/follow_button.html:4
+msgid "Unfollow"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/snippets/follow_button.html:9
+msgid "Follow"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/snippets/home_breadcrumb_item.html:2
+msgid "Home"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/snippets/language_selector.html:3
+msgid "Language"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/snippets/language_selector.html:11
+#: ckanext/fcscopendata/templates/snippets/search_form.html:42
+#: ckanext/fcscopendata/templates/snippets/simple_search.html:15
+#: ckanext/fcscopendata/templates/snippets/sort_by.html:22
+msgid "Go"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/snippets/license.html:8
+msgid "No License Provided"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/snippets/license.html:27
+msgid "This dataset satisfies the Open Definition."
+msgstr ""
+
+#: ckanext/fcscopendata/templates/snippets/organization.html:50
+msgid "There is no description for this organization"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/snippets/package_item.html:57
+msgid "This dataset has no description"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/snippets/search_form.html:33
+#: ckanext/fcscopendata/templates/snippets/simple_search.html:8
+#: ckanext/fcscopendata/templates/snippets/sort_by.html:12
+msgid "Order by"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/snippets/search_form.html:74
+msgid "Filter Results"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/snippets/search_form.html:81
+msgid "<p class=\"extra\">Please try another search.</p>"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/snippets/search_form.html:87
+msgid ""
+"<p id=\"search-error\"><strong>There was an error while "
+"searching.</strong> Please try again.</p>"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/snippets/search_result_text.html:15
+msgid "{number} dataset found for \"{query}\""
+msgid_plural "{number} datasets found for \"{query}\""
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+msgstr[3] ""
+msgstr[4] ""
+msgstr[5] ""
+
+#: ckanext/fcscopendata/templates/snippets/search_result_text.html:16
+msgid "No datasets found for \"{query}\""
+msgstr ""
+
+#: ckanext/fcscopendata/templates/snippets/search_result_text.html:17
+msgid "{number} dataset found"
+msgid_plural "{number} datasets found"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+msgstr[3] ""
+msgstr[4] ""
+msgstr[5] ""
+
+#: ckanext/fcscopendata/templates/snippets/search_result_text.html:18
+msgid "No datasets found"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/snippets/search_result_text.html:21
+msgid "{number} group found for \"{query}\""
+msgid_plural "{number} groups found for \"{query}\""
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+msgstr[3] ""
+msgstr[4] ""
+msgstr[5] ""
+
+#: ckanext/fcscopendata/templates/snippets/search_result_text.html:22
+msgid "No groups found for \"{query}\""
+msgstr ""
+
+#: ckanext/fcscopendata/templates/snippets/search_result_text.html:23
+msgid "{number} group found"
+msgid_plural "{number} groups found"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+msgstr[3] ""
+msgstr[4] ""
+msgstr[5] ""
+
+#: ckanext/fcscopendata/templates/snippets/search_result_text.html:24
+msgid "No groups found"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/snippets/search_result_text.html:27
+msgid "{number} organization found for \"{query}\""
+msgid_plural "{number} organizations found for \"{query}\""
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+msgstr[3] ""
+msgstr[4] ""
+msgstr[5] ""
+
+#: ckanext/fcscopendata/templates/snippets/search_result_text.html:28
+msgid "No organizations found for \"{query}\""
+msgstr ""
+
+#: ckanext/fcscopendata/templates/snippets/search_result_text.html:29
+msgid "{number} organization found"
+msgid_plural "{number} organizations found"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+msgstr[3] ""
+msgstr[4] ""
+msgstr[5] ""
+
+#: ckanext/fcscopendata/templates/snippets/search_result_text.html:30
+msgid "No organizations found"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/snippets/social.html:5
+msgid "Social"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/snippets/subscribe.html:2
+msgid "Subscribe"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/snippets/subscribe.html:4
+#: ckanext/fcscopendata/templates/user/edit_user_form.html:12
+#: ckanext/fcscopendata/templates/user/new_user_form.html:7
+#: ckanext/fcscopendata/templates/user/read_base.html:81
+msgid "Email"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/snippets/subscribe.html:5
+msgid "RSS"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/snippets/activities/added_tag.html:4
+msgid "{actor} added the tag {tag} to the dataset {dataset}"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/snippets/activities/changed_group.html:4
+msgid "{actor} updated the group {group}"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/snippets/activities/changed_organization.html:4
+msgid "{actor} updated the organization {organization}"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/snippets/activities/changed_package.html:6
+msgid "{actor} updated the dataset {dataset}"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/snippets/activities/changed_package.html:16
+#: ckanext/fcscopendata/templates/snippets/activities/new_package.html:15
+msgid "View this version"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/snippets/activities/changed_resource.html:4
+msgid "{actor} updated the resource {resource} in the dataset {dataset}"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/snippets/activities/changed_user.html:4
+msgid "{actor} updated their profile"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/snippets/activities/deleted_group.html:4
+msgid "{actor} deleted the group {group}"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/snippets/activities/deleted_organization.html:4
+msgid "{actor} deleted the organization {organization}"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/snippets/activities/deleted_package.html:4
+msgid "{actor} deleted the dataset {dataset}"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/snippets/activities/deleted_resource.html:4
+msgid "{actor} deleted the resource {resource} from the dataset {dataset}"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/snippets/activities/fallback.html:14
+msgid "{actor} {activity_type}"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/snippets/activities/follow_dataset.html:4
+msgid "{actor} started following {dataset}"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/snippets/activities/follow_group.html:4
+msgid "{actor} started following {group}"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/snippets/activities/follow_user.html:4
+msgid "{actor} started following {user}"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/snippets/activities/new_group.html:4
+msgid "{actor} created the group {group}"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/snippets/activities/new_organization.html:4
+msgid "{actor} created the organization {organization}"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/snippets/activities/new_package.html:5
+msgid "{actor} created the dataset {dataset}"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/snippets/activities/new_resource.html:4
+msgid "{actor} added the resource {resource} to the dataset {dataset}"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/snippets/activities/new_user.html:4
+msgid "{actor} signed up"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/snippets/activities/removed_tag.html:4
+msgid "{actor} removed the tag {tag} from the dataset {dataset}"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/snippets/changes/author.html:5
+msgid "Set author of {pkg_link} to {new_author} (previously {old_author})"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/snippets/changes/author.html:13
+msgid "Set author of {pkg_link} to {new_author}"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/snippets/changes/author.html:20
+msgid "Removed author from {pkg_link}"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/snippets/changes/author.html:26
+#: ckanext/fcscopendata/templates/snippets/changes/author_email.html:26
+#: ckanext/fcscopendata/templates/snippets/changes/extra_fields.html:81
+#: ckanext/fcscopendata/templates/snippets/changes/maintainer_email.html:26
+#: ckanext/fcscopendata/templates/snippets/changes/no_change.html:3
+#: ckanext/fcscopendata/templates/snippets/changes/notes.html:26
+#: ckanext/fcscopendata/templates/snippets/changes/org.html:26
+#: ckanext/fcscopendata/templates/snippets/changes/resource_desc.html:35
+#: ckanext/fcscopendata/templates/snippets/changes/resource_extras.html:108
+#: ckanext/fcscopendata/templates/snippets/changes/resource_format.html:31
+#: ckanext/fcscopendata/templates/snippets/changes/tags.html:55
+#: ckanext/fcscopendata/templates/snippets/changes/url.html:26
+#: ckanext/fcscopendata/templates/snippets/changes/version.html:26
+msgid "No fields were updated. See the metadata diff for more details."
+msgstr ""
+
+#: ckanext/fcscopendata/templates/snippets/changes/author_email.html:5
+msgid ""
+"Set author email of {pkg_link} to {new_author_email} (previously "
+"{old_author_email})"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/snippets/changes/author_email.html:13
+msgid "Set author email of {pkg_link} to {new_author_email}"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/snippets/changes/author_email.html:20
+msgid "Removed author email from {pkg_link}"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/snippets/changes/delete_resource.html:3
+msgid "Deleted resource {resource_link} from {pkg_link}"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/snippets/changes/extension_fields.html:3
+msgid "Changed value of field <q>{key}</q> to <q>{value}</q> in {pkg_link}"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/snippets/changes/extra_fields.html:5
+msgid "Added field <q>{key}</q> with value <q>{value}</q> to {pkg_link}"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/snippets/changes/extra_fields.html:13
+msgid "Added field <q>{key}</q> to {pkg_link}"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/snippets/changes/extra_fields.html:20
+msgid "Added the following fields to {pkg_link}"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/snippets/changes/extra_fields.html:27
+#: ckanext/fcscopendata/templates/snippets/changes/resource_extras.html:35
+msgid "{key} with value {value}"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/snippets/changes/extra_fields.html:32
+#: ckanext/fcscopendata/templates/snippets/changes/resource_extras.html:40
+#: ckanext/fcscopendata/templates/snippets/changes/resource_extras.html:67
+msgid "{key}"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/snippets/changes/extra_fields.html:42
+msgid ""
+"Changed value of field <q>{key}</q> to <q>{new_val}</q> (previously "
+"<q>{old_val}</q>) in {pkg_link}"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/snippets/changes/extra_fields.html:51
+msgid "Changed value of field <q>{key}</q> to <q>{new_val}</q> in {pkg_link}"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/snippets/changes/extra_fields.html:59
+msgid "Removed field <q>{key}</q> from {pkg_link}"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/snippets/changes/extra_fields.html:66
+msgid "Removed the following fields from {pkg_link}"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/snippets/changes/extra_fields.html:72
+msgid "<q>{key}</q>"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/snippets/changes/license.html:6
+msgid "Changed the license of {pkg_link} to {new_link} (previously {old_link})"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/snippets/changes/license.html:16
+msgid "Changed the license of {pkg_link} to {new_link} (previously {old_title})"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/snippets/changes/license.html:25
+msgid "Changed the license of {pkg_link} to {new_title} (previously {old_link})"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/snippets/changes/license.html:35
+msgid "Changed the license of {pkg_link} to {new_title} (previously {old_title})"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/snippets/changes/maintainer_email.html:5
+msgid "Set maintainer email of {pkg_link} to {new_email} (previously {old_email})"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/snippets/changes/maintainer_email.html:13
+msgid "Set maintainer email of {pkg_link} to {new_email}"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/snippets/changes/maintainer_email.html:20
+msgid "Removed maintainer email from {pkg_link}"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/snippets/changes/name.html:6
+msgid "Moved {pkg_link} from {old_link} to {new_link}"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/snippets/changes/new_file.html:3
+msgid "Uploaded a new file to resource {resource_link} in {pkg_link}"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/snippets/changes/new_resource.html:10
+msgid "Unnamed resource"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/snippets/changes/new_resource.html:15
+msgid "Added resource {resource_link} to {pkg_link}"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/snippets/changes/notes.html:5
+msgid ""
+"Updated description of {pkg_link} from <br class=\"line-"
+"height2\"><blockquote>{old_notes}</blockquote> to <br class=\"line-"
+"height2\"><blockquote>{new_notes}</blockquote>"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/snippets/changes/notes.html:13
+msgid ""
+"Updated description of {pkg_link} to <br class=\"line-"
+"height2\"><blockquote>{new_notes}</blockquote>"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/snippets/changes/notes.html:20
+msgid "Removed description from {pkg_link}"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/snippets/changes/org.html:5
+msgid ""
+"Moved {pkg_link} from organization {old_org_link} to organization "
+"{new_org_link}"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/snippets/changes/org.html:13
+msgid "Removed {pkg_link} from organization {old_org_link}"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/snippets/changes/org.html:20
+msgid "Added {pkg_link} to organization {new_org_link}"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/snippets/changes/private.html:3
+msgid "Set visibility of {pkg_link} to {visibility}"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/snippets/changes/resource_desc.html:5
+msgid ""
+"Updated description of resource {resource_link} in {pkg_link} to <br "
+"class=\"line-height2\"><blockquote>{new_desc}</blockquote>"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/snippets/changes/resource_desc.html:15
+msgid "Removed description from resource {resource_link} in {pkg_link}"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/snippets/changes/resource_desc.html:24
+msgid ""
+"Updated description of resource {resource_link} in {pkg_link} from <br "
+"class=\"line-height2\"><blockquote>{old_desc}</blockquote> to <br class"
+"=\"line-height2\"><blockquote>{new_desc}</blockquote>"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/snippets/changes/resource_extras.html:5
+msgid ""
+"Added field <q>{key}</q> with value <q>{value}</q> to resource "
+"{resource_link} in {pkg_link}"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/snippets/changes/resource_extras.html:16
+msgid "Added field <q>{key}</q> to resource {resource_link} in {pkg_link}"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/snippets/changes/resource_extras.html:26
+msgid "Added the following fields to resource {resource_link} in {pkg_link}"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/snippets/changes/resource_extras.html:49
+msgid "Removed field <q>{key}</q> from resource {resource_link} in {pkg_link}"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/snippets/changes/resource_extras.html:59
+msgid "Removed the following fields from resource {resource_link} in {pkg_link}"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/snippets/changes/resource_extras.html:75
+msgid ""
+"Changed value of field <q>{key}</q> of resource {resource_link} to "
+"<q>{new_val}</q> (previously <q>{old_val}</q>) in {pkg_link}"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/snippets/changes/resource_extras.html:87
+msgid ""
+"Changed value of field <q>{key}</q> to <q>{new_val}</q> in resource "
+"{resource_link} in {pkg_link}"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/snippets/changes/resource_extras.html:98
+msgid ""
+"Removed the value of field <q>{key}</q> in resource {resource_link} in "
+"{pkg_link}"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/snippets/changes/resource_format.html:10
+msgid "Set format of resource {resource_link} to {format_link} in {pkg_link}"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/snippets/changes/resource_format.html:20
+msgid ""
+"Set format of resource {resource_link} to {new_format_link} (previously "
+"{old_format_link}) in {pkg_link}"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/snippets/changes/resource_name.html:3
+msgid "Renamed resource {old_resource_link} to {new_resource_link} in {pkg_link}"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/snippets/changes/tags.html:5
+msgid "Removed tag {tag_link} from {pkg_link}"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/snippets/changes/tags.html:16
+msgid "Removed the following tags from {pkg_link}"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/snippets/changes/tags.html:23
+#: ckanext/fcscopendata/templates/snippets/changes/tags.html:46
+msgid "{tag_link}"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/snippets/changes/tags.html:32
+msgid "Added tag {tag_link} to {pkg_link}"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/snippets/changes/tags.html:39
+msgid "Added the following tags to {pkg_link}"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/snippets/changes/title.html:3
+msgid "Changed title to {title_link} (previously {old_title})"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/snippets/changes/url.html:5
+msgid "Changed the source URL of {pkg_link} from {old_link} to {new_link}"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/snippets/changes/url.html:13
+msgid "Removed the source URL from {pkg_link}"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/snippets/changes/url.html:19
+msgid "Changed the source URL of {pkg_link} to {new_link}"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/snippets/changes/version.html:5
+msgid ""
+"Changed the version of {pkg_link} to {new_version} (previously "
+"{old_version})"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/snippets/changes/version.html:13
+msgid "Removed the version from {pkg_link}"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/snippets/changes/version.html:19
+msgid "Changed the version of {pkg_link} to {new_version}"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/tag/index.html:33
+#: ckanext/fcscopendata/templates/tag/index.html:34
+msgid "Search Tags"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/tests/mock_json_resource_preview_template.html:7
+#: ckanext/fcscopendata/templates/tests/mock_resource_preview_template.html:7
+msgid "Loading..."
+msgstr ""
+
+#: ckanext/fcscopendata/templates/user/api_tokens.html:19
+msgid "Create API Token"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/user/api_tokens.html:29
+#: ckanext/fcscopendata/templates/user/read_base.html:22
+msgid "API Tokens"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/user/api_tokens.html:37
+msgid "You haven't created any API Tokens."
+msgstr ""
+
+#: ckanext/fcscopendata/templates/user/dashboard.html:20
+#: ckanext/fcscopendata/templates/user/dashboard.html:39
+msgid "News feed"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/user/dashboard.html:21
+#: ckanext/fcscopendata/templates/user/dashboard_datasets.html:12
+msgid "My Datasets"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/user/dashboard.html:22
+#: ckanext/fcscopendata/templates/user/dashboard_organizations.html:12
+msgid "My Organizations"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/user/dashboard.html:23
+#: ckanext/fcscopendata/templates/user/dashboard_groups.html:12
+msgid "My Groups"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/user/dashboard.html:41
+msgid "Activity from items that I'm following"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/user/dashboard_datasets.html:17
+#: ckanext/fcscopendata/templates/user/read.html:20
+msgid "You haven't created any datasets."
+msgstr ""
+
+#: ckanext/fcscopendata/templates/user/dashboard_datasets.html:19
+#: ckanext/fcscopendata/templates/user/dashboard_groups.html:22
+#: ckanext/fcscopendata/templates/user/dashboard_organizations.html:23
+#: ckanext/fcscopendata/templates/user/read.html:22
+msgid "Create one now?"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/user/dashboard_groups.html:20
+msgid "You are not a member of any groups."
+msgstr ""
+
+#: ckanext/fcscopendata/templates/user/dashboard_organizations.html:21
+msgid "You are not a member of any organizations."
+msgstr ""
+
+#: ckanext/fcscopendata/templates/user/edit.html:6
+#: ckanext/fcscopendata/templates/user/edit_base.html:3
+#: ckanext/fcscopendata/templates/user/list.html:6
+#: ckanext/fcscopendata/templates/user/list.html:13
+#: ckanext/fcscopendata/templates/user/read_base.html:5
+#: ckanext/fcscopendata/templates/user/read_base.html:8
+#: ckanext/fcscopendata/templates/user/snippets/user_search.html:2
+msgid "Users"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/user/edit.html:17
+msgid "Account Info"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/user/edit.html:19
+msgid "Your profile lets other CKAN users know about who you are and what you do."
+msgstr ""
+
+#: ckanext/fcscopendata/templates/user/edit_user_form.html:7
+msgid "Change details"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/user/edit_user_form.html:10
+msgid "Full name"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/user/edit_user_form.html:10
+msgid "eg. Joe Bloggs"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/user/edit_user_form.html:12
+msgid "eg. joe@example.com"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/user/edit_user_form.html:14
+msgid "A little information about yourself"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/user/edit_user_form.html:17
+msgid "Subscribe to notification emails"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/user/edit_user_form.html:26
+#: ckanext/fcscopendata/templates/user/new_user_form.html:14
+msgid "Profile picture"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/user/edit_user_form.html:26
+#: ckanext/fcscopendata/templates/user/new_user_form.html:14
+msgid "Profile picture URL"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/user/edit_user_form.html:31
+msgid "Change password"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/user/edit_user_form.html:34
+msgid "Sysadmin Password"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/user/edit_user_form.html:34
+msgid "Old Password"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/user/edit_user_form.html:42
+#: ckanext/fcscopendata/templates/user/logout_first.html:11
+#: ckanext/fcscopendata/templates/user/new_user_form.html:8
+#: ckanext/fcscopendata/templates/user/perform_reset.html:25
+#: ckanext/fcscopendata/templates/user/snippets/login_form.html:22
+msgid "Password"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/user/edit_user_form.html:44
+msgid "Confirm Password"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/user/edit_user_form.html:50
+msgid "Are you sure you want to delete this User?"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/user/edit_user_form.html:55
+msgid "Are you sure you want to regenerate the API key?"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/user/edit_user_form.html:55
+msgid "Regenerate API Key"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/user/edit_user_form.html:59
+msgid "Update Profile"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/user/list.html:3
+#: ckanext/fcscopendata/templates/user/snippets/user_search.html:11
+msgid "All Users"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/user/login.html:3
+#: ckanext/fcscopendata/templates/user/login.html:6
+#: ckanext/fcscopendata/templates/user/login.html:12
+#: ckanext/fcscopendata/templates/user/snippets/login_form.html:28
+msgid "Login"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/user/login.html:25
+msgid "Need an Account?"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/user/login.html:27
+msgid "Then sign right up, it only takes a minute."
+msgstr ""
+
+#: ckanext/fcscopendata/templates/user/login.html:30
+msgid "Create an Account"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/user/login.html:42
+msgid "Forgotten your password?"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/user/login.html:44
+msgid "No problem, use our password recovery form to reset it."
+msgstr ""
+
+#: ckanext/fcscopendata/templates/user/login.html:47
+msgid "Forgot your password?"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/user/logout.html:3
+#: ckanext/fcscopendata/templates/user/logout.html:9
+msgid "Logged Out"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/user/logout.html:11
+msgid "You are now logged out."
+msgstr ""
+
+#: ckanext/fcscopendata/templates/user/logout_first.html:9
+msgid "You're already logged in as {user}."
+msgstr ""
+
+#: ckanext/fcscopendata/templates/user/logout_first.html:9
+msgid "Logout"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/user/logout_first.html:12
+#: ckanext/fcscopendata/templates/user/snippets/login_form.html:24
+msgid "Remember me"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/user/logout_first.html:20
+msgid "You're already logged in"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/user/logout_first.html:22
+msgid "You need to log out before you can log in with another account."
+msgstr ""
+
+#: ckanext/fcscopendata/templates/user/logout_first.html:23
+msgid "Log out now"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/user/new.html:6
+msgid "Registration"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/user/new.html:14
+msgid "Register for an Account"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/user/new.html:26
+msgid "Why Sign Up?"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/user/new.html:28
+msgid "Create datasets, groups and other exciting things"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/user/new_user_form.html:5
+msgid "username"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/user/new_user_form.html:6
+msgid "Full Name"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/user/new_user_form.html:9
+#: ckanext/fcscopendata/templates/user/perform_reset.html:26
+msgid "Confirm"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/user/new_user_form.html:27
+msgid "Create Account"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/user/perform_reset.html:4
+#: ckanext/fcscopendata/templates/user/perform_reset.html:15
+msgid "Reset Your Password"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/user/perform_reset.html:7
+#: ckanext/fcscopendata/templates/user/request_reset.html:6
+msgid "Password Reset"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/user/perform_reset.html:21
+msgid "You can also change username. It can not be modified later."
+msgstr ""
+
+#: ckanext/fcscopendata/templates/user/perform_reset.html:29
+msgid "Update Password"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/user/perform_reset.html:43
+#: ckanext/fcscopendata/templates/user/request_reset.html:36
+msgid "How does this work?"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/user/perform_reset.html:45
+msgid "Simply enter a new password and we'll update your account"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/user/read.html:27
+msgid "User hasn't created any datasets."
+msgstr ""
+
+#: ckanext/fcscopendata/templates/user/read_base.html:42
+msgid "You have not provided a biography."
+msgstr ""
+
+#: ckanext/fcscopendata/templates/user/read_base.html:44
+msgid "This user has no biography."
+msgstr ""
+
+#: ckanext/fcscopendata/templates/user/read_base.html:72
+msgid "Open ID"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/user/read_base.html:81
+#: ckanext/fcscopendata/templates/user/read_base.html:95
+msgid "This means only you can see this"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/user/read_base.html:86
+msgid "Member Since"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/user/read_base.html:95
+msgid "API Key"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/user/request_reset.html:3
+#: ckanext/fcscopendata/templates/user/request_reset.html:13
+msgid "Reset your password"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/user/request_reset.html:17
+msgid "Email or username"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/user/request_reset.html:22
+msgid "Request Reset"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/user/request_reset.html:38
+msgid ""
+"Enter your email address or username into the box and we will send you an"
+" email with a link to enter a new password."
+msgstr ""
+
+#: ckanext/fcscopendata/templates/user/snippets/api_token_list.html:13
+msgid "Token"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/user/snippets/api_token_list.html:14
+msgid "Last access"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/user/snippets/api_token_list.html:15
+msgid "Actions"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/user/snippets/api_token_list.html:32
+msgid "Never"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/user/snippets/api_token_list.html:40
+msgid "Revoke"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/user/snippets/followee_dropdown.html:15
+#: ckanext/fcscopendata/templates/user/snippets/followee_dropdown.html:16
+msgid "Activity from:"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/user/snippets/followee_dropdown.html:23
+msgid "Search list..."
+msgstr ""
+
+#: ckanext/fcscopendata/templates/user/snippets/followee_dropdown.html:44
+msgid "You are not following anything"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/user/snippets/followers.html:9
+msgid "No followers"
+msgstr ""
+
+#: ckanext/fcscopendata/templates/user/snippets/user_search.html:5
+msgid "Search Users"
+msgstr ""
+
+#: ckanext/hierarchy/templates/snippets/search_form.html:5
+msgid "Include Sub-Groups"
+msgstr "المواضيع الفرعية"
+
