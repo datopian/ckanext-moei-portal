@@ -4,6 +4,8 @@ import ckan.logic as logic
 import ckan.model as model
 
 from ckanext.fcscopendata.logic import action
+import ckanext.fcscopendata.cli as cli
+
 from ckan.lib.plugins import DefaultTranslation
 
 from flask import Blueprint, render_template
@@ -19,6 +21,8 @@ class FcscopendataPlugin(plugins.SingletonPlugin, DefaultTranslation):
     plugins.implements(plugins.IActions)
     plugins.implements(plugins.ITranslation)
     plugins.implements(plugins.IPackageController, inherit=True)
+    plugins.implements(plugins.IClick)
+
 
     # IPackageController
     def after_search(self, search_results, search_params):
@@ -65,3 +69,6 @@ class FcscopendataPlugin(plugins.SingletonPlugin, DefaultTranslation):
     def get_actions(self):
         return action.get_actions()
 
+    # IClick
+    def get_commands(self):
+        return cli.get_commands()
