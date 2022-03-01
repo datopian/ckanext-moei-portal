@@ -6,17 +6,17 @@ from ckanext.fcscopendata.modal import (
 )
 
 def get_commands():
-    return [fluent]
+    return [fcsc]
 
 @click.group()
-def fluent():
+def fcsc():
     pass
 
-@fluent.command()
+@fcsc.command()
 def initdb():
     """Adds extras fields to ckan tag and vocabulary.
     Usage:
-        fluent initdb
+        fcsc initdb
         - Creates the necessary tables in the database
     """
     if not tag_extra_table.exists():
