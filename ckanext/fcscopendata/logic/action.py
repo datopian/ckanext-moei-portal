@@ -1,10 +1,11 @@
 import json
 import logging
+from unittest import result
 import ckan.plugins.toolkit as tk
 import ckan.plugins as p
 import ckan.logic as logic
-import ckanext.fcscopendata.modal.tags_extra as tags_extra
-import ckan.lib.dictization as d
+import ckan.lib.dictization.model_dictize as model_dictize
+from ckan.plugins.toolkit import ValidationError
 _get_or_bust = logic.get_or_bust
 
 log = logging.getLogger(__name__)
@@ -106,6 +107,18 @@ def group_update(up_func,context,data_dict):
 
 @p.toolkit.chained_action                                                                                                                                                    
 def tag_create(up_func,context,data_dict):
+    '''
+    :param name: the name for the new tag, a string between 2 and 100
+        characters long containing only alphanumeric characters and ``-``,
+        ``_`` and ``.``, e.g. ``'Jazz'``
+    :type name: string
+    :param vocabulary_id: the id of the vocabulary that the new tag
+        should be added to, e.g. the id of vocabulary ``'Genre'``
+    :type vocabulary_id: string
+
+    :returns: the newly-created tag
+    :rtype: dictionary
+    '''
     model = context['model']
     tag = context.get('tag')
     data_dict['name'] = data_dict.get('name_translated-en', data_dict['name'])
@@ -114,7 +127,7 @@ def tag_create(up_func,context,data_dict):
         'en' : data_dict.get('name_translated-en', data_dict['name']), 
         'ar': data_dict.get('name_translated-ar', '')
     }
-    data_dict["extras"] = [{"key": "author_translated", 
+    data_dict["extras"] = [{"key": "name_translated", 
             "value": json.dumps(name_translated, ensure_ascii=False)
             }]
     if tag:
@@ -123,18 +136,78 @@ def tag_create(up_func,context,data_dict):
     extras_save(data_dict["extras"], tag, context)
     result["name_translated"] = name_translated
     return result
+    
+@p.toolkit.chained_action                                                                                                                                                    
+def tag_show(up_func,context,data_dict):
+    model = context['model']
+    id = _get_or_bust(data_dict, 'id')
+    result = up_func(context, data_dict)  
+    query = model.Session.query(model.tag.Tag).filter(model.tag.Tag.id == id)
+    tag = query.first()
+    if tag is None:
+        query = model.Session.query(model.tag.Tag).filter(model.tag.Tag.name == id)
+        tag = query.first()
+
+    if tag._extras:
+        extras = model_dictize.extras_dict_dictize(
+                tag._extras, context)
+        translated = list(filter(lambda d: d['key'] in ['name_translated'], extras))
+        if translated:   
+            prefix = 'name_translated'
+            field_value = json.loads(translated[0].get('value', {}))
+            result[prefix] = field_value
+    return result
+
+@p.toolkit.chained_action                                                                                                                                                    
+def vocabulary_show(up_func,context,data_dict):
+    model = context['model']
+    id = _get_or_bust(data_dict, 'id')
+    result = up_func(context, data_dict)
+    query = model.Session.query(model.vocabulary.Vocabulary).filter(model.vocabulary.Vocabulary.id == id)
+    vocabulary = query.first()
+    if vocabulary is None:
+        query = model.Session.query(model.vocabulary.Vocabulary).filter(model.vocabulary.Vocabulary.name == id)
+        vocabulary = query.first()
+
+    if vocabulary._extras:
+        extras = model_dictize.extras_dict_dictize(
+         vocabulary._extras, context)
+        translated = list(filter(lambda d: d['key'] in ['name_translated'], extras))
+        if translated:   
+            prefix = 'name_translated'
+            field_value = json.loads(translated[0].get('value', {}))
+            result[prefix] = field_value
+        
+        for idx, tag in enumerate(result['tags']): 
+            result['tags'][idx] = logic.get_action('tag_show')(context, {'id': tag['id']})
+    return result
+
 
 @p.toolkit.chained_action                                                                                                                                                    
 def vocabulary_create(up_func,context,data_dict):
+    '''Create a new tag vocabulary.
+    You must be a sysadmin to create vocabularies.
+    :param name: the name of the new vocabulary, e.g. ``'Genre'``
+    :type name: string
+    :param name_translated-en: translated name in English
+    :type name: string
+     :param name_translated-ar: translated name in Aragic
+    :type name: string
+    :param tags: the new tags to add to the new vocabulary, for the format of
+        tag dictionaries see :py:func:`tag_create`
+    :type tags: list of tag dictionaries
+
+    :returns: the newly-created vocabulary
+    :rtype: dictionary
+    '''
     if data_dict.get('tags', False):
         tags = data_dict.pop('tags')
-        del data_dict['tags']
 
     name_translated = {
         'en' : data_dict.get('name_translated-en', data_dict['name']), 
         'ar': data_dict.get('name_translated-ar', '')
     }
-    data_dict["extras"] = [{"key": "author_translated", 
+    data_dict["extras"] = [{"key": "name_translated", 
         "value": json.dumps(name_translated, ensure_ascii=False)
         }]
         
@@ -142,6 +215,16 @@ def vocabulary_create(up_func,context,data_dict):
     model = context['model']
     vocabulary = model.vocabulary.Vocabulary.get(_get_or_bust(result, 'id'))
     extras_save(data_dict["extras"], vocabulary, context)
+    # Create tags if tags is given in request payload
+    if tags: 
+        result['tags'] = []
+        for tag in tags:
+            if isinstance(tag, dict):
+                tag_dict = logic.get_action('tag_create')(context,
+                {**tag,'vocabulary_id': _get_or_bust(result, 'id')})
+                result['tags'].append(tag_dict)
+            else:
+                raise ValidationError({'message': 'Provied list of tags doesn\'t have valid dictionaries.'})
     return result
 
 def get_actions():
@@ -153,7 +236,9 @@ def get_actions():
         'group_create': group_create,
         'group_update': group_update,
         'tag_create': tag_create,
+        'tag_show': tag_show,
         'vocabulary_create': vocabulary_create,
+        'vocabulary_show': vocabulary_show
     }
 
 
