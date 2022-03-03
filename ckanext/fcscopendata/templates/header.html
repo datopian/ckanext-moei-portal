@@ -86,13 +86,23 @@
       <nav class="section navigation">
         <ul class="nav nav-pills">
             {% block header_site_navigation_tabs %}
-		{{ h.build_nav_main(
-		    ('dataset.search', _('Datasets')),
-		    ('organization.index', _('Organizations')),
-		    ('group.index', _('Groups')),
-		    ('vocabulary.index', _('Categories')),
-        ('home.about', _('About')) ) }}
-	    {% endblock %}
+              {% if c.userobj.sysadmin %}
+                {{ h.build_nav_main(
+                  ('dataset.search', _('Datasets')),
+                  ('organization.index', _('Organizations')),
+                  ('group.index', _('Groups')),
+                  ('vocabulary.index', _('Categories')),
+                  ('home.about', _('About')) ) }}
+                
+              {% else %}
+              {{ h.build_nav_main(
+                ('dataset.search', _('Datasets')),
+                ('organization.index', _('Organizations')),
+                ('group.index', _('Groups')),
+                ('home.about', _('About')) ) }}
+              
+              {% endif %}
+              {% endblock %}
         </ul>
       </nav>
       {% endblock %} {% block header_site_search %}
