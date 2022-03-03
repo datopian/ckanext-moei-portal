@@ -137,7 +137,8 @@ def tag_create(up_func,context,data_dict):
     result["name_translated"] = name_translated
     return result
     
-@p.toolkit.chained_action                                                                                                                                                    
+@p.toolkit.chained_action         
+@logic.side_effect_free
 def tag_show(up_func,context,data_dict):
     model = context['model']
     id = _get_or_bust(data_dict, 'id')
@@ -158,7 +159,8 @@ def tag_show(up_func,context,data_dict):
             result[prefix] = field_value
     return result
 
-@p.toolkit.chained_action                                                                                                                                                    
+@p.toolkit.chained_action  
+@logic.side_effect_free
 def vocabulary_show(up_func,context,data_dict):
     model = context['model']
     id = _get_or_bust(data_dict, 'id')
