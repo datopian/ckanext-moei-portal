@@ -31,15 +31,20 @@ def extras_save(extra_dicts, tag, context):
 def package_create(up_func, context, data_dict):
     # Get the translated title field value in the original title field so that 
     # core features do not break. eg. solr search with title
+    model = context['model']
     data_dict['title'] =  data_dict.get('title_translated-en', '')
     data_dict['notes'] =  data_dict.get('notes_translated-en', '')
 
-    keywords =  [tag.strip() \
-                for tag in data_dict.get('keywords-en', '').split(',') \
-                if tag.strip()]
-    tags = [{ 'name': word, 'state': 'active'} for word in keywords ]
-    if tags:
-        data_dict['tags'] = tags 
+    tags  = model.Session.query(model.tag.Tag).filter(model.tag.Tag.name.in_(
+    tag['name'] for tag in data_dict['tags'])).all()
+
+    tags_dict = model_dictize.tag_list_dictize(tags, context)
+
+    for idx, tag in enumerate(data_dict['tags']):
+        data_dict['tags'][idx]['vocabulary_id'] = [t['vocabulary_id'] for t in tags_dict if t['name'] == tag['name']][0]
+
+    # Do not create free tags. 
+    data_dict['tag_string'] = ''
     result = up_func(context, data_dict)
     return result
 
@@ -47,18 +52,25 @@ def package_create(up_func, context, data_dict):
 def package_update(up_func, context, data_dict):
     # Get the translated title field value in the original title field so that 
     # core features do not break. eg. solr search with title 
+    model = context['model']
+
     if data_dict.get('title_translated-en', False):
         data_dict['title'] =  data_dict.get('title_translated-en', '')
         
     if data_dict.get('notes_translated-en', False):
         data_dict['notes'] =  data_dict.get('notes_translated-en', '')
 
-    if data_dict.get('keywords-en', False):
-        keywords =  [tag.strip() \
-                    for tag in data_dict.get('keywords-en', '').split(',') \
-                    if tag.strip()]
-        tags = [{ 'name': word, 'state': 'active'} for word in keywords ]
-        data_dict['tags'] = tags
+    tags  = model.Session.query(model.tag.Tag).filter(model.tag.Tag.name.in_(
+        tag['name'] for tag in data_dict['tags'])).all()
+
+    tags_dict = model_dictize.tag_list_dictize(tags, context)
+
+    for idx, tag in enumerate(data_dict['tags']):
+        data_dict['tags'][idx]['vocabulary_id'] = [t['vocabulary_id'] for t in tags_dict if t['name'] == tag['name']][0]
+
+    # Do not create free tags. 
+    data_dict['tag_string'] = ''
+
     if data_dict.get('resources', False):
         for resources in data_dict['resources']:
             resources['description'] =  resources.get('notes_translated-en', '')
