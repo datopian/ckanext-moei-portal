@@ -47,6 +47,11 @@ class FcscopendataPlugin(plugins.SingletonPlugin, DefaultTranslation):
                 search_results['results'][idx]['organization'].update(
                     {'notes_translated' : org_dict.get('notes_translated', {'ar': '', 'en': ''})})
 
+            if results.get('tags', []):
+                for inindex, tag in enumerate(search_results['results'][idx]['tags']):
+                    search_results['results'][idx]['tags'][inindex] =  \
+                    logic.get_action('tag_show')(context, {'id': tag['id'] })
+                    
         return search_results
 
 
