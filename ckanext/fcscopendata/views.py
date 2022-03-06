@@ -1,9 +1,8 @@
 import ckan.model as model
-from ckan.common import json, _, g, request
+from ckan.common import _, g, request
 from ckan.logic import get_action
 from ckan.views.api import _finish_ok
 
-API_REST_DEFAULT_VERSION = 1
 
 def vocab_tag_autocomplete():
     q = request.args.get(u'incomplete', u'')
