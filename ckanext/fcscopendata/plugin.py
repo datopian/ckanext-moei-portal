@@ -5,6 +5,7 @@ import ckan.model as model
 
 from ckanext.fcscopendata.logic import action
 import ckanext.fcscopendata.cli as cli
+from ckanext.fcscopendata.views import vocab_tag_autocomplete
 
 from ckan.lib.plugins import DefaultTranslation
 
@@ -46,6 +47,11 @@ class FcscopendataPlugin(plugins.SingletonPlugin, DefaultTranslation):
                 search_results['results'][idx]['organization'].update(
                     {'notes_translated' : org_dict.get('notes_translated', {'ar': '', 'en': ''})})
 
+            if results.get('tags', []):
+                for inindex, tag in enumerate(search_results['results'][idx]['tags']):
+                    search_results['results'][idx]['tags'][inindex] =  \
+                    logic.get_action('tag_show')(context, {'id': tag['id'] })
+                    
         return search_results
 
 
@@ -63,7 +69,8 @@ class FcscopendataPlugin(plugins.SingletonPlugin, DefaultTranslation):
         blueprint = Blueprint(self.name, self.__module__)
         blueprint.template_folder = u'templates'
         # Add plugin url rules to Blueprint object
-        blueprint.add_url_rule('/hello_plugin', '/hello_plugin', hello_plugin)
+        blueprint.add_url_rule(u'/api/2/util/vocab/tag/autocomplete', methods=[u'GET'], 
+                                view_func=vocab_tag_autocomplete)
         return blueprint
 
     def get_actions(self):
