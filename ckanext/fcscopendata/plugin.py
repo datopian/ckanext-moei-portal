@@ -2,7 +2,7 @@ import ckan.plugins as plugins
 import ckan.plugins.toolkit as toolkit
 import ckan.logic as logic
 import ckan.model as model
-
+import json
 from ckanext.fcscopendata.logic import action
 import ckanext.fcscopendata.cli as cli
 from ckanext.fcscopendata.views import vocab_tag_autocomplete
@@ -54,6 +54,17 @@ class FcscopendataPlugin(plugins.SingletonPlugin, DefaultTranslation):
                     
         return search_results
 
+    def before_index(self, pkg_dict):
+        # Index vocab tags as tag field also so that
+        # it is searchable via default tag query.
+        data_dict = json.loads(pkg_dict.get('data_dict', {}))
+        if data_dict.get('tags', []):
+            tag_list = []
+            tags = data_dict.get('tags', [])
+            for tag in tags:
+                tag_list.append(tag['name'])
+            pkg_dict['tags'] = tag_list
+        return pkg_dict
 
     # IConfigurer
     def update_config(self, config_):
