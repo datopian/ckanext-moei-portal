@@ -55,6 +55,8 @@ class FcscopendataPlugin(plugins.SingletonPlugin, DefaultTranslation):
         return search_results
 
     def before_index(self, pkg_dict):
+        # Index vocab tags as tag field also so that
+        # it is searchable via default tag query.
         data_dict = json.loads(pkg_dict.get('data_dict', {}))
         if data_dict.get('tags', []):
             tag_list = []
