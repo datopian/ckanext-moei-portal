@@ -36,12 +36,13 @@ def package_create(up_func, context, data_dict):
     data_dict['notes'] =  data_dict.get('notes_translated-en', '')
 
     tags  = model.Session.query(model.tag.Tag).filter(model.tag.Tag.name.in_(
-    tag['name'] for tag in data_dict['tags'])).all()
+            tag['name'] for tag in data_dict['tags'])).all()
 
     tags_dict = model_dictize.tag_list_dictize(tags, context)
 
     for idx, tag in enumerate(data_dict['tags']):
-        data_dict['tags'][idx]['vocabulary_id'] = [t['vocabulary_id'] for t in tags_dict if t['name'] == tag['name']][0]
+        data_dict['tags'][idx]['vocabulary_id'] = \
+            [t.get('vocabulary_id', None) for t in tags_dict if t['name'] == tag['name']][0]
 
     # Do not create free tags. 
     data_dict['tag_string'] = ''
@@ -66,7 +67,8 @@ def package_update(up_func, context, data_dict):
     tags_dict = model_dictize.tag_list_dictize(tags, context)
 
     for idx, tag in enumerate(data_dict['tags']):
-        data_dict['tags'][idx]['vocabulary_id'] = [t['vocabulary_id'] for t in tags_dict if t['name'] == tag['name']][0]
+        data_dict['tags'][idx]['vocabulary_id'] = \
+            [t.get('vocabulary_id', None) for t in tags_dict if t['name'] == tag['name']][0]
 
     # Do not create free tags. 
     data_dict['tag_string'] = ''
