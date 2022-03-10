@@ -47,24 +47,16 @@ def package_create(up_func, context, data_dict):
     # Do not create free tags. 
     data_dict['tag_string'] = ''
 
-    # Add selected group in package
-    if data_dict.get('owner_theme', False):
-        req_dict = {
-            'id': data_dict.get('owner_theme'),
-            'include_extras': False,
-            'include_users': False,
-            'include_groups': False,
-            'include_followers': False,
-            }
-
-        pkg_member_group = logic.get_action('group_show')(context, req_dict)
-
-        if pkg_member_group:
-            if data_dict.get('groups'):
-                data_dict['groups'].append(pkg_member_group)
-            else:
-                data_dict['groups'] = [pkg_member_group]
-
+    # Add selected groups in package
+    if data_dict.get('themes'):
+        pkg_group = data_dict.get('themes')
+        pkg_group = [pkg_group] if isinstance(pkg_group, str) else pkg_group
+        group = model.Session.query(model.group.Group).filter(model.group.Group.id.in_(pkg_group)).all()
+        group_dict = model_dictize.group_list_dictize(group, context, with_package_counts=False)
+        data_dict['groups'] = group_dict
+    else:
+        data_dict['groups'] = []
+        
     result = up_func(context, data_dict)
     return result
 
@@ -92,25 +84,18 @@ def package_update(up_func, context, data_dict):
     # Do not create free tags. 
     data_dict['tag_string'] = ''
 
-    # Add selected group in package
-    if data_dict.get('owner_theme', False):
-        req_dict = {
-            'id': data_dict.get('owner_theme'),
-            'include_extras': False,
-            'include_users': False,
-            'include_groups': False,
-            'include_followers': False,
-            }
+    # Add selected groups in package
+    if data_dict.get('themes'):
+        pkg_group = data_dict.get('themes')
+        pkg_group = [pkg_group] if isinstance(pkg_group, str) else pkg_group
+        group = model.Session.query(model.group.Group).filter(model.group.Group.id.in_(pkg_group)).all()
+        group_dict = model_dictize.group_list_dictize(group, context, with_package_counts=False)
+        data_dict['groups'] = group_dict
+    else:
+        data_dict['groups'] = []
 
-        pkg_member_group = logic.get_action('group_show')(context, req_dict)
-
-        if pkg_member_group:
-            if data_dict.get('groups'):
-                data_dict['groups'].append(pkg_member_group)
-            else:
-                data_dict['groups'] = [pkg_member_group]
-
-    # Map resource description from scheming note field
+    # Map resource d
+    # escription from scheming note field
     if data_dict.get('resources', False):
         for resources in data_dict['resources']:
             resources['description'] =  resources.get('notes_translated-en', '')
