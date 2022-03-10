@@ -94,8 +94,7 @@ def package_update(up_func, context, data_dict):
     else:
         data_dict['groups'] = []
 
-    # Map resource d
-    # escription from scheming note field
+    # Map resource description from scheming note field
     if data_dict.get('resources', False):
         for resources in data_dict['resources']:
             resources['description'] =  resources.get('notes_translated-en', '')
