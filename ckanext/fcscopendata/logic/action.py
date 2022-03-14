@@ -10,6 +10,23 @@ _get_or_bust = logic.get_or_bust
 
 log = logging.getLogger(__name__)
 
+def theme_update(pkg, groups, context):
+    model = context['model']
+    members = model.Session.query(model.Member).\
+            filter(model.Member.table_name == 'package').\
+            filter(model.Member.table_id == pkg['id']).\
+            filter(model.Member.capacity == 'public').\
+            filter(model.Member.group_id.notin_(group['id'] for group in groups)).all()
+
+    delete_groups = []
+    if members: 
+        for member in members:
+            model.Session.delete(member)
+            model.repo.commit()
+            delete_groups.append(member.id)
+    return delete_groups
+            
+    
 def extras_save(extra_dicts, tag, context):
     model = context['model']
     extras = extra_dicts
@@ -50,7 +67,11 @@ def package_create(up_func, context, data_dict):
     # Add selected groups in package
     if data_dict.get('themes'):
         pkg_group = data_dict.get('themes')
-        pkg_group = [pkg_group] if isinstance(pkg_group, str) else pkg_group
+        if isinstance(pkg_group, str):
+            try:
+                pkg_group = eval(pkg_group) 
+            except:
+                pkg_group = [pkg_group] 
         group = model.Session.query(model.group.Group).filter(model.group.Group.id.in_(pkg_group)).all()
         group_dict = model_dictize.group_list_dictize(group, context, with_package_counts=False)
         data_dict['groups'] = group_dict
@@ -87,7 +108,12 @@ def package_update(up_func, context, data_dict):
     # Add selected groups in package
     if data_dict.get('themes'):
         pkg_group = data_dict.get('themes')
-        pkg_group = [pkg_group] if isinstance(pkg_group, str) else pkg_group
+        if isinstance(pkg_group, str):
+            try:
+                pkg_group = eval(pkg_group)
+            except:
+                pkg_group = [pkg_group]
+
         group = model.Session.query(model.group.Group).filter(model.group.Group.id.in_(pkg_group)).all()
         group_dict = model_dictize.group_list_dictize(group, context, with_package_counts=False)
         data_dict['groups'] = group_dict
@@ -99,6 +125,14 @@ def package_update(up_func, context, data_dict):
         for resources in data_dict['resources']:
             resources['description'] =  resources.get('notes_translated-en', '')
     result = up_func(context, data_dict)
+
+    # Update package member for groups
+    try:
+        delete_groups = theme_update(result, data_dict['groups'], context)
+        result['groups'] = list(filter(lambda g: g['id'] not in delete_groups, result['groups']))
+    except: 
+        log.warn('Failed to update deleted groups')
+
     return result
 
 @p.toolkit.chained_action                                                                                                                                                    
