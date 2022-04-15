@@ -4,7 +4,9 @@ from unittest import result
 import ckan.plugins.toolkit as tk
 import ckan.plugins as p
 import ckan.logic as logic
+import ckan.lib.helpers as h
 import ckan.lib.dictization.model_dictize as model_dictize
+import ckan.lib.uploader as uploader
 from ckan.plugins.toolkit import ValidationError
 _get_or_bust = logic.get_or_bust
 
@@ -101,13 +103,30 @@ def package_update(up_func, context, data_dict):
     result = up_func(context, data_dict)
     return result
 
+@p.toolkit.chained_action   
+@logic.side_effect_free
+def organization_show(up_func,context,data_dict): 
+    result = up_func(context, data_dict)  
+
+    # Return full icon url
+    if result.get('icon_url') and not result.get('icon_url').startswith('http'):
+        result['icon_display_url'] = h.url_for_static(
+                'uploads/group/%s' % result.get('icon_url'),
+                qualified=True
+            )                                                                                                                                                                                                                                                                                                                 
+    return result
+
 @p.toolkit.chained_action                                                                                                                                                    
 def organization_create(up_func,context,data_dict): 
     data_dict['title'] = data_dict.get('title_translated-en', '') 
 
     if data_dict['notes_translated-en']:                                                                                                                         
         data_dict['description'] = data_dict.get('notes_translated-en', '')  
-                                                                                          
+
+    # upload icon  
+    upload = uploader.get_uploader('group')
+    upload.update_data_dict(data_dict, 'icon_url','icon_upload', 'clear_upload')
+    upload.upload(uploader.get_max_image_size())                                                          
     result = up_func(context, data_dict)                                                                                                                                                                                                                                                                                                     
     return result
 
@@ -116,9 +135,26 @@ def organization_update(up_func,context,data_dict):
     data_dict['title'] = data_dict.get('title_translated-en', '') 
 
     if data_dict['notes_translated-en']:                                                                                                                         
-        data_dict['description'] = data_dict.get('notes_translated-en', '')  
-                                                                                                          
+        data_dict['description'] = data_dict.get('notes_translated-en', '') 
+
+    # upload icon  
+    upload = uploader.get_uploader('group')
+    upload.update_data_dict(data_dict, 'icon_url','icon_upload', 'clear_upload')
+    upload.upload(uploader.get_max_image_size())                                                                                                 
     result = up_func(context, data_dict)                                                                                                                                                                                                                                                                                                     
+    return result
+
+@p.toolkit.chained_action   
+@logic.side_effect_free
+def group_show(up_func,context,data_dict): 
+    result = up_func(context, data_dict)  
+
+    # Return full icon url
+    if result.get('icon_url') and not result.get('icon_url').startswith('http'):
+        result['icon_display_url'] = h.url_for_static(
+                'uploads/group/%s' % result.get('icon_url'),
+                qualified=True
+            )                                                                                                                                                                                                                                                                                                                 
     return result
 
 @p.toolkit.chained_action                                                                                                                                                    
@@ -127,7 +163,11 @@ def group_create(up_func,context,data_dict):
 
     if data_dict['description_translated-en']:                                                                                                                         
         data_dict['description'] = data_dict.get('description_translated-en', '')  
-                                                                                          
+    
+    # upload icon 
+    upload = uploader.get_uploader('group')
+    upload.update_data_dict(data_dict, 'icon_url','icon_upload', 'clear_upload')
+    upload.upload(uploader.get_max_image_size())                                                                 
     result = up_func(context, data_dict)                                                                                                                                                                                                                                                                                                     
     return result
 
@@ -137,8 +177,13 @@ def group_update(up_func,context,data_dict):
 
     if data_dict['description_translated-en']:                                                                                                                         
         data_dict['description'] = data_dict.get('description_translated-en', '')  
-                                                                                                          
-    result = up_func(context, data_dict)                                                                                                                                                                                                                                                                                                     
+        
+    
+    # upload icon  
+    upload = uploader.get_uploader('group')
+    upload.update_data_dict(data_dict, 'icon_url','icon_upload', 'clear_upload')
+    upload.upload(uploader.get_max_image_size())  
+    result = up_func(context, data_dict)                                                                                                                                                                                                                                                                                                   
     return result
 
 @p.toolkit.chained_action                                                                                                                                                    
@@ -269,8 +314,10 @@ def get_actions():
     return {
         'package_create': package_create,
         'package_update': package_update,
+        'organization_show': organization_show,
         'organization_create': organization_create,
         'organization_update': organization_update,
+        'group_show': group_show,
         'group_create': group_create,
         'group_update': group_update,
         'tag_create': tag_create,
