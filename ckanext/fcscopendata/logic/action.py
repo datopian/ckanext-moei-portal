@@ -113,7 +113,9 @@ def organization_show(up_func,context,data_dict):
         result['icon_display_url'] = h.url_for_static(
                 'uploads/group/%s' % result.get('icon_url'),
                 qualified=True
-            )                                                                                                                                                                                                                                                                                                                 
+            )
+    else:
+         result['icon_display_url'] = result.get('icon_url') or ''                                                                                                                                                                                                                                                                                                             
     return result
 
 @p.toolkit.chained_action                                                                                                                                                    
@@ -154,7 +156,9 @@ def group_show(up_func,context,data_dict):
         result['icon_display_url'] = h.url_for_static(
                 'uploads/group/%s' % result.get('icon_url'),
                 qualified=True
-            )                                                                                                                                                                                                                                                                                                                 
+            )
+    else:
+         result['icon_display_url'] = result.get('icon_url') or ''                                                                                                                                                                                                                                                                                                                
     return result
 
 @p.toolkit.chained_action                                                                                                                                                    
