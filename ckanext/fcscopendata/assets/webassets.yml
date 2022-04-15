@@ -18,3 +18,15 @@ home_css:
   output: ckanext-fcscopendata/%(version)s-home.css
   contents:
     - home.css
+
+
+main-js:
+  filters: rjsmin
+  output: ckanext-fcscopendata/%(version)s_main.js
+  extra:
+    preload:
+      - base/main
+  contents:
+    - vendor/jquery.js
+    - vendor/datepicker/js/bootstrap-datepicker.js
+    - js/datepicker.js
