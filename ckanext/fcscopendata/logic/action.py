@@ -27,19 +27,19 @@ def theme_update(pkg, groups, context):
     return delete_groups
             
     
-def extras_save(extra_dicts, tag, context):
+def extras_save(extra_dicts, model_obj, context):
     model = context['model']
     extras = extra_dicts
     new_extras = {i['key'] for i in extras}
     if extras:
-        old_extras = tag.extras
+        old_extras = model_obj.extras
         for key in set(old_extras) - new_extras:
-            del tag.extras[key]
+            del model_obj.extras[key]
         for x in extras:
             if 'deleted' in x and x['key'] in old_extras:
-                del tag.extras[x['key']]
+                del model_obj.extras[x['key']]
                 continue
-            tag.extras[x['key']] = x['value']
+            model_obj.extras[x['key']] = x['value']
     if not context.get('defer_commit'):
         model.repo.commit()
 
@@ -244,12 +244,12 @@ def vocabulary_show(up_func,context,data_dict):
     if vocabulary._extras:
         extras = model_dictize.extras_dict_dictize(
          vocabulary._extras, context)
-        translated = list(filter(lambda d: d['key'] in ['name_translated'], extras))
-        if translated:   
-            prefix = 'name_translated'
-            field_value = json.loads(translated[0].get('value', {}))
-            result[prefix] = field_value
-        
+        for translated  in ['name_translated', 'description_translated']:
+            is_key_exist = list(filter(lambda d: d['key'] in translated, extras))
+            if is_key_exist:   
+                field_value = json.loads(is_key_exist[0].get('value', {}))
+                result[translated] = field_value
+
         for idx, tag in enumerate(result['tags']): 
             result['tags'][idx] = logic.get_action('tag_show')(context, {'id': tag['id']})
     return result
@@ -274,13 +274,26 @@ def vocabulary_create(up_func,context,data_dict):
     '''
     if data_dict.get('tags', False):
         tags = data_dict.pop('tags')
+    else:
+        tags = False
 
     name_translated = {
         'en' : data_dict.get('name_translated-en', data_dict['name']), 
         'ar': data_dict.get('name_translated-ar', '')
     }
-    data_dict["extras"] = [{"key": "name_translated", 
+
+    description_translated = {
+        'en' : data_dict.get('description_translated-en', ''), 
+        'ar': data_dict.get('description_translated-ar', '')
+    }
+    
+    data_dict["extras"] = [{
+        "key": "name_translated", 
         "value": json.dumps(name_translated, ensure_ascii=False)
+        },
+        {
+        "key": "description_translated", 
+        "value": json.dumps(description_translated, ensure_ascii=False)
         }]
         
     result = up_func(context, data_dict)  
@@ -299,6 +312,50 @@ def vocabulary_create(up_func,context,data_dict):
                 raise ValidationError({'message': 'Provied list of tags doesn\'t have valid dictionaries.'})
     return result
 
+
+@p.toolkit.chained_action                                                                                                                                                    
+def vocabulary_update(up_func,context,data_dict):
+    '''Create a new tag vocabulary.
+    You must be a sysadmin to create vocabularies.
+    :param name: the name of the new vocabulary, e.g. ``'Genre'``
+    :type name: string
+    :param name_translated-en: translated name in English
+    :type name: string
+     :param name_translated-ar: translated name in Aragic
+    :type name: string
+    :param tags: the new tags to add to the new vocabulary, for the format of
+        tag dictionaries see :py:func:`tag_create`
+    :type tags: list of tag dictionaries
+
+    :returns: the newly-created vocabulary
+    :rtype: dictionary
+    '''
+
+    name_translated = {
+        'en' : data_dict.get('name_translated-en', ''), 
+        'ar': data_dict.get('name_translated-ar', '')
+    }
+
+    description_translated = {
+        'en' : data_dict.get('description_translated-en', ''), 
+        'ar': data_dict.get('description_translated-ar', '')
+    }
+    
+    data_dict["extras"] = [{
+        "key": "name_translated", 
+        "value": json.dumps(name_translated, ensure_ascii=False)
+        },
+        {
+        "key": "description_translated", 
+        "value": json.dumps(description_translated, ensure_ascii=False)
+        }]
+        
+    result = up_func(context, data_dict)  
+    model = context['model']
+    vocabulary = model.vocabulary.Vocabulary.get(_get_or_bust(result, 'id'))
+    extras_save(data_dict["extras"], vocabulary, context)
+    return result
+
 def get_actions():
     return {
         'package_create': package_create,
@@ -310,6 +367,7 @@ def get_actions():
         'tag_create': tag_create,
         'tag_show': tag_show,
         'vocabulary_create': vocabulary_create,
+        'vocabulary_update': vocabulary_update,
         'vocabulary_show': vocabulary_show
     }
 
