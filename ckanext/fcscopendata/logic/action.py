@@ -6,6 +6,9 @@ import ckan.plugins as p
 import ckan.logic as logic
 import ckan.lib.dictization.model_dictize as model_dictize
 from ckan.plugins.toolkit import ValidationError
+import ckan.lib.uploader as uploader
+import ckan.lib.helpers as h
+
 _get_or_bust = logic.get_or_bust
 
 log = logging.getLogger(__name__)
@@ -244,14 +247,33 @@ def vocabulary_show(up_func,context,data_dict):
     if vocabulary._extras:
         extras = model_dictize.extras_dict_dictize(
          vocabulary._extras, context)
-        for translated  in ['name_translated', 'description_translated']:
-            is_key_exist = list(filter(lambda d: d['key'] in translated, extras))
-            if is_key_exist:   
-                field_value = json.loads(is_key_exist[0].get('value', {}))
-                result[translated] = field_value
 
-        for idx, tag in enumerate(result['tags']): 
-            result['tags'][idx] = logic.get_action('tag_show')(context, {'id': tag['id']})
+        for field in extras:
+            for key in field:
+                if field['key'].endswith('_translated'):
+                    result[field['key']] = json.loads(field.get('value', {}))
+                else:
+                    result[field['key']] = field.get('value', '')
+        
+    # return icon and image full url    
+    if result.get('icon_url') and not result.get('icon_url').startswith('http'):
+        result['icon_display_url'] = h.url_for_static(
+                'uploads/vocabulary/%s' % result.get('icon_url'), qualified=True)
+    else:
+        result['icon_display_url'] = result.get('icon_url') or  ''
+
+
+    if result.get('image_url') and not result.get('image_url').startswith('http'):
+        result['image_display_url'] = h.url_for_static(
+                'uploads/vocabulary/%s' % result.get('image_url'), qualified=True)
+    else:
+        result['image_display_url'] = result.get('image_url') or  ''
+
+
+
+    for idx, tag in enumerate(result['tags']): 
+        result['tags'][idx] = logic.get_action('tag_show')(context, {'id': tag['id']})
+
     return result
 
 
@@ -286,15 +308,32 @@ def vocabulary_create(up_func,context,data_dict):
         'en' : data_dict.get('description_translated-en', ''), 
         'ar': data_dict.get('description_translated-ar', '')
     }
-    
+
+    if data_dict.get('image_upload'):
+        upload = uploader.get_uploader('vocabulary')
+        upload.update_data_dict(data_dict, 'image_url',
+                                'image_upload', 'clear_upload')
+        upload.upload(uploader.get_max_image_size())
+
+    if data_dict.get('icon_upload'):
+        upload = uploader.get_uploader('vocabulary')
+        upload.update_data_dict(data_dict, 'icon_url',
+                                'icon_upload', 'clear_upload')
+        upload.upload(uploader.get_max_image_size())
+        
     data_dict["extras"] = [{
         "key": "name_translated", 
         "value": json.dumps(name_translated, ensure_ascii=False)
-        },
-        {
+        },{
         "key": "description_translated", 
         "value": json.dumps(description_translated, ensure_ascii=False)
-        }]
+        },{
+        "key": "image_url", 
+        "value": data_dict.get('image_url', '')
+        },{
+        "key": "icon_url", 
+        "value": data_dict.get('icon_url', '')
+     }]
         
     result = up_func(context, data_dict)  
     model = context['model']
@@ -340,16 +379,38 @@ def vocabulary_update(up_func,context,data_dict):
         'en' : data_dict.get('description_translated-en', ''), 
         'ar': data_dict.get('description_translated-ar', '')
     }
-    
+
     data_dict["extras"] = [{
         "key": "name_translated", 
         "value": json.dumps(name_translated, ensure_ascii=False)
-        },
-        {
+        },{
         "key": "description_translated", 
         "value": json.dumps(description_translated, ensure_ascii=False)
         }]
         
+    
+    if data_dict.get('image_upload'):
+        upload = uploader.get_uploader('vocabulary')
+        upload.update_data_dict(data_dict, 'image_url',
+                                'image_upload', 'clear_upload')
+        upload.upload(uploader.get_max_image_size())
+
+    if data_dict.get('icon_upload'):
+        upload = uploader.get_uploader('vocabulary')
+        upload.update_data_dict(data_dict, 'icon_url',
+                                'icon_upload', 'clear_upload')
+        upload.upload(uploader.get_max_image_size())
+    
+    data_dict["extras"].extend([
+        {
+        "key": "image_url", 
+        "value": data_dict.get('image_url', '')
+        },
+         {
+        "key": "icon_url", 
+        "value": data_dict.get('icon_url', '')
+        }])   
+
     result = up_func(context, data_dict)  
     model = context['model']
     vocabulary = model.vocabulary.Vocabulary.get(_get_or_bust(result, 'id'))
