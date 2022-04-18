@@ -30,6 +30,11 @@ Example:
             <img src="{{ organization.image_display_url or h.url_for_static('/base/images/placeholder-organization.png') }}" width="200" alt="{{ organization.name }}" />
           </a>
         </div>
+        <div class="icon">
+          {% if organization.icon_display_url %}
+          <img src="{{ organization.icon_display_url }}" width="50" height="50" alt="{{ organization.name }}" />
+        {% endif %}
+        </div>
       {% endblock %}
       {% block heading %}
       <h1 class="heading">{{ organization.title or organization.name }}
