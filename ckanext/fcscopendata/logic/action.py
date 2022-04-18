@@ -60,9 +60,6 @@ def package_create(up_func, context, data_dict):
     data_dict['title'] =  data_dict.get('title_translated-en', '')
     data_dict['notes'] =  data_dict.get('notes_translated-en', '')
 
-    log.debug("START PERIOD")
-    log.debug(type(data_dict.get('start_period')))
-    log.debug(data_dict.get('end_period'))
     start_period = str(data_dict.get('start_period')) + "-01"
     end_period = str(data_dict.get('end_period')) + "-01"
     start_date = date.fromisoformat(start_period)
