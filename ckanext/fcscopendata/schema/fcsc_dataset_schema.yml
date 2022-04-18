@@ -69,10 +69,20 @@ dataset_fields:
 
 - field_name: maintainer_email
   label: Maintainer Email
-  form_placeholder: joe@example.com
+  form_placeholder: stephen@example.com
   display_property: dc:contributor
   display_snippet: email.html
   display_email_name_field: maintainer
+
+- field_name: start_period
+  label: Start Period
+  form_placeholder: '2021-04'
+  validators: ignore_missing convert_to_extras
+
+- field_name: end_period
+  label: end Period
+  form_placeholder: '2021-04'
+  validators: ignore_missing convert_to_extras
 
 
 resource_fields:
