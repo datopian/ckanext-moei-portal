@@ -4,10 +4,14 @@ from unittest import result
 import ckan.plugins.toolkit as tk
 import ckan.plugins as p
 import ckan.logic as logic
+import ckan.lib.helpers as h
 import ckan.lib.dictization.model_dictize as model_dictize
+import ckan.lib.uploader as uploader
 from ckan.plugins.toolkit import ValidationError
 from datetime import date
 import ckan.lib.helpers as h
+import ckan.lib.uploader as uploader
+
 
 ValidationError = logic.ValidationError
 _get_or_bust = logic.get_or_bust
@@ -31,19 +35,19 @@ def theme_update(pkg, groups, context):
     return delete_groups
             
     
-def extras_save(extra_dicts, tag, context):
+def extras_save(extra_dicts, model_obj, context):
     model = context['model']
     extras = extra_dicts
     new_extras = {i['key'] for i in extras}
     if extras:
-        old_extras = tag.extras
+        old_extras = model_obj.extras
         for key in set(old_extras) - new_extras:
-            del tag.extras[key]
+            del model_obj.extras[key]
         for x in extras:
             if 'deleted' in x and x['key'] in old_extras:
-                del tag.extras[x['key']]
+                del model_obj.extras[x['key']]
                 continue
-            tag.extras[x['key']] = x['value']
+            model_obj.extras[x['key']] = x['value']
     if not context.get('defer_commit'):
         model.repo.commit()
 
@@ -154,13 +158,32 @@ def package_update(up_func, context, data_dict):
 
     return result
 
+@p.toolkit.chained_action   
+@logic.side_effect_free
+def organization_show(up_func,context,data_dict): 
+    result = up_func(context, data_dict)  
+
+    # Return full icon url
+    if result.get('icon_url') and not result.get('icon_url').startswith('http'):
+        result['icon_display_url'] = h.url_for_static(
+                'uploads/group/%s' % result.get('icon_url'),
+                qualified=True
+            )
+    else:
+         result['icon_display_url'] = result.get('icon_url') or ''                                                                                                                                                                                                                                                                                                             
+    return result
+
 @p.toolkit.chained_action                                                                                                                                                    
 def organization_create(up_func,context,data_dict): 
     data_dict['title'] = data_dict.get('title_translated-en', '') 
 
     if data_dict['notes_translated-en']:                                                                                                                         
         data_dict['description'] = data_dict.get('notes_translated-en', '')  
-                                                                                          
+
+    # upload icon  
+    upload = uploader.get_uploader('group')
+    upload.update_data_dict(data_dict, 'icon_url','icon_upload', 'clear_upload')
+    upload.upload(uploader.get_max_image_size())                                                          
     result = up_func(context, data_dict)                                                                                                                                                                                                                                                                                                     
     return result
 
@@ -169,9 +192,28 @@ def organization_update(up_func,context,data_dict):
     data_dict['title'] = data_dict.get('title_translated-en', '') 
 
     if data_dict['notes_translated-en']:                                                                                                                         
-        data_dict['description'] = data_dict.get('notes_translated-en', '')  
-                                                                                                          
+        data_dict['description'] = data_dict.get('notes_translated-en', '') 
+
+    # upload icon  
+    upload = uploader.get_uploader('group')
+    upload.update_data_dict(data_dict, 'icon_url','icon_upload', 'clear_upload')
+    upload.upload(uploader.get_max_image_size())                                                                                                 
     result = up_func(context, data_dict)                                                                                                                                                                                                                                                                                                     
+    return result
+
+@p.toolkit.chained_action   
+@logic.side_effect_free
+def group_show(up_func,context,data_dict): 
+    result = up_func(context, data_dict)  
+
+    # Return full icon url
+    if result.get('icon_url') and not result.get('icon_url').startswith('http'):
+        result['icon_display_url'] = h.url_for_static(
+                'uploads/group/%s' % result.get('icon_url'),
+                qualified=True
+            )
+    else:
+         result['icon_display_url'] = result.get('icon_url') or ''                                                                                                                                                                                                                                                                                                                
     return result
 
 @p.toolkit.chained_action                                                                                                                                                    
@@ -180,7 +222,11 @@ def group_create(up_func,context,data_dict):
 
     if data_dict['description_translated-en']:                                                                                                                         
         data_dict['description'] = data_dict.get('description_translated-en', '')  
-                                                                                          
+    
+    # upload icon 
+    upload = uploader.get_uploader('group')
+    upload.update_data_dict(data_dict, 'icon_url','icon_upload', 'clear_upload')
+    upload.upload(uploader.get_max_image_size())                                                                 
     result = up_func(context, data_dict)                                                                                                                                                                                                                                                                                                     
     return result
 
@@ -190,8 +236,13 @@ def group_update(up_func,context,data_dict):
 
     if data_dict['description_translated-en']:                                                                                                                         
         data_dict['description'] = data_dict.get('description_translated-en', '')  
-                                                                                                          
-    result = up_func(context, data_dict)                                                                                                                                                                                                                                                                                                     
+        
+    
+    # upload icon  
+    upload = uploader.get_uploader('group')
+    upload.update_data_dict(data_dict, 'icon_url','icon_upload', 'clear_upload')
+    upload.upload(uploader.get_max_image_size())  
+    result = up_func(context, data_dict)                                                                                                                                                                                                                                                                                                   
     return result
 
 @p.toolkit.chained_action                                                                                                                                                    
@@ -263,14 +314,33 @@ def vocabulary_show(up_func,context,data_dict):
     if vocabulary._extras:
         extras = model_dictize.extras_dict_dictize(
          vocabulary._extras, context)
-        translated = list(filter(lambda d: d['key'] in ['name_translated'], extras))
-        if translated:   
-            prefix = 'name_translated'
-            field_value = json.loads(translated[0].get('value', {}))
-            result[prefix] = field_value
+
+        for field in extras:
+            for key in field:
+                if field['key'].endswith('_translated'):
+                    result[field['key']] = json.loads(field.get('value', {}))
+                else:
+                    result[field['key']] = field.get('value', '')
         
-        for idx, tag in enumerate(result['tags']): 
-            result['tags'][idx] = logic.get_action('tag_show')(context, {'id': tag['id']})
+    # return icon and image full url    
+    if result.get('icon_url') and not result.get('icon_url').startswith('http'):
+        result['icon_display_url'] = h.url_for_static(
+                'uploads/vocabulary/%s' % result.get('icon_url'), qualified=True)
+    else:
+        result['icon_display_url'] = result.get('icon_url') or  ''
+
+
+    if result.get('image_url') and not result.get('image_url').startswith('http'):
+        result['image_display_url'] = h.url_for_static(
+                'uploads/vocabulary/%s' % result.get('image_url'), qualified=True)
+    else:
+        result['image_display_url'] = result.get('image_url') or  ''
+
+
+
+    for idx, tag in enumerate(result['tags']): 
+        result['tags'][idx] = logic.get_action('tag_show')(context, {'id': tag['id']})
+
     return result
 
 
@@ -293,14 +363,44 @@ def vocabulary_create(up_func,context,data_dict):
     '''
     if data_dict.get('tags', False):
         tags = data_dict.pop('tags')
+    else:
+        tags = False
 
     name_translated = {
         'en' : data_dict.get('name_translated-en', data_dict['name']), 
         'ar': data_dict.get('name_translated-ar', '')
     }
-    data_dict["extras"] = [{"key": "name_translated", 
+
+    description_translated = {
+        'en' : data_dict.get('description_translated-en', ''), 
+        'ar': data_dict.get('description_translated-ar', '')
+    }
+
+    if data_dict.get('image_upload'):
+        upload = uploader.get_uploader('vocabulary')
+        upload.update_data_dict(data_dict, 'image_url',
+                                'image_upload', 'clear_upload')
+        upload.upload(uploader.get_max_image_size())
+
+    if data_dict.get('icon_upload'):
+        upload = uploader.get_uploader('vocabulary')
+        upload.update_data_dict(data_dict, 'icon_url',
+                                'icon_upload', 'clear_upload')
+        upload.upload(uploader.get_max_image_size())
+        
+    data_dict["extras"] = [{
+        "key": "name_translated", 
         "value": json.dumps(name_translated, ensure_ascii=False)
-        }]
+        },{
+        "key": "description_translated", 
+        "value": json.dumps(description_translated, ensure_ascii=False)
+        },{
+        "key": "image_url", 
+        "value": data_dict.get('image_url', '')
+        },{
+        "key": "icon_url", 
+        "value": data_dict.get('icon_url', '')
+     }]
         
     result = up_func(context, data_dict)  
     model = context['model']
@@ -318,17 +418,86 @@ def vocabulary_create(up_func,context,data_dict):
                 raise ValidationError({'message': 'Provied list of tags doesn\'t have valid dictionaries.'})
     return result
 
+
+@p.toolkit.chained_action                                                                                                                                                    
+def vocabulary_update(up_func,context,data_dict):
+    '''Create a new tag vocabulary.
+    You must be a sysadmin to create vocabularies.
+    :param name: the name of the new vocabulary, e.g. ``'Genre'``
+    :type name: string
+    :param name_translated-en: translated name in English
+    :type name: string
+     :param name_translated-ar: translated name in Aragic
+    :type name: string
+    :param tags: the new tags to add to the new vocabulary, for the format of
+        tag dictionaries see :py:func:`tag_create`
+    :type tags: list of tag dictionaries
+
+    :returns: the newly-created vocabulary
+    :rtype: dictionary
+    '''
+
+    name_translated = {
+        'en' : data_dict.get('name_translated-en', ''), 
+        'ar': data_dict.get('name_translated-ar', '')
+    }
+
+    description_translated = {
+        'en' : data_dict.get('description_translated-en', ''), 
+        'ar': data_dict.get('description_translated-ar', '')
+    }
+
+    data_dict["extras"] = [{
+        "key": "name_translated", 
+        "value": json.dumps(name_translated, ensure_ascii=False)
+        },{
+        "key": "description_translated", 
+        "value": json.dumps(description_translated, ensure_ascii=False)
+        }]
+        
+    
+    if data_dict.get('image_upload'):
+        upload = uploader.get_uploader('vocabulary')
+        upload.update_data_dict(data_dict, 'image_url',
+                                'image_upload', 'clear_upload')
+        upload.upload(uploader.get_max_image_size())
+
+    if data_dict.get('icon_upload'):
+        upload = uploader.get_uploader('vocabulary')
+        upload.update_data_dict(data_dict, 'icon_url',
+                                'icon_upload', 'clear_upload')
+        upload.upload(uploader.get_max_image_size())
+    
+    data_dict["extras"].extend([
+        {
+        "key": "image_url", 
+        "value": data_dict.get('image_url', '')
+        },
+         {
+        "key": "icon_url", 
+        "value": data_dict.get('icon_url', '')
+        }])   
+
+    result = up_func(context, data_dict)  
+    model = context['model']
+    vocabulary = model.vocabulary.Vocabulary.get(_get_or_bust(result, 'id'))
+    extras_save(data_dict["extras"], vocabulary, context)
+    return result
+
 def get_actions():
     return {
         'package_create': package_create,
         'package_update': package_update,
+        'organization_show': organization_show,
         'organization_create': organization_create,
         'organization_update': organization_update,
+        'group_show': group_show,
         'group_create': group_create,
         'group_update': group_update,
         'tag_create': tag_create,
         'tag_show': tag_show,
         'vocabulary_create': vocabulary_create,
+        'vocabulary_update': vocabulary_update,
         'vocabulary_show': vocabulary_show
     }
 
