@@ -6,6 +6,10 @@ import ckan.plugins as p
 import ckan.logic as logic
 import ckan.lib.dictization.model_dictize as model_dictize
 from ckan.plugins.toolkit import ValidationError
+from datetime import date
+import ckan.lib.helpers as h
+
+ValidationError = logic.ValidationError
 _get_or_bust = logic.get_or_bust
 
 log = logging.getLogger(__name__)
@@ -51,6 +55,21 @@ def package_create(up_func, context, data_dict):
     model = context['model']
     data_dict['title'] =  data_dict.get('title_translated-en', '')
     data_dict['notes'] =  data_dict.get('notes_translated-en', '')
+
+    log.debug("START PERIOD")
+    log.debug(type(data_dict.get('start_period')))
+    log.debug(data_dict.get('end_period'))
+    start_period = str(data_dict.get('start_period')) + "-01"
+    end_period = str(data_dict.get('end_period')) + "-01"
+    start_date = date.fromisoformat(start_period)
+    end_date = date.fromisoformat(end_period)
+
+    if start_date > end_date:
+        
+        raise ValidationError(
+            error_dict =  { 'start_period' : ['Start period need to be lesser than End Period'] },
+            error_summary = ['Start period need to be lesser than End Period']
+        )
 
     tags  = model.Session.query(model.tag.Tag).filter(model.tag.Tag.name.in_(
             tag['name'] for tag in data_dict['tags'])).all()
