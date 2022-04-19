@@ -69,10 +69,11 @@ dataset_fields:
 
 - field_name: maintainer_email
   label: Maintainer Email
-  form_placeholder: joe@example.com
+  form_placeholder: stephen@example.com
   display_property: dc:contributor
   display_snippet: email.html
   display_email_name_field: maintainer
+
 
 
 resource_fields:
