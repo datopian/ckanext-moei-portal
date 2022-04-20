@@ -794,6 +794,9 @@ button.active {
   border-color: #eee;
 }
 
+.context-info {
+  margin-bottom: 20px;
+}
 .context-info .icon {
   margin-top: -35px;
 }
