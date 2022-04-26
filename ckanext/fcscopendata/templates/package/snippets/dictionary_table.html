@@ -1,0 +1,12 @@
+<tr>
+    <td>{{ field.id }}</td>
+    <td>{{ field.type }}</td>
+    <td>{{ h.get_translated(field.get('info', {}), 'label') }}</td>
+    {% if h.lang() == 'en' %}
+      <td>{{ h.render_markdown(h.get_translated(field.get('info', {}), 'notes_en')) }}</td>
+    {% elif h.lang() == 'ar' %}
+      <td>{{ h.render_markdown(h.get_translated(field.get('info', {}), 'notes_ar')) }}</td>
+    {% else %}
+      <td>{{ h.render_markdown(h.get_translated(field.get('info', {}), 'notes')) }}</td>
+    {%endif%}
+  </tr>
