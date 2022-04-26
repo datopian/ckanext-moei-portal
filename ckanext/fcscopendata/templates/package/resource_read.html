@@ -1,1 +1,14 @@
 {% ckan_extends %}
+
+{% block secondary_content %}
+{{super()}}
+
+{% block resource_download %}
+<section class="module module-narrow social">
+  <h2 class="module-heading"><i class="fa fa-download"></i> {{ _('Downloads') }}</h2>
+  <p class="module-content">
+    {{ res.total_downloads }}
+  </p>
+</section>
+{% endblock %}
+{% endblock %}
