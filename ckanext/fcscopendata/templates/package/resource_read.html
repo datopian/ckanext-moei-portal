@@ -220,8 +220,18 @@
   {% block resources_list %}
     {% snippet "package/snippets/resources.html", pkg=pkg, active=res.id, action='read', is_activity_archive=is_activity_archive %}
   {% endblock %}
+    
 
   {% block resource_license %}
     {% snippet "snippets/social.html" %}
+  {% endblock %}
+
+  {% block resource_download %}
+  <section class="module module-narrow social">
+    <h2 class="module-heading"><i class="fa fa-download"></i> {{ _('Downloads') }}</h2>
+    <p class="module-content">
+      {{ res.total_downloads }}
+    </p>
+  </section>
   {% endblock %}
 {% endblock %}

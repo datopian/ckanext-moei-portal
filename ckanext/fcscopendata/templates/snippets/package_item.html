@@ -46,10 +46,15 @@ Example:
           </h2>
         {% endblock %}
         {% block banner %}
-          {% if banner %}
-            <span class="banner">{{ _('Popular') }}</span>
-          {% endif %}
+          
         {% endblock %}
+        
+        <div class="btn btn-default">
+          <i class="fa fa-download"></i>
+          {{ h.get_package_download_stats(package.get('id'))}}
+        </div>
+        
+        
         {% block notes %}
           {% if notes %}
             <div>{{ notes|urlize }}</div>

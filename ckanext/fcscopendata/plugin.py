@@ -6,6 +6,7 @@ import json
 from ckanext.fcscopendata.logic import action
 import ckanext.fcscopendata.cli as cli
 from ckanext.fcscopendata.views import vocab_tag_autocomplete
+from ckanext.fcscopendata.helpers import get_package_download_stats
 
 from ckan.lib.plugins import DefaultTranslation
 
@@ -23,6 +24,7 @@ class FcscopendataPlugin(plugins.SingletonPlugin, DefaultTranslation):
     plugins.implements(plugins.ITranslation)
     plugins.implements(plugins.IPackageController, inherit=True)
     plugins.implements(plugins.IClick)
+    plugins.implements(plugins.ITemplateHelpers)
 
 
     # IPackageController
@@ -90,3 +92,10 @@ class FcscopendataPlugin(plugins.SingletonPlugin, DefaultTranslation):
     # IClick
     def get_commands(self):
         return cli.get_commands()
+
+
+    #ITemplateHelpers
+    def get_helpers(self):
+        return {
+            'get_package_download_stats': get_package_download_stats
+        }
