@@ -8,7 +8,7 @@ import ckan.lib.helpers as h
 import ckan.lib.dictization.model_dictize as model_dictize
 import ckan.lib.uploader as uploader
 from ckan.plugins.toolkit import ValidationError
-from datetime import date
+from datetime import date, datetime
 import ckan.lib.helpers as h
 import ckan.lib.uploader as uploader
 
@@ -59,27 +59,31 @@ def package_create(up_func, context, data_dict):
     model = context['model']
     data_dict['title'] =  data_dict.get('title_translated-en', '')
     data_dict['notes'] =  data_dict.get('notes_translated-en', '')
+    start_period = data_dict.get('start_period', False)
+    end_period = data_dict.get('end_period', False)
 
-    start_period = str(data_dict.get('start_period')) + "-01"
-    end_period = str(data_dict.get('end_period')) + "-01"
-    start_date = date.fromisoformat(start_period)
-    end_date = date.fromisoformat(end_period)
+    if start_period:
+        start_date = datetime.strptime(str(start_period), '%Y-%m').isoformat()
 
-    if start_date > end_date:
-        
-        raise ValidationError(
-            error_dict =  { 'start_period' : ['Start period need to be lesser than End Period'] },
-            error_summary = ['Start period need to be lesser than End Period']
-        )
+    if end_period:
+        end_date = datetime.strptime(str(end_period), '%Y-%m').isoformat()
 
-    tags  = model.Session.query(model.tag.Tag).filter(model.tag.Tag.name.in_(
-            tag['name'] for tag in data_dict['tags'])).all()
+    if start_period and end_period:
+        if start_date > end_date:
+            raise ValidationError(
+                error_dict =  { 'start_period' : ['Start period need to be lesser than End Period'] },
+                error_summary = ['Start period need to be lesser than End Period']
+            )
 
-    tags_dict = model_dictize.tag_list_dictize(tags, context)
+    if data_dict.get('tags', False):
+        tags  = model.Session.query(model.tag.Tag).filter(model.tag.Tag.name.in_(
+                tag['name'] for tag in data_dict['tags'])).all()
 
-    for idx, tag in enumerate(data_dict['tags']):
-        data_dict['tags'][idx]['vocabulary_id'] = \
-            [t.get('vocabulary_id', None) for t in tags_dict if t['name'] == tag['name']][0]
+        tags_dict = model_dictize.tag_list_dictize(tags, context)
+
+        for idx, tag in enumerate(data_dict['tags']):
+            data_dict['tags'][idx]['vocabulary_id'] = \
+                [t.get('vocabulary_id', None) for t in tags_dict if t['name'] == tag['name']][0]
 
     # Do not create free tags. 
     data_dict['tag_string'] = ''
