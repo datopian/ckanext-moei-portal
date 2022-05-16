@@ -111,13 +111,13 @@ def package_update(up_func, context, data_dict):
     # core features do not break. eg. solr search with title 
     model = context['model']
 
-    if not data_dict.get("cli"):
-        if data_dict.get('title_translated-en', False):
-            data_dict['title'] =  data_dict.get('title_translated-en', '')
-            
-        if data_dict.get('notes_translated-en', False):
-            data_dict['notes'] =  data_dict.get('notes_translated-en', '')
-
+    if data_dict.get('title_translated-en', False):
+        data_dict['title'] =  data_dict.get('title_translated-en', '')
+        
+    if data_dict.get('notes_translated-en', False):
+        data_dict['notes'] =  data_dict.get('notes_translated-en', '')
+    
+    if not data_dict.get('allow_free_tags', False):
         tags  = model.Session.query(model.tag.Tag).filter(model.tag.Tag.name.in_(
             tag['name'] for tag in data_dict['tags'])).all()
 
@@ -127,7 +127,7 @@ def package_update(up_func, context, data_dict):
             data_dict['tags'][idx]['vocabulary_id'] = \
                 [t.get('vocabulary_id', None) for t in tags_dict if t['name'] == tag['name']][0]
 
-        # # Do not create free tags. 
+        # Do not create free tags. 
         data_dict['tag_string'] = ''
 
     # Add selected groups in package
