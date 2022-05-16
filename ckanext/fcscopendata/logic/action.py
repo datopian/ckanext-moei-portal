@@ -496,19 +496,22 @@ def package_show(up_func,context,data_dict):
     except:
         log.error(f'package {id} stats not available')
 
-    resources = result.get('resources')
-    overall_stat = 0
-    for i, resource in enumerate(resources):
-        resource_id = resource.get('id')
-        try:
-            stats = logic.get_action('resource_stats')(context, {'resource_id': resource_id})
-            result['resources'][i]['total_downloads'] = stats
-            overall_stat += int(stats)
-        except:
-            log.error(f'resource {resource_id} not found')
+    # resources = result.get('resources')
+    # overall_stat = 0
+    # for i, resource in enumerate(resources):
+    #     resource_id = resource.get('id')
+    #     try:
+    #         stats = logic.get_action('resource_stats')(context, {'resource_id': resource_id})
+    #         result['resources'][i]['total_downloads'] = stats
+    #         overall_stat += int(stats)
+    #     except:
+    #         log.error(f'resource {resource_id} not found')
+
+    # if "total_downloads" not in result:
+    #     result['total_downloads'] = overall_stat
 
     if "total_downloads" not in result:
-        result['total_downloads'] = overall_stat
+        result['total_downloads'] = 0
     return result
 
 
