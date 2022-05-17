@@ -11,6 +11,8 @@ from ckan.plugins.toolkit import ValidationError
 from datetime import date, datetime
 import ckan.lib.helpers as h
 import ckan.lib.uploader as uploader
+import ckan.model as model
+from ckan.common import c
 
 
 ValidationError = logic.ValidationError
@@ -50,6 +52,32 @@ def extras_save(extra_dicts, model_obj, context):
             model_obj.extras[x['key']] = x['value']
     if not context.get('defer_commit'):
         model.repo.commit()
+
+
+@p.toolkit.chained_action
+@logic.side_effect_free
+def package_search(up_func, context, data_dict):
+    result = up_func(context, data_dict)
+    # Only add bilingual fields if the action is called from API.
+    if not context.get('request_from_ui', False):
+        context = {'model': model, 'session': model.Session,
+                    'user': c.user, 'auth_user_obj': c.userobj}
+                    
+        for idx, pkg in enumerate(result['results']):
+            if pkg.get('groups', []):
+                for gidx, group in enumerate(pkg.get('groups', [])):
+                    group_dict = logic.get_action('group_show')(context, {'id': group.get('id')})
+                    result['results'][idx]['groups'][gidx] = group_dict
+
+            if pkg.get('organization', {}):
+                org_dict = logic.get_action('organization_show')(context, {'id': pkg.get('organization', {})['id'] })
+                result['results'][idx]['organization'] = org_dict
+
+            if pkg.get('tags', []):
+                for index, tag in enumerate(result['results'][idx]['tags']):
+                    result['results'][idx]['tags'][index] =  \
+                    logic.get_action('tag_show')(context, {'id': tag['id'] })
+    return result
 
 
 @p.toolkit.chained_action
@@ -527,7 +555,8 @@ def get_actions():
         'vocabulary_create': vocabulary_create,
         'vocabulary_update': vocabulary_update,
         'vocabulary_show': vocabulary_show,
-        'package_show': package_show
+        'package_show': package_show,
+        'package_search': package_search
     }
 
 
