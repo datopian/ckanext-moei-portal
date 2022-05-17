@@ -59,7 +59,7 @@ def extras_save(extra_dicts, model_obj, context):
 def package_search(up_func, context, data_dict):
     result = up_func(context, data_dict)
     # Only add bilingual fields if the action is called from API.
-    if context.get('request_from_ui', False):
+    if not context.get('request_from_ui', False):
         context = {'model': model, 'session': model.Session,
                     'user': c.user, 'auth_user_obj': c.userobj}
                     
