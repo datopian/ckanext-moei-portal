@@ -29,29 +29,23 @@ class FcscopendataPlugin(plugins.SingletonPlugin, DefaultTranslation):
 
     # IPackageController
     def after_search(self, search_results, search_params):
-
         # Update group and organization dict with translated fields.
-        for idx, results in enumerate(search_results['results']):
-            context = {'model': model, 'session': model.Session,
-                       'user': c.user, 'auth_user_obj': c.userobj}
-            if results.get('groups', []):
-                for gidx, group in enumerate(results.get('groups', [])):
+        context = {'model': model, 'session': model.Session,
+                    'user': c.user, 'auth_user_obj': c.userobj}
+
+        for idx, pkg in enumerate(search_results['results']):
+            if pkg.get('groups', []):
+                for gidx, group in enumerate(pkg.get('groups', [])):
                     group_dict = logic.get_action('group_show')(context, {'id': group.get('id')})
-                    search_results['results'][idx]['groups'][gidx].update(
-                        {'title_translated' : group_dict.get('title_translated', {'ar': '', 'en': ''})})
-                    search_results['results'][idx]['groups'][gidx].update(
-                        {'description_translated' : group_dict.get('description_translated', {'ar': '', 'en': ''})})
+                    search_results['results'][idx]['groups'][gidx] = group_dict
 
-            if results.get('organization', {}):
-                org_dict = logic.get_action('organization_show')(context, {'id': results.get('organization', {})['id'] })
-                search_results['results'][idx]['organization'].update(
-                    {'title_translated' : org_dict.get('title_translated', {'ar': '', 'en': ''})})
-                search_results['results'][idx]['organization'].update(
-                    {'notes_translated' : org_dict.get('notes_translated', {'ar': '', 'en': ''})})
+            if pkg.get('organization', {}):
+                org_dict = logic.get_action('organization_show')(context, {'id': pkg.get('organization', {})['id'] })
+                search_results['results'][idx]['organization'] = org_dict
 
-            if results.get('tags', []):
-                for inindex, tag in enumerate(search_results['results'][idx]['tags']):
-                    search_results['results'][idx]['tags'][inindex] =  \
+            if pkg.get('tags', []):
+                for index, tag in enumerate(search_results['results'][idx]['tags']):
+                    search_results['results'][idx]['tags'][index] =  \
                     logic.get_action('tag_show')(context, {'id': tag['id'] })
                     
         return search_results
