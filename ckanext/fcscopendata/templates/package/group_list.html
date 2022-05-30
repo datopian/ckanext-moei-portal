@@ -17,7 +17,7 @@
 
   {% if pkg_dict.groups %}
     <form method="post">
-      {% snippet 'group/snippets/group_list.html', groups=pkg_dict.groups %}
+      {% snippet 'group/snippets/group_list.html', groups=pkg_dict.groups, pkg_dict=pkg_dict %}
     </form>
   {% else %}
     <p class="empty">{{ _('There are no groups associated with this dataset') }}</p>
