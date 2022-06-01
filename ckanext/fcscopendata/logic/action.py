@@ -518,6 +518,9 @@ def vocabulary_update(up_func,context,data_dict):
 @logic.side_effect_free
 def package_show(up_func,context,data_dict): 
     result = up_func(context, data_dict)
+    if result.get('publishing_status', '') == 'draft':
+        tk.check_access('package_update', context, {'id': data_dict.get('id')})
+
     id = result.get('id')
     try:
         result['total_downloads'] = logic.get_action('package_stats')(context, {'package_id': id})
@@ -543,10 +546,24 @@ def package_show(up_func,context,data_dict):
     return result
 
 
+# To save dataset as draft dataset. 
+@p.toolkit.chained_action   
+def resource_create(up_func,context, data_dict):
+    if data_dict.get('pkg_publishing_status', False):
+        logic.get_action('package_patch')(context, {
+            'id': data_dict.get('package_id', ''), 
+            'publishing_status': data_dict.get('pkg_publishing_status')
+            })
+        data_dict.pop('pkg_publishing_status', None)
+    result = up_func(context, data_dict)
+    return result
+
+
 def get_actions():
     return {
         'package_create': package_create,
         'package_update': package_update,
+        'resource_create': resource_create,
         'organization_show': organization_show,
         'organization_create': organization_create,
         'organization_update': organization_update,
