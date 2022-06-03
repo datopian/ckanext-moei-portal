@@ -581,6 +581,20 @@ button.active {
 .stages li.active:before {
   color: #252525;
 }
+
+/* label */
+.dataset-status-label {
+  display: flex;
+  justify-content: flex-end;
+  flex-direction: row;
+}
+
+.dataset-status-label span {
+  margin-left: 2px;
+  font-size: 12px;
+  text-transform: uppercase;
+}
+
 /* About */
 .about .page-heading {
   color: #003164;
