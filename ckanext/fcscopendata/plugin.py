@@ -39,7 +39,6 @@ class FcscopendataPlugin(plugins.SingletonPlugin, DefaultTranslation):
 
     def before_search(self, search_params):
         include_drafts = search_params.get('include_drafts', False)
-        print(include_drafts)
         if not include_drafts:
             search_params.update({
                 'fq': '!(publishing_status:draft)' + search_params.get('fq', ''),
