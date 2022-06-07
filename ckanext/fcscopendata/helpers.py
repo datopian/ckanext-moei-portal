@@ -10,13 +10,18 @@ def get_package_download_stats(package_id):
     stats = logic.get_action('package_show')(context, {'id': package_id})
     return stats['total_downloads']
 
-def get_dataset_group_list():
+def get_dataset_group_list(pkg_dict):
     context = {'model':model}
     q = model.Session.query(model.Group) \
         .filter(model.Group.is_organization == False) \
         .filter(model.Group.state == 'active')
     groups = q.all()
     group_list = model_dictize.group_list_dictize(groups, context)
+    if pkg_dict['groups']:
+        for group in pkg_dict['groups']:
+            for group_element in group_list:
+                if group_element['id'] == group['id']:
+                    group_list.remove(group_element)
 
     group_dropdown = [[group[u'id'], group[u'display_name']]
                           for group in group_list]
