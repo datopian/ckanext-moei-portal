@@ -592,7 +592,8 @@ button.active {
 .dataset-status-label span {
   margin-left: 2px;
   font-size: 12px;
-  text-transform: uppercase;
+  text-transform: capitalize;
+  font-weight: 600;
 }
 
 /* About */
