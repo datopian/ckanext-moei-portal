@@ -1,6 +1,5 @@
 import json
 import logging
-from unittest import result
 import ckan.plugins.toolkit as tk
 import ckan.plugins as p
 import ckan.logic as logic
@@ -8,11 +7,12 @@ import ckan.lib.helpers as h
 import ckan.lib.dictization.model_dictize as model_dictize
 import ckan.lib.uploader as uploader
 from ckan.plugins.toolkit import ValidationError
-from datetime import date, datetime
+from datetime import datetime
 import ckan.lib.helpers as h
 import ckan.lib.uploader as uploader
 import ckan.model as model
 from ckan.common import c
+from ckan.authz import users_role_for_group_or_org
 
 
 ValidationError = logic.ValidationError
@@ -35,7 +35,19 @@ def theme_update(pkg, groups, context):
             model.repo.commit()
             delete_groups.append(member.id)
     return delete_groups
-            
+
+def _add_user_as_memeber_on_groups(groups, context):
+    for group_id in groups:
+        is_memeber_of_group = users_role_for_group_or_org(group_id, context['user'])
+        if not is_memeber_of_group:
+            member_dict = {
+            'id': group_id,
+            'object': c.userobj.id,
+            'object_type': 'user',
+            'capacity': 'member',
+            }
+            logic.get_action('member_create')(dict(context, ignore_auth=True),
+                                                member_dict)
     
 def extras_save(extra_dicts, model_obj, context):
     model = context['model']
@@ -124,6 +136,10 @@ def package_create(up_func, context, data_dict):
                 pkg_group = eval(pkg_group) 
             except:
                 pkg_group = [pkg_group] 
+        
+        # Add user as member on each group
+        _add_user_as_memeber_on_groups(pkg_group, context)
+        
         group = model.Session.query(model.group.Group).filter(model.group.Group.id.in_(pkg_group)).all()
         group_dict = model_dictize.group_list_dictize(group, context, with_package_counts=False)
         data_dict['groups'] = group_dict
@@ -166,6 +182,9 @@ def package_update(up_func, context, data_dict):
                 pkg_group = eval(pkg_group)
             except:
                 pkg_group = [pkg_group]
+                
+        # Add user as member on each group
+        _add_user_as_memeber_on_groups(pkg_group, context)
 
         group = model.Session.query(model.group.Group).filter(model.group.Group.id.in_(pkg_group)).all()
         group_dict = model_dictize.group_list_dictize(group, context, with_package_counts=False)
@@ -589,7 +608,7 @@ def get_actions():
         'vocabulary_update': vocabulary_update,
         'vocabulary_show': vocabulary_show,
         'package_show': package_show,
-        'package_search': package_search
+        'package_search': package_search,
     }
 
 

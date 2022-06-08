@@ -1,5 +1,7 @@
 import ckan.logic as logic
 import ckan.model as model
+import ckan.model as model
+import ckan.lib.dictization.model_dictize as model_dictize
 import logging
 
 log = logging.getLogger(__name__)
@@ -15,3 +17,22 @@ def is_dataset_draft(package_id):
         return True
     else:
         return False
+
+
+def get_dataset_group_list(pkg_dict):
+    context = {'model':model}
+    q = model.Session.query(model.Group) \
+        .filter(model.Group.is_organization == False) \
+        .filter(model.Group.state == 'active')
+    groups = q.all()
+    group_list = model_dictize.group_list_dictize(groups, context)
+    if pkg_dict['groups']:
+        for group in pkg_dict['groups']:
+            for group_element in group_list:
+                if group_element['id'] == group['id']:
+                    group_list.remove(group_element)
+
+    group_dropdown = [[group[u'id'], group[u'display_name']]
+                          for group in group_list]
+
+    return group_dropdown
