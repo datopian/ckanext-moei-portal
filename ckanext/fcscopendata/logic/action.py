@@ -36,6 +36,10 @@ def theme_update(pkg, groups, context):
             delete_groups.append(member.id)
     return delete_groups
 
+def if_editor_publishing_dataset(owner_org, context):
+    user_capacity = users_role_for_group_or_org(owner_org, context['user'])
+    return user_capacity != 'admin'
+
 def _add_user_as_memeber_on_groups(groups, context):
     for group_id in groups:
         is_memeber_of_group = users_role_for_group_or_org(group_id, context['user'])
@@ -128,6 +132,10 @@ def package_create(up_func, context, data_dict):
     # Do not create free tags. 
     data_dict['tag_string'] = ''
 
+    # Always publish dataset as private for editor user
+    if if_editor_publishing_dataset(data_dict.get('owner_org', ''), context):
+        data_dict['private'] = True
+
     # Add selected groups in package
     if data_dict.get('themes'):
         pkg_group = data_dict.get('themes')
@@ -173,6 +181,10 @@ def package_update(up_func, context, data_dict):
 
         # Do not create free tags. 
         data_dict['tag_string'] = ''
+
+    # Always publish dataset as private for editor user
+    if if_editor_publishing_dataset(data_dict.get('owner_org', ''), context):
+        data_dict['private'] = True
 
     # Add selected groups in package
     if data_dict.get('themes'):

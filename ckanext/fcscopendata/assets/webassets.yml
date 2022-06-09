@@ -18,6 +18,7 @@ fcsc_js:
   output: ckanext-fcscopendata/%(version)s-form-submit.js
   contents:
     - javascript/form-submit.js
+    - javascript/dataset-visibility.js
   extra:
     preload:
       - base/main
