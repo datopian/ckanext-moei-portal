@@ -5,6 +5,7 @@ import ckan.lib.dictization.model_dictize as model_dictize
 import logging
 
 log = logging.getLogger(__name__)
+
 def get_package_download_stats(package_id):
     context = {'model': model, 'session': model.Session}
     stats = logic.get_action('package_show')(context, {'id': package_id})
