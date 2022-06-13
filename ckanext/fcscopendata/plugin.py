@@ -1,20 +1,16 @@
-from email.policy import default
 import ckan.plugins as plugins
 import ckan.plugins.toolkit as toolkit
 import json
-from ckanext.fcscopendata.logic import action
-import ckanext.fcscopendata.cli as cli
-
-from ckanext.fcscopendata.views import vocab_tag_autocomplete, GroupManage
-from ckanext.fcscopendata.helpers import get_package_download_stats, is_dataset_draft, get_dataset_group_list
-
+from flask import Blueprint
 from ckan.lib.plugins import DefaultTranslation
 
-from flask import Blueprint, render_template
-
-def hello_plugin():
-    return u'Hello from the fcscopendata Theme extension'
-
+from ckanext.fcscopendata.views import vocab_tag_autocomplete, GroupManage
+import ckanext.fcscopendata.cli as cli
+from ckanext.fcscopendata.lib.helpers import (
+     get_package_download_stats, 
+     is_dataset_draft, 
+     get_dataset_group_list
+)
 
 class FcscopendataPlugin(plugins.SingletonPlugin, DefaultTranslation):
     plugins.implements(plugins.IConfigurer)
@@ -67,8 +63,12 @@ class FcscopendataPlugin(plugins.SingletonPlugin, DefaultTranslation):
                                 view_func=GroupManage.as_view(str(u'groups')))
         return blueprint
 
+    # IActions
     def get_actions(self):
-        return action.get_actions()
+        import ckanext.fcscopendata.logic.action as action
+        return dict((name, function) for name, function
+                    in action.__dict__.items()
+                    if callable(function))
 
     # IClick
     def get_commands(self):
