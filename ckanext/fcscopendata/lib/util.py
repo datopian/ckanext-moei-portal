@@ -36,7 +36,7 @@ def add_user_as_memeber_on_groups(groups, context):
             'object_type': 'user',
             'capacity': 'member',
             }
-            tk.logic.get_action('member_create')(dict(context, ignore_auth=True),
+            tk.get_action('member_create')(dict(context, ignore_auth=True),
                                                 member_dict)
 
 def extras_save(extra_dicts, model_obj, context):
