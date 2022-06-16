@@ -57,8 +57,8 @@ def package_create(up_func, context, data_dict):
         data_dict['private'] = True
 
     # Add selected groups in package
-    if data_dict.get('themes'):
-        pkg_group = data_dict.get('themes')
+    if data_dict.get('topics'):
+        pkg_group = data_dict.get('topics')
         if isinstance(pkg_group, str):
             try:
                 pkg_group = eval(pkg_group) 
