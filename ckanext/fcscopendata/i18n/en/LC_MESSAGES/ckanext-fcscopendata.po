@@ -131,7 +131,7 @@ msgstr ""
 #: ckanext/fcscopendata/templates/package/group_list.html:5
 #: ckanext/fcscopendata/templates/package/read_base.html:22
 msgid "Groups"
-msgstr "Themes"
+msgstr "Topics"
 
 #: ckanext/fcscopendata/templates/admin/config.html:25
 #: ckanext/fcscopendata/templates/group/about.html:3
@@ -321,7 +321,7 @@ msgstr ""
 
 #: ckanext/fcscopendata/templates/admin/trash.html:31
 msgid "Purge deleted datasets, organizations or groups forever and irreversibly."
-msgstr "Purge deleted datasets, organizations or themes forever and irreversibly."
+msgstr "Purge deleted datasets, organizations or topics forever and irreversibly."
 
 #: ckanext/fcscopendata/templates/admin/snippets/confirm_delete.html:3
 #: ckanext/fcscopendata/templates/admin/snippets/confirm_delete.html:17
@@ -350,7 +350,7 @@ msgstr ""
 
 #: ckanext/fcscopendata/templates/admin/snippets/data_type.html:11
 msgid "Deleted groups"
-msgstr "Deleted Themes"
+msgstr "Deleted Topics"
 
 #: ckanext/fcscopendata/templates/admin/snippets/data_type.html:41
 msgid "Purge"
@@ -554,11 +554,11 @@ msgstr ""
 #: ckanext/fcscopendata/templates/group/index.html:13
 #: ckanext/fcscopendata/templates/user/dashboard_groups.html:7
 msgid "Add Group"
-msgstr "Add Theme"
+msgstr "Add Topic"
 
 #: ckanext/fcscopendata/templates/group/index.html:20
 msgid "Search groups..."
-msgstr "Search themes..."
+msgstr "Search topics..."
 
 #: ckanext/fcscopendata/templates/group/index.html:20
 #: ckanext/fcscopendata/templates/group/read.html:14
@@ -586,7 +586,7 @@ msgstr ""
 
 #: ckanext/fcscopendata/templates/group/index.html:29
 msgid "There are currently no groups for this site"
-msgstr "There are currently no themes for this site"
+msgstr "There are currently no topics for this site"
 
 #: ckanext/fcscopendata/templates/group/index.html:31
 #: ckanext/fcscopendata/templates/organization/index.html:31
@@ -692,7 +692,7 @@ msgid ""
 msgstr ""
 "<p><strong>Admin:</strong> Can edit group information, as well as manage "
 "organization members.</p> <p><strong>Member:</strong> Can add/remove "
-"datasets from themes</p>"
+"datasets from topics</p>"
 
 #: ckanext/fcscopendata/templates/group/members.html:14
 #: ckanext/fcscopendata/templates/organization/members.html:19
@@ -704,15 +704,15 @@ msgstr ""
 #: ckanext/fcscopendata/templates/group/new.html:5
 #: ckanext/fcscopendata/templates/group/new.html:7
 msgid "Create a Group"
-msgstr "Create a Theme"
+msgstr "Create a Topic"
 
 #: ckanext/fcscopendata/templates/group/new_group_form.html:17
 msgid "Update Group"
-msgstr "Update Theme"
+msgstr "Update Topic"
 
 #: ckanext/fcscopendata/templates/group/new_group_form.html:19
 msgid "Create Group"
-msgstr "Create Theme"
+msgstr "Create Topic"
 
 #: ckanext/fcscopendata/templates/group/read.html:13
 #: ckanext/fcscopendata/templates/organization/read.html:19
@@ -747,7 +747,7 @@ msgstr ""
 
 #: ckanext/fcscopendata/templates/group/snippets/feeds.html:2
 msgid "Datasets in group: {group}"
-msgstr "Datasets in theme: {group}"
+msgstr "Datasets in topic: {group}"
 
 #: ckanext/fcscopendata/templates/group/snippets/group_form.html:10
 #: ckanext/fcscopendata/templates/organization/snippets/organization_form.html:10
@@ -757,7 +757,7 @@ msgstr ""
 
 #: ckanext/fcscopendata/templates/group/snippets/group_form.html:10
 msgid "My Group"
-msgstr "My Theme"
+msgstr "My Topic"
 
 #: ckanext/fcscopendata/templates/group/snippets/group_form.html:18
 #: ckanext/fcscopendata/templates/organization/snippets/organization_form.html:18
@@ -776,15 +776,15 @@ msgstr ""
 
 #: ckanext/fcscopendata/templates/group/snippets/group_form.html:20
 msgid "A little information about my group..."
-msgstr "A little information about my theme..."
+msgstr "A little information about my topic..."
 
 #: ckanext/fcscopendata/templates/group/snippets/group_form.html:38
 msgid "Are you sure you want to delete this Group?"
-msgstr "Are you sure you want to delete this Theme?"
+msgstr "Are you sure you want to delete this Topic?"
 
 #: ckanext/fcscopendata/templates/group/snippets/group_form.html:41
 msgid "Save Group"
-msgstr "Save Theme"
+msgstr "Save Topic"
 
 #: ckanext/fcscopendata/templates/group/snippets/group_item.html:32
 #: ckanext/fcscopendata/templates/organization/snippets/organization_item.html:31
@@ -811,11 +811,11 @@ msgstr ""
 
 #: ckanext/fcscopendata/templates/group/snippets/group_item.html:43
 msgid "Remove dataset from this group"
-msgstr "Remove dataset from this theme"
+msgstr "Remove dataset from this topic"
 
 #: ckanext/fcscopendata/templates/group/snippets/helper.html:4
 msgid "What are Groups?"
-msgstr "What are Themes?"
+msgstr "What are Topics?"
 
 #: ckanext/fcscopendata/templates/group/snippets/helper.html:8
 msgid ""
@@ -824,9 +824,9 @@ msgid ""
 "on a particular theme, or as a very simple way to help people find and "
 "search your own published datasets."
 msgstr ""
-"You can use CKAN Themes to create and manage collections of datasets. "
+"You can use CKAN Topics to create and manage collections of datasets. "
 "This could be to catalogue datasets for a particular project or team, or "
-"on a particular theme, or as a very simple way to help people find and "
+"on a particular topic, or as a very simple way to help people find and "
 "search your own published datasets."
 
 #: ckanext/fcscopendata/templates/group/snippets/info.html:16
@@ -876,7 +876,7 @@ msgstr ""
 "of robust data APIs). CKAN is aimed at data publishers (national and "
 "regional governments, companies and organizations) wanting to make their "
 "data open and available.</p> <p>CKAN is used by governments and user "
-"themes worldwide and powers a variety of official and community data "
+"top worldwide and powers a variety of official and community data "
 "portals including portals for local, national and international "
 "government, such as the UK’s <a "
 "href=\"http://data.gov.uk\">data.gov.uk</a> and the European Union’s <a "
@@ -937,11 +937,11 @@ msgstr ""
 
 #: ckanext/fcscopendata/templates/home/snippets/stats.html:23
 msgid "group"
-msgstr "theme"
+msgstr "topic"
 
 #: ckanext/fcscopendata/templates/home/snippets/stats.html:23
 msgid "groups"
-msgstr "themes"
+msgstr "topics"
 
 #: ckanext/fcscopendata/templates/macros/form.html:54
 #: ckanext/fcscopendata/templates/macros/form.html:287
@@ -1235,15 +1235,15 @@ msgstr ""
 
 #: ckanext/fcscopendata/templates/package/group_list.html:14
 msgid "Associate this group with this dataset"
-msgstr "Associate this theme with this dataset"
+msgstr "Associate this topic with this dataset"
 
 #: ckanext/fcscopendata/templates/package/group_list.html:14
 msgid "Add to group"
-msgstr "Add to theme"
+msgstr "Add to topic"
 
 #: ckanext/fcscopendata/templates/package/group_list.html:23
 msgid "There are no groups associated with this dataset"
-msgstr "There are no themes associated with this dataset"
+msgstr "There are no topics associated with this dataset"
 
 #: ckanext/fcscopendata/templates/package/new_package_form.html:13
 msgid "Update Dataset"
@@ -1966,22 +1966,22 @@ msgstr ""
 #: ckanext/fcscopendata/templates/snippets/search_result_text.html:21
 msgid "{number} group found for \"{query}\""
 msgid_plural "{number} groups found for \"{query}\""
-msgstr[0] "{number} theme found for \"{query}\""
-msgstr[1] "{number} themes found for \"{query}\""
+msgstr[0] "{number} topic found for \"{query}\""
+msgstr[1] "{number} topics found for \"{query}\""
 
 #: ckanext/fcscopendata/templates/snippets/search_result_text.html:22
 msgid "No groups found for \"{query}\""
-msgstr "No themes found for \"{query}\""
+msgstr "No topics found for \"{query}\""
 
 #: ckanext/fcscopendata/templates/snippets/search_result_text.html:23
 msgid "{number} group found"
 msgid_plural "{number} groups found"
-msgstr[0] "{number} theme found"
-msgstr[1] "{number} themes found"
+msgstr[0] "{number} topic found"
+msgstr[1] "{number} topics found"
 
 #: ckanext/fcscopendata/templates/snippets/search_result_text.html:24
 msgid "No groups found"
-msgstr "No themes found"
+msgstr "No topics found"
 
 #: ckanext/fcscopendata/templates/snippets/search_result_text.html:27
 msgid "{number} organization found for \"{query}\""
@@ -2028,7 +2028,7 @@ msgstr ""
 
 #: ckanext/fcscopendata/templates/snippets/activities/changed_group.html:4
 msgid "{actor} updated the group {group}"
-msgstr "{actor} updated the theme {group}"
+msgstr "{actor} updated the topic {group}"
 
 #: ckanext/fcscopendata/templates/snippets/activities/changed_organization.html:4
 msgid "{actor} updated the organization {organization}"
@@ -2053,7 +2053,7 @@ msgstr ""
 
 #: ckanext/fcscopendata/templates/snippets/activities/deleted_group.html:4
 msgid "{actor} deleted the group {group}"
-msgstr "{actor} deleted the theme {group}"
+msgstr "{actor} deleted the topic {group}"
 
 #: ckanext/fcscopendata/templates/snippets/activities/deleted_organization.html:4
 msgid "{actor} deleted the organization {organization}"
@@ -2085,7 +2085,7 @@ msgstr ""
 
 #: ckanext/fcscopendata/templates/snippets/activities/new_group.html:4
 msgid "{actor} created the group {group}"
-msgstr "{actor} created the theme {group}"
+msgstr "{actor} created the topic {group}"
 
 #: ckanext/fcscopendata/templates/snippets/activities/new_organization.html:4
 msgid "{actor} created the organization {organization}"
@@ -2444,7 +2444,7 @@ msgstr ""
 #: ckanext/fcscopendata/templates/user/dashboard.html:23
 #: ckanext/fcscopendata/templates/user/dashboard_groups.html:12
 msgid "My Groups"
-msgstr "My Themes"
+msgstr "My Topics"
 
 #: ckanext/fcscopendata/templates/user/dashboard.html:41
 msgid "Activity from items that I'm following"
@@ -2464,7 +2464,7 @@ msgstr ""
 
 #: ckanext/fcscopendata/templates/user/dashboard_groups.html:20
 msgid "You are not a member of any groups."
-msgstr "You are not a member of any themes."
+msgstr "You are not a member of any topics."
 
 #: ckanext/fcscopendata/templates/user/dashboard_organizations.html:21
 msgid "You are not a member of any organizations."
@@ -2646,7 +2646,7 @@ msgstr ""
 
 #: ckanext/fcscopendata/templates/user/new.html:28
 msgid "Create datasets, groups and other exciting things"
-msgstr "Create datasets, themes and other exciting things"
+msgstr "Create datasets, topics and other exciting things"
 
 #: ckanext/fcscopendata/templates/user/new_user_form.html:5
 msgid "username"
@@ -2783,5 +2783,5 @@ msgstr ""
 
 #: ckanext/hierarchy/templates/snippets/search_form.html:5
 msgid "Include Sub-Groups"
-msgstr "Include Sub-Themes"
+msgstr "Include Sub-Topics"
 
