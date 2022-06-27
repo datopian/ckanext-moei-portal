@@ -94,7 +94,7 @@ def resource_create(up_func,context, data_dict):
 def organization_create(up_func,context,data_dict): 
     data_dict['title'] = data_dict.get('title_translated-en', '') 
 
-    if data_dict['notes_translated-en']:                                                                                                                         
+    if data_dict.get('notes_translated-en'):                                                                                                                         
         data_dict['description'] = data_dict.get('notes_translated-en', '')  
 
     # upload icon  
