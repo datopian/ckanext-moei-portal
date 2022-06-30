@@ -41,12 +41,11 @@ class FcscopendataPlugin(plugins.SingletonPlugin, DefaultTranslation):
         else:
             user_is_syadmin = False
 
-        if not user_is_syadmin:
-            include_drafts = search_params.get('include_drafts', False)
-            if not include_drafts:
-                search_params.update({
-                    'fq': '!(publishing_status:draft)' + search_params.get('fq', '')
-                })
+        include_drafts = search_params.get('include_drafts', False)
+        if not include_drafts and not user_is_syadmin:
+            search_params.update({
+                'fq': '!(publishing_status:draft)' + search_params.get('fq', '')
+            })
         return search_params
 
     # IConfigurer
