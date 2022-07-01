@@ -5,6 +5,7 @@ import ckan.plugins as p
 import ckan.lib.dictization.model_dictize as model_dictize
 import ckan.lib.uploader as uploader
 from datetime import datetime
+from sqlalchemy import or_
 
 from ckanext.fcscopendata.lib.util import (
     add_user_as_memeber_on_groups,
@@ -135,14 +136,29 @@ def tag_create(up_func,context,data_dict):
     model = context['model']
     tag = context.get('tag')
     data_dict['name'] = data_dict.get('name_translated-en', data_dict['name'])
-    result = up_func(context, data_dict)  
     name_translated = {
         'en' : data_dict.get('name_translated-en', data_dict['name']), 
         'ar': data_dict.get('name_translated-ar', '')
     }
+
+    tag_already_exist = model.Session.query(model.tag.Tag).filter(or_(
+        model.tag.Tag.extras.ilike("%{0}%".format(name_translated['en'])),
+        model.tag.Tag.extras.ilike("%{0}%".format(name_translated['ar']))
+        )
+    ).first()
+
+    if tag_already_exist:
+        raise tk.ValidationError({
+            'message': [
+                    u'Tag "{0}" is already belongs to category "{1}".'.format(
+                        name_translated['en'], tag_already_exist.vocabulary.name)]
+            })
+    result = up_func(context, data_dict)  
+
     data_dict["extras"] = [{"key": "name_translated", 
             "value": json.dumps(name_translated, ensure_ascii=False)
             }]
+                    
     if tag:
         data_dict['id'] = tag.id
     tag = model.tag.Tag.get(_get_or_bust(result, 'id'))
