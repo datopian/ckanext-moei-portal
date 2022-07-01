@@ -36,11 +36,16 @@ class FcscopendataPlugin(plugins.SingletonPlugin, DefaultTranslation):
         return pkg_dict
 
     def before_search(self, search_params):
+        if toolkit.c.userobj:
+            user_is_syadmin = toolkit.c.userobj.sysadmin
+        else:
+            user_is_syadmin = False
+
         include_drafts = search_params.get('include_drafts', False)
-        if not include_drafts:
+        if not include_drafts and not user_is_syadmin:
             search_params.update({
-                'fq': '!(publishing_status:draft)' + search_params.get('fq', ''),
-            })  
+                'fq': '!(publishing_status:draft)' + search_params.get('fq', '')
+            })
         return search_params
 
     # IConfigurer
