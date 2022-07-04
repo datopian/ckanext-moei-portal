@@ -24,6 +24,8 @@ def theme_update(pkg, groups, context):
 
 def editor_publishing_dataset(owner_org, context):
     user_capacity = users_role_for_group_or_org(owner_org, context['user'])
+    if context['auth_user_obj'].sysadmin:
+        return False
     return user_capacity != 'admin'
 
 def add_user_as_memeber_on_groups(groups, context):
