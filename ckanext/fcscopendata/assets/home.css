@@ -265,7 +265,6 @@ a.tag:hover {
   font-size: 0.9em;
 }
 .group-list{
-  display: flex;
   margin: 0;
   list-style: none;
   padding: 2px;
@@ -279,6 +278,8 @@ a.tag:hover {
   box-shadow: none;
   font-size: 14px;
   margin-right: 4px;
+  float: left;
+  margin-bottom: 4px;
 }
 
 /* Organizations */
