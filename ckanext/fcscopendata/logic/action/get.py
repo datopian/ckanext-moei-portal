@@ -86,6 +86,24 @@ def organization_show(up_func,context,data_dict):
 
 @p.toolkit.chained_action   
 @tk.side_effect_free
+def group_list(up_func,context,data_dict):
+    groups = data_dict.get('groups', False)
+    if groups:
+        data_dict['groups'] = json.loads(groups)
+    return up_func(context, data_dict)  
+
+
+@p.toolkit.chained_action   
+@tk.side_effect_free
+def organization_list(up_func,context,data_dict):
+    organizations = data_dict.get('organizations', False)
+    if organizations:
+        data_dict['organizations'] = json.loads(organizations)
+    return up_func(context, data_dict)  
+
+
+@p.toolkit.chained_action   
+@tk.side_effect_free
 def group_show(up_func,context,data_dict): 
     result = up_func(context, data_dict)  
 
