@@ -74,13 +74,13 @@ def organization_show(up_func,context,data_dict):
     result = up_func(context, data_dict)  
 
     # Return full icon url
-    if result.get('icon_url') and not result.get('icon_url').startswith('http'):
-        result['icon_display_url'] = tk.h.url_for_static(
-                'uploads/group/%s' % result.get('icon_url'),
+    if result.get('logo_url') and not result.get('logo_url').startswith('http'):
+        result['logo_display_url'] = tk.h.url_for_static(
+                'uploads/group/%s' % result.get('logo_url'),
                 qualified=True
             )
     else:
-         result['icon_display_url'] = result.get('icon_url') or ''                                                                                                                                                                                                                                                                                                             
+         result['logo_display_url'] = result.get('logo_url') or ''                                                                                                                                                                                                                                                                                                             
     return result
 
 
@@ -108,13 +108,13 @@ def group_show(up_func,context,data_dict):
     result = up_func(context, data_dict)  
 
     # Return full icon url
-    if result.get('icon_url') and not result.get('icon_url').startswith('http'):
-        result['icon_display_url'] = tk.h.url_for_static(
-                'uploads/group/%s' % result.get('icon_url'),
+    if result.get('logo_url') and not result.get('logo_url').startswith('http'):
+        result['logo_display_url'] = tk.h.url_for_static(
+                'uploads/group/%s' % result.get('logo_url'),
                 qualified=True
             )
     else:
-         result['icon_display_url'] = result.get('icon_url') or ''                                                                                                                                                                                                                                                                                                                
+         result['logo_display_url'] = result.get('logo_url') or ''                                                                                                                                                                                                                                                                                                                
     return result
 
 

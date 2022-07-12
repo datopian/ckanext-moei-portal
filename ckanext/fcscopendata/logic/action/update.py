@@ -103,7 +103,7 @@ def organization_update(up_func,context,data_dict):
 
     # upload icon  
     upload = uploader.get_uploader('group')
-    upload.update_data_dict(data_dict, 'icon_url','icon_upload', 'clear_upload')
+    upload.update_data_dict(data_dict, 'logo_url','logo_upload', 'logo_upload_clear')
     upload.upload(uploader.get_max_image_size())                                                                                                 
     result = up_func(context, data_dict)                                                                                                                                                                                                                                                                                                     
     return result
@@ -119,7 +119,7 @@ def group_update(up_func,context,data_dict):
     
     # upload icon  
     upload = uploader.get_uploader('group')
-    upload.update_data_dict(data_dict, 'icon_url','icon_upload', 'clear_upload')
+    upload.update_data_dict(data_dict, 'logo_url','logo_upload', 'logo_upload_clear')
     upload.upload(uploader.get_max_image_size())  
     result = up_func(context, data_dict)                                                                                                                                                                                                                                                                                                   
     return result

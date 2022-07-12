@@ -8,9 +8,9 @@
         <img src="{{ group.image_display_url or h.url_for_static('/base/images/placeholder-group.png') }}" width="190" height="118" alt="{{ group.name }}" />
       </a>
     </div>
-    <div class="icon">
-      {% if group.icon_display_url %}
-          <img src="{{ group.icon_display_url }}" width="50" height="50" alt="{{ group.name }}" />
+    <div class="logo">
+      {% if group.logo_display_url %}
+          <img src="{{ group.logo_display_url }}" width="50" height="50" alt="{{ group.name }}" />
       {% endif %}   
     </div>
     {% endblock %}
