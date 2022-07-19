@@ -837,15 +837,25 @@ button.btn.btn-warning:hover{
 .context-info {
   margin-bottom: 20px;
 }
-.context-info .icon {
+.context-info .logo {
   margin-top: -35px;
 }
 
-.context-info .icon img {
+.context-info .logo img {
   border-radius: 50px;
   border: 2px solid #f7f7f7;
   background: #fff;
   padding: 2px;
+}
+
+.image-upload .form-group {
+  margin-bottom: 0px;
+}
+
+.info-block {
+  margin: 0 0 16px 1px;
+  font-size: 12px;
+  color: #555;
 }
 
 /**** Responsive CSS *****/
