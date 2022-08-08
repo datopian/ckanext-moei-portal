@@ -1,8 +1,12 @@
+from email.policy import default
 import ckan.logic as logic
 import ckan.model as model
 import ckan.model as model
 import ckan.lib.dictization.model_dictize as model_dictize
 import logging
+from ckan.common import config
+import distutils.util
+from urllib.parse import urlparse
 
 log = logging.getLogger(__name__)
 
@@ -37,3 +41,15 @@ def get_dataset_group_list(pkg_dict):
                           for group in group_list]
 
     return group_dropdown
+
+
+def get_cms_url():
+    default = 'https://cms.fcsc.production.datopian.com/ghost'
+    key = 'ckanext.fcsc.cms'
+    if config.get(key):
+        url = config.get(key)
+        if bool(urlparse(url).netloc):
+            return url
+        return default
+    else:
+        return default
