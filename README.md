@@ -35,3 +35,12 @@ To install ckanext-fcscopendata:
 4. Restart CKAN. For example if you've deployed CKAN with Apache on Ubuntu:
      sudo service apache2 reload
 
+
+
+## ENV
+
+To add Fcsc cms admin link
+
+```
+CKANEXT__FCSC__CMS = https://cms.fcsc.production.datopian.com/ghost
+```
