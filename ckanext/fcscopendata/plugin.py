@@ -10,7 +10,6 @@ from ckanext.fcscopendata.lib.helpers import (
      get_package_download_stats, 
      is_dataset_draft, 
      get_dataset_group_list,
-     get_cms_url
 )
 
 class FcscopendataPlugin(plugins.SingletonPlugin, DefaultTranslation):
@@ -87,5 +86,4 @@ class FcscopendataPlugin(plugins.SingletonPlugin, DefaultTranslation):
             'get_package_download_stats': get_package_download_stats,
             'is_dataset_draft': is_dataset_draft,
             'get_dataset_group_list': get_dataset_group_list,
-            'get_cms_url': get_cms_url
         }

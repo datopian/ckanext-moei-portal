@@ -91,24 +91,14 @@
                   ('dataset.search', _('Datasets')),
                   ('organization.index', _('Organizations')),
                   ('group.index', _('Groups')),
-                  ('vocabulary.index', _('Categories')) ) }}
-
-                  <li>
-                    <a href="{{h.get_cms_url()}}" target="_blank" rel="noopener noreferrer">CMS Admin</a>
-                  </li>
-                  {{ h.build_nav_main(
-                    ('home.about', _('About')) ) }}
+                  ('vocabulary.index', _('Categories')),
+                  ('home.about', _('About')) ) }}
                 
               {% else %}
               {{ h.build_nav_main(
                 ('dataset.search', _('Datasets')),
                 ('organization.index', _('Organizations')),
-                ('group.index', _('Groups')) ) }}
-
-              <li>
-                <a href="{{h.get_cms_url()}}" target="_blank" rel="noopener noreferrer">CMS Admin</a>
-              </li>
-              {{ h.build_nav_main(
+                ('group.index', _('Groups')),
                 ('home.about', _('About')) ) }}
               
               {% endif %}

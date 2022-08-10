@@ -7,6 +7,7 @@ import logging
 from ckan.common import config
 import distutils.util
 from urllib.parse import urlparse
+from ckan.lib.helpers import build_nav_main, _make_menu_item, literal
 
 log = logging.getLogger(__name__)
 
@@ -53,3 +54,24 @@ def get_cms_url():
         return default
     else:
         return default
+
+
+def build_nav_main(*args):
+    ''' build a set of menu items.
+
+    args: tuples of (menu type, title) eg ('login', _('Login'))
+    outputs <li><a href="...">title</a></li>
+    '''
+    output = ''
+    for item in args:
+        menu_item, title = item[:2]
+        if len(item) == 3 and not check_access(item[2]):
+            continue
+        
+        if title == "About":
+            link = literal(f'<li><a href={get_cms_url()} target="_blank" rel="noopener noreferrer">CMS Admin</a></li>')
+            output += link
+            output += _make_menu_item(menu_item, title)
+        else:
+            output += _make_menu_item(menu_item, title)
+    return output
