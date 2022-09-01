@@ -40,6 +40,37 @@ def package_search(up_func, context, data_dict):
 @tk.side_effect_free
 def package_show(up_func,context,data_dict): 
     result = up_func(context, data_dict)
+    if result.get('organization'):
+        org_id = result.get('organization', {}).get('id')
+        org_dict = tk.get_action('organization_show')(context, {
+            'id': org_id,
+            'include_dataset_count': False,
+            'include_datasets': False,
+            'include_users': False,
+            'include_groups': False,
+            'include_tags': False,
+            'include_followers': False
+            })
+        result['organization'] = org_dict
+    
+    if result.get('groups', []):
+        for idx, group in enumerate(result.get('groups')):
+            group_dict = tk.get_action('group_show')(context, {
+                'id': group['id'],
+                'include_dataset_count': False,
+                'include_datasets': False,
+                'include_users': False,
+                'include_groups': False,
+                'include_tags': False,
+                'include_followers': False
+                })
+            result.get('groups')[idx] = group_dict
+
+    if result.get('tags', []):
+        for idx, tag in enumerate(result.get('tags')):
+            result['tags'][idx] =  \
+            tk.get_action('tag_show')(context, {'id': tag['id'] })
+
     if result.get('publishing_status', '') == 'draft':
         tk.check_access('package_update', context, {'id': data_dict.get('id')})
 
