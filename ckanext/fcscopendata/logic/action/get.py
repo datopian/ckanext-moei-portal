@@ -15,25 +15,44 @@ log = logging.getLogger(__name__)
 @tk.side_effect_free
 def package_search(up_func, context, data_dict):
     result = up_func(context, data_dict)
+
     # Only add bilingual fields if the action is called from API.
     if not context.get('request_from_ui', False):
-        context = {'model': model, 'session': model.Session,
-                    'user': tk.c.user, 'auth_user_obj': tk.c.userobj}
-                    
         for idx, pkg in enumerate(result['results']):
+            data_dict.update({
+                'q': 'id:{0}'.format(pkg['id']), 
+                'use_default_schema': 'true'
+                })
+            # Add bilingual fields from solr validate_data_dict result
+            validate_data_result = up_func(context, data_dict)['results'][0]
             if pkg.get('groups', []):
-                for gidx, group in enumerate(pkg.get('groups', [])):
-                    group_dict = tk.get_action('group_show')(context, {'id': group.get('id')})
-                    result['results'][idx]['groups'][gidx] = group_dict
+                result['results'][idx]['groups'] = validate_data_result['groups']
 
             if pkg.get('organization', {}):
-                org_dict = tk.get_action('organization_show')(context, {'id': pkg.get('organization', {})['id'] })
-                result['results'][idx]['organization'] = org_dict
+                result['results'][idx]['organization'] = validate_data_result['organization']
 
             if pkg.get('tags', []):
-                for index, tag in enumerate(result['results'][idx]['tags']):
-                    result['results'][idx]['tags'][index] =  \
-                    tk.get_action('tag_show')(context, {'id': tag['id'] })
+                result['results'][idx]['tags'] = validate_data_result['tags']
+            
+            result['results'][idx]['total_downloads'] = validate_data_result.get('total_downloads') or 0
+
+
+    facet_tags = result.get('search_facets', {}).get('tags', {}).get('items', [])
+    new_facet_tags = []
+
+    # Add bilingual tags in facets result
+    if facet_tags:
+        for index, tag in enumerate(facet_tags):
+            tag_obj = model.Session.query(model.Tag).filter(model.Tag.name == tag['name']).first()
+            if tag_obj._extras:
+                extras = model_dictize.extras_dict_dictize(
+                        tag_obj._extras, context)
+                translated = list(filter(lambda d: d['key'] in ['name_translated'], extras))
+                if translated:   
+                    field_value = json.loads(translated[0].get('value', {}))
+                    new_facet_tags.append({**tag, 'name_translated': field_value  })
+        result['search_facets']['tags']['items'] = new_facet_tags
+
     return result
 
 @p.toolkit.chained_action   
