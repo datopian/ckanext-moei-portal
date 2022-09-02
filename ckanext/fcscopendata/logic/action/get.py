@@ -15,30 +15,26 @@ log = logging.getLogger(__name__)
 @tk.side_effect_free
 def package_search(up_func, context, data_dict):
     result = up_func(context, data_dict)
+
     # Only add bilingual fields if the action is called from API.
     if not context.get('request_from_ui', False):
-        context = {'model': model, 'session': model.Session,
-                    'user': tk.c.user, 'auth_user_obj': tk.c.userobj}
-
         for idx, pkg in enumerate(result['results']):
             data_dict.update({
                 'q': 'id:{0}'.format(pkg['id']), 
                 'use_default_schema': 'true'
                 })
-
-            non_validate_data_result = up_func(context, data_dict)
-            print(non_validate_data_result)
+            # Add bilingual fields from solr validate_data_dict result
+            validate_data_result = up_func(context, data_dict)['results'][0]
             if pkg.get('groups', []):
-                result['results'][idx]['groups'] = non_validate_data_result['results'][0]['groups']
+                result['results'][idx]['groups'] = validate_data_result['groups']
 
             if pkg.get('organization', {}):
-                result['results'][idx]['organization'] = non_validate_data_result['results'][0]['organization']
+                result['results'][idx]['organization'] = validate_data_result['organization']
 
             if pkg.get('tags', []):
-                result['results'][idx]['tags'] = non_validate_data_result['results'][0]['tags']
+                result['results'][idx]['tags'] = validate_data_result['tags']
             
-            if pkg.get('total_downloads', False):
-                result['results'][idx]['total_downloads'] = non_validate_data_result['results'][0]['total_downloads']
+            result['results'][idx]['total_downloads'] = validate_data_result.get('total_downloads') or 0
 
 
     facet_tags = result.get('search_facets', {}).get('tags', {}).get('items', [])
