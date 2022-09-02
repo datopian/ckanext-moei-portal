@@ -41,6 +41,21 @@ def package_search(up_func, context, data_dict):
                 for index, tag in enumerate(result['results'][idx]['tags']):
                     result['results'][idx]['tags'][index] =  \
                     tk.get_action('tag_show')(context, {'id': tag['id'] })
+
+    facet_tags = result.get('search_facets', {}).get('tags', {}).get('items', [])
+    new_facet_tags = []
+    if facet_tags:
+        for index, tag in enumerate(facet_tags):
+            tag_obj = model.Session.query(model.Tag).filter(model.Tag.name == tag['name']).first()
+            if tag_obj._extras:
+                extras = model_dictize.extras_dict_dictize(
+                        tag_obj._extras, context)
+                translated = list(filter(lambda d: d['key'] in ['name_translated'], extras))
+                if translated:   
+                    field_value = json.loads(translated[0].get('value', {}))
+                    new_facet_tags.append({**tag, 'name_translated': field_value  })
+        result['search_facets']['tags']['items'] = new_facet_tags
+
     return result
 
 @p.toolkit.chained_action   
