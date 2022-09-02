@@ -21,6 +21,13 @@ def package_search(up_func, context, data_dict):
                     'user': tk.c.user, 'auth_user_obj': tk.c.userobj}
                     
         for idx, pkg in enumerate(result['results']):
+            try:
+               result['results'][idx]['total_downloads'] = tk.get_action('package_stats') \
+                                                            (context, {'package_id': pkg['id']})
+            except:
+                log.error('package {id} stats not available'.format(id=pkg['id']))
+                result['results'][idx]['total_downloads'] = 0
+            
             if pkg.get('groups', []):
                 for gidx, group in enumerate(pkg.get('groups', [])):
                     group_dict = tk.get_action('group_show')(context, {'id': group.get('id')})
