@@ -19,31 +19,32 @@ def package_search(up_func, context, data_dict):
     if not context.get('request_from_ui', False):
         context = {'model': model, 'session': model.Session,
                     'user': tk.c.user, 'auth_user_obj': tk.c.userobj}
-                    
+
         for idx, pkg in enumerate(result['results']):
-            try:
-               result['results'][idx]['total_downloads'] = tk.get_action('package_stats') \
-                                                            (context, {'package_id': pkg['id']})
-            except:
-                log.error('package {id} stats not available'.format(id=pkg['id']))
-                result['results'][idx]['total_downloads'] = 0
-            
+            data_dict.update({
+                'q': 'id:{0}'.format(pkg['id']), 
+                'use_default_schema': 'true'
+                })
+
+            non_validate_data_result = up_func(context, data_dict)
+            print(non_validate_data_result)
             if pkg.get('groups', []):
-                for gidx, group in enumerate(pkg.get('groups', [])):
-                    group_dict = tk.get_action('group_show')(context, {'id': group.get('id')})
-                    result['results'][idx]['groups'][gidx] = group_dict
+                result['results'][idx]['groups'] = non_validate_data_result['results'][0]['groups']
 
             if pkg.get('organization', {}):
-                org_dict = tk.get_action('organization_show')(context, {'id': pkg.get('organization', {})['id'] })
-                result['results'][idx]['organization'] = org_dict
+                result['results'][idx]['organization'] = non_validate_data_result['results'][0]['organization']
 
             if pkg.get('tags', []):
-                for index, tag in enumerate(result['results'][idx]['tags']):
-                    result['results'][idx]['tags'][index] =  \
-                    tk.get_action('tag_show')(context, {'id': tag['id'] })
+                result['results'][idx]['tags'] = non_validate_data_result['results'][0]['tags']
+            
+            if pkg.get('total_downloads', False):
+                result['results'][idx]['total_downloads'] = non_validate_data_result['results'][0]['total_downloads']
+
 
     facet_tags = result.get('search_facets', {}).get('tags', {}).get('items', [])
     new_facet_tags = []
+
+    # Add bilingual tags in facets result
     if facet_tags:
         for index, tag in enumerate(facet_tags):
             tag_obj = model.Session.query(model.Tag).filter(model.Tag.name == tag['name']).first()
