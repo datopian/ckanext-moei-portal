@@ -1,4 +1,3 @@
-from ast import Delete
 import json
 import logging
 import ckan.plugins.toolkit as tk
