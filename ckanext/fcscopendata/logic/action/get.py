@@ -34,11 +34,11 @@ def package_search(up_func, context, data_dict):
 
         # Get total downloads from db tables.
         try:
-            result['total_downloads'] = tk.get_action('package_stats')(context, {'package_id': pkg['id']})
-            
+            pkg['total_downloads'] = tk.get_action('package_stats')(context, {'package_id': pkg['id']})
+
         except:
             log.error('package {id} download stats not available'.format(id=pkg['id']))
-            result['total_downloads'] = 0
+            pkg['total_downloads'] = 0
 
     # Add bilingual tags in facets result
     facet_tags = result.get('search_facets', {}).get('tags', {}).get('items', [])
