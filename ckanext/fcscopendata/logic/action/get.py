@@ -16,33 +16,35 @@ log = logging.getLogger(__name__)
 def package_search(up_func, context, data_dict):
     result = up_func(context, data_dict)
 
-    # Only add bilingual fields if the action is called from API.
-    if not context.get('request_from_ui', False):
-        for idx, pkg in enumerate(result['results']):
-            data_dict.update({
-                'q': 'id:{0}'.format(pkg['id']), 
-                'use_default_schema': 'true'
-                })
-            # Add bilingual fields from solr validate_data_dict result
-            validate_data_result = up_func(context, data_dict)['results'][0]
-            if pkg.get('groups', []):
-                result['results'][idx]['groups'] = validate_data_result['groups']
+    # Add bilingual groups 
+    for pkg in result['results']:
+        
+        if pkg.get('groups', []):
+            for idx, group in enumerate(pkg.get('groups')):
+                group_dict = tk.get_action('group_show')(context, {
+                    'id': group['id'],
+                    'include_dataset_count': False,
+                    'include_datasets': False,
+                    'include_users': False,
+                    'include_groups': False,
+                    'include_tags': False,
+                    'include_followers': False
+                    })
+                pkg['groups'][idx] = group_dict
 
-            if pkg.get('organization', {}):
-                result['results'][idx]['organization'] = validate_data_result['organization']
-
-            if pkg.get('tags', []):
-                result['results'][idx]['tags'] = validate_data_result['tags']
+        # Get total downloads from db tables.
+        try:
+            result['total_downloads'] = tk.get_action('package_stats')(context, {'package_id': pkg['id']})
             
-            result['results'][idx]['total_downloads'] = validate_data_result.get('total_downloads') or 0
-
-
-    facet_tags = result.get('search_facets', {}).get('tags', {}).get('items', [])
-    new_facet_tags = []
+        except:
+            log.error('package {id} download stats not available'.format(id=pkg['id']))
+            result['total_downloads'] = 0
 
     # Add bilingual tags in facets result
+    facet_tags = result.get('search_facets', {}).get('tags', {}).get('items', [])
+    new_facet_tags = []
     if facet_tags:
-        for index, tag in enumerate(facet_tags):
+        for tag in facet_tags:
             tag_obj = model.Session.query(model.Tag).filter(model.Tag.name == tag['name']).first()
             if tag_obj._extras:
                 extras = model_dictize.extras_dict_dictize(
@@ -52,7 +54,6 @@ def package_search(up_func, context, data_dict):
                     field_value = json.loads(translated[0].get('value', {}))
                     new_facet_tags.append({**tag, 'name_translated': field_value  })
         result['search_facets']['tags']['items'] = new_facet_tags
-
     return result
 
 @p.toolkit.chained_action   
@@ -83,8 +84,8 @@ def package_show(up_func,context,data_dict):
                 'include_tags': False,
                 'include_followers': False
                 })
-            result.get('groups')[idx] = group_dict
-
+            result['groups'][idx] = group_dict
+   
     if result.get('tags', []):
         for idx, tag in enumerate(result.get('tags')):
             result['tags'][idx] =  \
@@ -97,7 +98,8 @@ def package_show(up_func,context,data_dict):
     try:
         result['total_downloads'] = tk.get_action('package_stats')(context, {'package_id': id})
     except:
-        log.error(f'package {id} stats not available')
+        log.error(f'package {id} download stats not available')
+        result['total_downloads'] = 0
 
     # resources = result.get('resources')
     # overall_stat = 0
@@ -113,8 +115,6 @@ def package_show(up_func,context,data_dict):
     # if "total_downloads" not in result:
     #     result['total_downloads'] = overall_stat
 
-    if "total_downloads" not in result:
-        result['total_downloads'] = 0
     return result
 
 
