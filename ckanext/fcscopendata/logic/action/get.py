@@ -30,6 +30,7 @@ def package_search(up_func, context, data_dict):
                     'include_tags': False,
                     'include_followers': False
                     })
+                group_dict.pop('extras', None)
                 pkg['groups'][idx] = group_dict
 
         # Get total downloads from db tables.
@@ -84,6 +85,7 @@ def package_show(up_func,context,data_dict):
                 'include_tags': False,
                 'include_followers': False
                 })
+            group_dict.pop('extras', None)
             result['groups'][idx] = group_dict
    
     if result.get('tags', []):
