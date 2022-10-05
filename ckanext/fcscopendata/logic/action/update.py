@@ -68,7 +68,10 @@ def package_update(up_func, context, data_dict):
     # Map resource description from scheming note field
     if data_dict.get('resources', False):
         for resources in data_dict['resources']:
-            resources['description'] =  resources.get('notes_translated-en', '')
+            if resources.get('notes_translated-en', False):
+                resources['description'] =  resources.get('notes_translated-en', '')
+            else:
+                resources['description'] =  resources.get('notes_translated', {}).get('en', '')
     result = up_func(context, data_dict)
 
     # Update package member for groups
