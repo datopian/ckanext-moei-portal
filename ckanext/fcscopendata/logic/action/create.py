@@ -33,7 +33,7 @@ def package_create(up_func, context, data_dict):
         except:
             try:
                 start_date = datetime.strptime(str(start_period), '%Y-%m-%d').isoformat()
-             except ValueError as ve:
+            except ValueError as ve:
                 log.error('%s for start period', ve)
                 raise tk.ValidationError(
                         error_dict =  { 'start_period' : ['Start period needs to be in the format YYYY-MM or YYYY-MM-DD'] },
@@ -46,7 +46,7 @@ def package_create(up_func, context, data_dict):
         except:
             try:
                 end_date = datetime.strptime(str(end_period), '%Y-%m-%d').isoformat()
-             except ValueError as ve:
+            except ValueError as ve:
                 log.error('%s for end period', ve)
                 raise tk.ValidationError(
                         error_dict =  { 'end_period' : ['End period needs to be in the format YYYY-MM or YYYY-MM-DD'] },
