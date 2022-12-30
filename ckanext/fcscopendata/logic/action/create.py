@@ -28,11 +28,30 @@ def package_create(up_func, context, data_dict):
     end_period = data_dict.get('end_period', False)
 
     if start_period:
-        start_date = datetime.strptime(str(start_period), '%Y-%m').isoformat()
+        try:
+            start_date = datetime.strptime(str(start_period), '%Y-%m').isoformat()
+        except:
+            try:
+                start_date = datetime.strptime(str(start_period), '%Y-%m-%d').isoformat()
+            except ValueError as ve:
+                log.error('%s for start period', ve)
+                raise tk.ValidationError(
+                        error_dict =  { 'start_period' : ['Start period needs to be in the format YYYY-MM or YYYY-MM-DD'] },
+                        error_summary = ['Start period needs to be in the format YYYY-MM or YYYY-MM-DD']
+                    )
 
     if end_period:
-        end_date = datetime.strptime(str(end_period), '%Y-%m').isoformat()
-
+        try:
+            end_date = datetime.strptime(str(end_period), '%Y-%m').isoformat()
+        except:
+            try:
+                end_date = datetime.strptime(str(end_period), '%Y-%m-%d').isoformat()
+            except ValueError as ve:
+                log.error('%s for end period', ve)
+                raise tk.ValidationError(
+                        error_dict =  { 'end_period' : ['End period needs to be in the format YYYY-MM or YYYY-MM-DD'] },
+                        error_summary = ['End period needs to be in the format YYYY-MM or YYYY-MM-DD']
+                    )
     if start_period and end_period:
         if start_date > end_date:
             raise tk.ValidationError(
