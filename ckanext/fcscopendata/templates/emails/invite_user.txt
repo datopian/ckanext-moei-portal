@@ -1,17 +1,13 @@
-Dear {{ user_name }},
+<p>Dear {{ user_name }},</p>
 
-You have been invited to {{ site_title }}.
+<p>You have been invited to {{ site_title }}.</p>
 
-A user has already been created for you with the username {{ user_name }}. You can change it later.
+<p>A user has already been created for you with the username {{ user_name }}. You can change it later.</p>
 
-You have been added to the {{ group_type }} {{ group_title }} with the following role: {{ role_name }}.
+<p>You have been added to the {{ group_type }} {{ group_title }} with the following role: {{ role_name }}.</p>
+<p>To accept this invite, please reset your password <a href="{{ reset_link }}">here</a>.</p><br>
 
-To accept this invite, please reset your password at:
+<p>Have a nice day.</p>
 
-   {{ reset_link }}
-
-
-Have a nice day.
-
---
-Message sent by {{ site_title }} ({{ site_url }})
+<p>--<br>
+Message sent by {{ site_title }} (<a href="{{ site_url }}">{{ site_url }}</a>)</p>
