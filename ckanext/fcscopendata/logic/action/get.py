@@ -17,26 +17,30 @@ def package_search(up_func, context, data_dict):
     result = up_func(context, data_dict)
 
     # Add bilingual groups 
+    group_cache = {}
+    
     for pkg in result['results']:
-        
         if pkg.get('groups', []):
             for idx, group in enumerate(pkg.get('groups')):
-                group_dict = tk.get_action('group_show')(context, {
-                    'id': group['id'],
-                    'include_dataset_count': False,
-                    'include_datasets': False,
-                    'include_users': False,
-                    'include_groups': False,
-                    'include_tags': False,
-                    'include_followers': False
+                group_id = group['id']
+                if group_id not in group_cache:
+                    group_dict = tk.get_action('group_show')(context, {
+                        'id': group_id,
+                        'include_dataset_count': False,
+                        'include_datasets': False,
+                        'include_users': False,
+                        'include_groups': False,
+                        'include_tags': False,
+                        'include_followers': False
                     })
-                group_dict.pop('extras', None)
-                pkg['groups'][idx] = group_dict
+                    group_dict.pop('extras', None)
+                    group_cache[group_id] = group_dict
+                
+                pkg['groups'][idx] = group_cache[group_id]
 
         # Get total downloads from db tables.
         try:
             pkg['total_downloads'] = tk.get_action('package_stats')(context, {'package_id': pkg['id']})
-
         except:
             log.error('package {id} download stats not available'.format(id=pkg['id']))
             pkg['total_downloads'] = 0
