@@ -54,6 +54,8 @@ class FcscopendataPlugin(plugins.SingletonPlugin, DefaultTranslation):
         toolkit.add_public_directory(config_, 'public')
         toolkit.add_resource('assets',
                              'fcscopendata')
+         
+        # TODO: import models/__init__.py and call setup()
 
     # IBlueprint
     def get_blueprint(self):
