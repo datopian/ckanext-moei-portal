@@ -3,6 +3,7 @@ import ckan.plugins.toolkit as toolkit
 import json
 from flask import Blueprint
 from ckan.lib.plugins import DefaultTranslation
+from ckanext.fcscopendata.models import setup
 
 from ckanext.fcscopendata.views import vocab_tag_autocomplete, GroupManage, reports_index, reports_read
 import ckanext.fcscopendata.cli as cli
@@ -55,7 +56,7 @@ class FcscopendataPlugin(plugins.SingletonPlugin, DefaultTranslation):
         toolkit.add_resource('assets',
                              'fcscopendata')
          
-        # TODO: import models/__init__.py and call setup()
+        setup()
 
     # IBlueprint
     def get_blueprint(self):

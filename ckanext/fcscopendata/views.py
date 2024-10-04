@@ -88,7 +88,7 @@ def reports_read(name):
         limit = tk.request.args.get("limit", 20)
 
         data_requests = DataRequest.find_all({"page": page, "limit": limit })
-        return base.render("reports/analytics.html", extra_vars={"data_requests": data_requests, "page": page})
+        return base.render("reports/data_request.html", extra_vars={"data_requests": data_requests, "page": page})
     elif name == "analytics":
         # TODO
         pass

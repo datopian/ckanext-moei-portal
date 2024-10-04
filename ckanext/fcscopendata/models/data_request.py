@@ -8,93 +8,72 @@ from datetime import datetime
 
 log = logging.getLogger(__name__)
 
-# TODO: tweak this table so that it reflects a data_request model
-# https://docs.sqlalchemy.org/en/20/core/metadata.html
-floor_lock = sqlalchemy.Table(
+data_request = sqlalchemy.Table(
     "data_request",
     meta.metadata,
-    sqlalchemy.Column("id", sqlalchemy.types.UnicodeText,
-                      primary_key=True),
-    sqlalchemy.Column("date", sqlalchemy.types.TIMESTAMP,
-                      server_default=sqlalchemy.text("now() + interval '60 seconds'")),
-    sqlalchemy.Column("email", sqlalchemy.types.UnicodeText)
+    sqlalchemy.Column("id", sqlalchemy.Integer, primary_key=True, autoincrement=True),
+    sqlalchemy.Column(
+        "date_created",
+        sqlalchemy.DateTime,
+        nullable=False,
+    ),
+    sqlalchemy.Column("email", sqlalchemy.String(length=255), nullable=True),
+    sqlalchemy.Column("name", sqlalchemy.String(length=255), nullable=True),
+    sqlalchemy.Column("topic", sqlalchemy.String(length=255), nullable=False),
+    sqlalchemy.Column("phone_number", sqlalchemy.String(length=255), nullable=True),
+    sqlalchemy.Column(
+        "message_content", sqlalchemy.Text, nullable=False
+    ),  # Use Text for longer content
 )
 
-
-class FloorLock(object):
-    def __init__(self, floor_id: str, expiration, user_name: str) -> None:
-        self.floor_id = floor_id
-        self.expiration = expiration
-        self.user_name = user_name
-
-    @classmethod
-    def get(cls, floor_id: str):
-        try:
-            floor = (
-                meta.Session.query(FloorLock)
-                .filter(FloorLock.floor_id == floor_id)
-                .one()
-            )
-            return floor
-        except Exception as e:
-            log.error(e)
+class DataRequest(object):
+    def __init__(
+        self,
+        email,
+        topic,
+        date_created,
+        phone_number,
+        message_content,
+        name,
+    ) -> None:
+        self.email = email
+        self.date_created = date_created
+        self.topic = topic
+        self.phone_number = phone_number
+        self.message_content = message_content
+        self.name = name 
 
     @classmethod
-    def create(
-        cls,
-        floor_id: str,
-        expiration,
-        user_name: str
-    ) -> Optional[dict]:
+    def create(cls, data_request):
         try:
-            floor = FloorLock(floor_id)
-            meta.Session.add(floor)
+            meta.Session.add(data_request)
             meta.Session.commit()
-
-            return floor
-
+            return data_request
         except Exception as e:
-            log.error(e)
+            log.error(f"Error creating data request: {e}")
             meta.Session.rollback()
             raise
 
     @classmethod
-    def delete(cls, floor_id: str) -> None:
+    def get(cls, request_id):
         try:
-            if floor_id is not None:
-                floor = meta.Session.query(FloorLock).filter(
-                    FloorLock.floor_id == floor_id
-                ).one()
-                meta.Session.delete(floor)
-                meta.Session.commit()
-                return floor
-            else:
-                floors = meta.Session.query(FloorLock).filter(
-                    FloorLock.floor_id == floor_id
-                ).all()
-                for floor in floors:
-                    meta.Session.delete(floor)
-                meta.Session.commit()
-                return floors
-
+            return meta.Session.query(DataRequest).get(request_id)
         except Exception as e:
-            log.error(e)
-            meta.Session.rollback()
+            log.error(f"Error getting data request with ID '{request_id}': {e}")
+            raise
 
     @classmethod
-    def delete_expired(cls):
+    def delete(cls, request_id):
         try:
-            floor_locks = meta.Session.query(FloorLock).filter(
-                FloorLock.expiration < datetime.now()
-            ).all()
-            for floor_lock in floor_locks:
-                meta.Session.delete(floor_lock)
-            meta.Session.commit()
-            return floor_locks
-
+            data_request = meta.Session.query(DataRequest).get(request_id)
+            if data_request:
+                meta.Session.delete(data_request)
+                meta.Session.commit()
+            else:
+                log.warning(f"Data request with ID '{request_id}' not found for deletion.")
         except Exception as e:
-            log.error(e)
+            log.error(f"Error deleting data request with ID '{request_id}': {e}")
             meta.Session.rollback()
+            raise
 
-
-meta.mapper(FloorLock, floor_lock)
+meta.mapper(DataRequest, data_request)
