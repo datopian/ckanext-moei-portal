@@ -4,7 +4,7 @@ import json
 from flask import Blueprint
 from ckan.lib.plugins import DefaultTranslation
 
-from ckanext.fcscopendata.views import vocab_tag_autocomplete, GroupManage
+from ckanext.fcscopendata.views import vocab_tag_autocomplete, GroupManage, reports_index, reports_read
 import ckanext.fcscopendata.cli as cli
 from ckanext.fcscopendata.lib.helpers import (
      get_package_download_stats, 
@@ -68,6 +68,8 @@ class FcscopendataPlugin(plugins.SingletonPlugin, DefaultTranslation):
                                 view_func=vocab_tag_autocomplete)
         blueprint.add_url_rule(u'/dataset/groups/<id>', defaults= {u'package_type': u'dataset'},
                                 view_func=GroupManage.as_view(str(u'groups')))
+        blueprint.add_url_rule(u'/reports', view_func=reports_index)
+        blueprint.add_url_rule(u'/reports/<name>', view_func=reports_read)
         return blueprint
 
     # IActions
