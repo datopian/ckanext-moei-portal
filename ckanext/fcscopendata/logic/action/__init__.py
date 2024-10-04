@@ -16,6 +16,7 @@ from ckanext.fcscopendata.logic.action.create import (
     group_create,
     tag_create,
     vocabulary_create,
+    create_data_request
 )
 
 from ckanext.fcscopendata.logic.action.update import (
