@@ -70,3 +70,27 @@ class GroupManage(GroupView):
             except tk.NotFound:
                 return tk.abort(404, _(u'Group not found'))
         return tk.h.redirect_to(u'{}.groups'.format(package_type), id=id)
+
+# TODO: implement index page or redirect to first report
+def reports_index():
+    pass
+    # TODO: return base.redirect_to somewhere
+
+# TODO: implement report read page
+def reports_read(name):
+    # TODO: conditionally return a different template render based on the name parameter
+    # TODO: data-request
+    # TODO: analytics
+    if name == "data-request":
+        # TODO
+        # /reports/data-request?page=1&limit=20
+        page = tk.request.args.get("page", 1)
+        limit = tk.request.args.get("limit", 20)
+
+        data_requests = DataRequest.find_all({"page": page, "limit": limit })
+        return base.render("reports/analytics.html", extra_vars={"data_requests": data_requests, "page": page})
+    elif name == "analytics":
+        # TODO
+        pass
+
+    pass
