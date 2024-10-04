@@ -259,3 +259,12 @@ def vocabulary_create(up_func,context,data_dict):
             else:
                 raise tk.ValidationError({'message': 'Provied list of tags doesn\'t have valid dictionaries.'})
     return result
+
+# TODO: implement this method to create the data request entry
+# via API endpoint
+def create_data_request(context, data_dict):
+    model = context["model"] # ... or import ckan.model as model
+    new_data_request = models.DataRequest(**data_dict) # ... or whatever arguments are needed
+    model.Session.add(new_data_request)
+    return new_data_request
+
