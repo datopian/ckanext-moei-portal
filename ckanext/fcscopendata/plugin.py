@@ -5,7 +5,7 @@ from flask import Blueprint
 from ckan.lib.plugins import DefaultTranslation
 from ckanext.fcscopendata.models import setup
 
-from ckanext.fcscopendata.views import vocab_tag_autocomplete, GroupManage, reports_index, reports_read
+from ckanext.fcscopendata.views import vocab_tag_autocomplete, GroupManage, reports_index, reports_read, reports_download, reports_delete
 import ckanext.fcscopendata.cli as cli
 from ckanext.fcscopendata.lib.helpers import (
      get_package_download_stats, 
@@ -71,6 +71,8 @@ class FcscopendataPlugin(plugins.SingletonPlugin, DefaultTranslation):
                                 view_func=GroupManage.as_view(str(u'groups')))
         blueprint.add_url_rule(u'/reports', view_func=reports_index)
         blueprint.add_url_rule(u'/reports/<name>', view_func=reports_read)
+        blueprint.add_url_rule(u'/reports/<name>/download', view_func=reports_download)
+        blueprint.add_url_rule(u'/reports/<id>/delete', view_func=reports_delete,  methods=['POST'])
         return blueprint
 
     # IActions

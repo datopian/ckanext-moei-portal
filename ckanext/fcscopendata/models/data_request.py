@@ -31,13 +31,13 @@ class DataRequest(object):
         self,
         email,
         topic,
-        date_created,
         phone_number,
         message_content,
         name,
+        date_created=None,
     ) -> None:
         self.email = email
-        self.date_created = date_created
+        self.date_created = date_created or datetime.now()
         self.topic = topic
         self.phone_number = phone_number
         self.message_content = message_content
@@ -75,5 +75,24 @@ class DataRequest(object):
             log.error(f"Error deleting data request with ID '{request_id}': {e}")
             meta.Session.rollback()
             raise
+    
+    @classmethod
+    def find_all(cls, pagination: dict):
+        try:
+            page = int(pagination.get("page", 1))
+            limit = int(pagination.get("limit", 20))
+            offset = (page - 1) * limit
+            
+            # Query all data requests with pagination
+            query = meta.Session.query(DataRequest).order_by(DataRequest.date_created.desc())
+            
+            # Apply pagination
+            data_requests = query.offset(offset).limit(limit).all()
+            
+            return data_requests
+        except Exception as e:
+            log.error(f"Error finding all data requests: {e}")
+            raise
+    
 
 meta.mapper(DataRequest, data_request)

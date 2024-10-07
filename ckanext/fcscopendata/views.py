@@ -3,6 +3,10 @@ from ckan.common import _, g, request
 import ckan.plugins.toolkit as tk
 from ckan.views.api import _finish_ok
 from ckan.views.dataset import GroupView
+from ckanext.fcscopendata.models.data_request import DataRequest
+import csv
+from io import StringIO
+from flask import Response
 
 def vocab_tag_autocomplete():
     q = request.args.get(u'incomplete', u'')
@@ -79,7 +83,6 @@ def reports_index():
 # TODO: implement report read page
 def reports_read(name):
     # TODO: conditionally return a different template render based on the name parameter
-    # TODO: data-request
     # TODO: analytics
     if name == "data-request":
         # TODO
@@ -88,9 +91,57 @@ def reports_read(name):
         limit = tk.request.args.get("limit", 20)
 
         data_requests = DataRequest.find_all({"page": page, "limit": limit })
-        return base.render("reports/data_request.html", extra_vars={"data_requests": data_requests, "page": page})
+        return tk.render("reports/data-request.html", extra_vars={"data_requests": data_requests, "page": page})
     elif name == "analytics":
         # TODO
         pass
 
     pass
+def reports_delete(id):
+    try:
+        DataRequest.delete(id)  # Call the delete method by ID
+        tk.h.redirect_to(u'/reports/data-requests', view_func=reports_read)
+    except Exception as e:
+        tk.h.redirect_to(u'/reports/data-requests', view_func=reports_read)
+    return tk.h.redirect_to(u'/reports/data-requests', view_func=reports_read)
+    
+
+def generate_csv(data_requests):
+    """Helper function to generate CSV from data requests."""
+    output = StringIO()
+    writer = csv.writer(output)
+
+    # Write CSV header
+    writer.writerow(["Email", "Topic", "Date Created", "Phone Number", "Message Content", "Name"])
+
+    # Write each data request to the CSV
+    for data_request in data_requests:
+        writer.writerow([
+            data_request.email,
+            data_request.topic,
+            data_request.date_created,
+            data_request.phone_number,
+            data_request.message_content,
+            data_request.name,
+        ])
+
+    # Move the cursor to the start of the file for reading
+    output.seek(0)
+    
+    # Generate a Flask response with the correct headers for downloading
+    return Response(
+        output,
+        mimetype="text/csv",
+        headers={"Content-Disposition": "attachment;filename=data_requests.csv"}
+    )
+
+def reports_download(name):
+    if name == "data-request":
+        page = tk.request.args.get("page", 1)
+        limit = tk.request.args.get("limit", 1000)  # Optionally, allow more data for CSV
+
+        # Fetch the data requests (you can reuse the find_all method)
+        data_requests = DataRequest.find_all({"page": page, "limit": limit})
+
+        # Generate and return the CSV response
+        return generate_csv(data_requests)

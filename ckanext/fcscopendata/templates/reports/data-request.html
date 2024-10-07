@@ -1,6 +1,42 @@
-{ page }
+{% extends "page.html" %}
+
+{% block primary_content %}
+<h1>Data Requests Report</h1>
+<p>This page displays all the data request form submitted from the portal.</p>
 
 
-{% for data_request in data_requests %}
-<div>{data_request.email}</div>
-{% endfor %}
+<a href="/reports/data-request/download" class="btn btn-primary">Download as CSV</a>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Date Created</th>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Phone Number</th>
+      <th>Topic</th>
+      <th>Message Content</th>
+      <!-- <th>Actions</th> -->
+    </tr>
+  </thead>
+  <tbody>
+    {% for data_request in data_requests %}
+    <tr>
+      <td>{{ data_request.date_created }}</td>
+      <td>{{ data_request.name }}</td>
+      <td>{{ data_request.email }}</td>
+      <td>{{ data_request.phone_number }}</td>
+      <td>{{ data_request.topic }}</td>
+      <td>{{ data_request.message_content }}</td>
+      <!-- <td>
+        <form method="POST" action="/reports/{{ data_request.id }}/delete">
+          <input type="hidden" name="_method" value="DELETE">
+          <button type="submit" class="btn btn-danger">Resolve</button> 
+        </form>
+      </td> -->
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% endblock %}
