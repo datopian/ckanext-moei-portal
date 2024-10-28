@@ -1,6 +1,6 @@
 {% extends "page.html" %}
 
-{% block primary_content %}
+{% block main_content %}
 <h1>Data Requests Report</h1>
 <p>This page displays all the data request form submitted from the portal.</p>
 
@@ -22,18 +22,18 @@
   <tbody>
     {% for data_request in data_requests %}
     <tr>
-      <td>{{ data_request.date_created }}</td>
+      <td>{{ data_request.date_created.strftime('%Y-%m-%d') }}</td>
       <td>{{ data_request.name }}</td>
       <td>{{ data_request.email }}</td>
       <td>{{ data_request.phone_number }}</td>
       <td>{{ data_request.topic }}</td>
       <td>{{ data_request.message_content }}</td>
-      <!-- <td>
-        <form method="POST" action="/reports/{{ data_request.id }}/delete">
+      <td>
+        <form method="POST" action="/reports/data-request/delete/{{ data_request.id }}">
           <input type="hidden" name="_method" value="DELETE">
-          <button type="submit" class="btn btn-danger">Resolve</button> 
+          <button type="submit" class="btn btn-primary">Resolve</button>
         </form>
-      </td> -->
+      </td>
     </tr>
     {% endfor %}
   </tbody>

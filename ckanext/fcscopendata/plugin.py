@@ -72,7 +72,7 @@ class FcscopendataPlugin(plugins.SingletonPlugin, DefaultTranslation):
         blueprint.add_url_rule(u'/reports', view_func=reports_index)
         blueprint.add_url_rule(u'/reports/<name>', view_func=reports_read)
         blueprint.add_url_rule(u'/reports/<name>/download', view_func=reports_download)
-        blueprint.add_url_rule(u'/reports/<id>/delete', view_func=reports_delete,  methods=['POST'])
+        blueprint.add_url_rule(u'/reports/<name>/delete/<id>', view_func=reports_delete,  methods=['POST'])
         return blueprint
 
     # IActions

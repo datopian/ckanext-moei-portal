@@ -4,6 +4,7 @@ import ckan.plugins.toolkit as tk
 from ckan.views.api import _finish_ok
 from ckan.views.dataset import GroupView
 from ckanext.fcscopendata.models.data_request import DataRequest
+from ckanext.fcscopendata.models.analytics import Analytics
 import csv
 from io import StringIO
 from flask import Response
@@ -93,17 +94,26 @@ def reports_read(name):
         data_requests = DataRequest.find_all({"page": page, "limit": limit })
         return tk.render("reports/data-request.html", extra_vars={"data_requests": data_requests, "page": page})
     elif name == "analytics":
+        
+        page = tk.request.args.get("page", 1)
+        limit = tk.request.args.get("limit", 20)
+
+        analytics = Analytics.find_all({"page": page, "limit": limit })
+        return tk.render("reports/analytics.html", extra_vars={"analytics": analytics, "page": page})
         # TODO
         pass
 
     pass
-def reports_delete(id):
-    try:
-        DataRequest.delete(id)  # Call the delete method by ID
-        tk.h.redirect_to(u'/reports/data-requests', view_func=reports_read)
-    except Exception as e:
-        tk.h.redirect_to(u'/reports/data-requests', view_func=reports_read)
-    return tk.h.redirect_to(u'/reports/data-requests', view_func=reports_read)
+def reports_delete(name, id):
+    page = tk.request.args.get("page", 1)
+    limit = tk.request.args.get("limit", 20)
+    if name == "data-request":
+        try:
+            DataRequest.delete(id)  # Call the delete method by ID
+            data_requests = DataRequest.find_all({"page": page, "limit": limit })
+        except tk.NotFound:
+                return tk.abort(404, _(u'Report not found'))
+        return tk.render("reports/data-request.html", extra_vars={"data_requests": data_requests, "page": page})
     
 
 def generate_csv(data_requests):
@@ -134,6 +144,36 @@ def generate_csv(data_requests):
         mimetype="text/csv",
         headers={"Content-Disposition": "attachment;filename=data_requests.csv"}
     )
+    
+def generate_ga_csv(analytics):
+    """Helper function to generate CSV from analytics entries."""
+    output = StringIO()
+    writer = csv.writer(output)
+
+    # Write CSV header
+    writer.writerow(["Resource ID", "Date Created", "Date Updated", "Dataset Rating", "Dataset Title", "Resource Title", "Language"])
+
+    # Write each analytics entry to the CSV
+    for analytics_entry in analytics:
+        writer.writerow([
+            analytics_entry.resource_id,
+            analytics_entry.resource_created.strftime('%Y-%m-%d'),
+            analytics_entry.resource_updated.strftime('%Y-%m-%d'),
+            analytics_entry.dataset_rating,
+            analytics_entry.dataset_title,
+            analytics_entry.resource_title,
+            analytics_entry.language,
+        ])
+
+    # Move the cursor to the start of the file for reading
+    output.seek(0)
+
+    # Generate a Flask response with the correct headers for downloading
+    return Response(
+        output,
+        mimetype="text/csv",
+        headers={"Content-Disposition": "attachment;filename=analytics_entries.csv"}
+    )
 
 def reports_download(name):
     if name == "data-request":
@@ -144,4 +184,13 @@ def reports_download(name):
         data_requests = DataRequest.find_all({"page": page, "limit": limit})
 
         # Generate and return the CSV response
-        return generate_csv(data_requests)
+        return generate_csv(analytics)
+    if name == "analytics":
+        page = tk.request.args.get("page", 1)
+        limit = tk.request.args.get("limit", 1000)  # Optionally, allow more data for CSV
+
+        # Fetch the data requests (you can reuse the find_all method)
+        analytics = Analytics.find_all({"page": page, "limit": limit})
+
+        # Generate and return the CSV response
+        return generate_ga_csv(analytics)

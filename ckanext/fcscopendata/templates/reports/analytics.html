@@ -1,0 +1,44 @@
+{% extends "page.html" %}
+
+{% block main_content %}
+<h1>Analytics Report</h1>
+<p>This page displays the data that Google Analytics computes from dataset downloads in the frontend portal.</p>
+
+
+<a href="/reports/analytics/download" class="btn btn-primary">Download as CSV</a>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Resource ID</th>
+      <th>Date Created</th>
+      <th>Date Updated</th>
+      <th>Dataset Rating</th>
+      <th>Dataset Title</th>
+      <th>Resource Title</th>
+      <th>Language</th>
+      <!-- <th>Actions</th> -->
+    </tr>
+  </thead>
+  <tbody>
+    {% for analytics_entry in analytics %}
+    <tr>
+      <td>{{ analytics_entry.resource_id }}</td>
+      <td>{{ analytics_entry.resource_created.strftime('%Y-%m-%d') }}</td>
+      <td>{{ analytics_entry.resource_updated.strftime('%Y-%m-%d') }}</td>
+      <td>{{ analytics_entry.dataset_rating }}</td>
+      <td>{{ analytics_entry.dataset_title }}</td>
+      <td>{{ analytics_entry.resource_title }}</td>
+      <td>{{ analytics_entry.language }}</td>
+      <!-- <td>
+        <form method="POST" action="/reports/{{ analytics_entry.id }}/delete">
+          <input type="hidden" name="_method" value="DELETE">
+          <button type="submit" class="btn btn-danger">Delete</button> 
+        </form>
+      </td> -->
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% endblock %}
