@@ -8,7 +8,9 @@ from ckanext.fcscopendata.models.analytics import Analytics
 import csv
 from io import StringIO
 from flask import Response
-
+from ckan.lib.helpers import helper_functions as h, Page
+import logging
+logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
 def vocab_tag_autocomplete():
     q = request.args.get(u'incomplete', u'')
     context = {u'model': model, u'session': model.Session,
@@ -76,55 +78,62 @@ class GroupManage(GroupView):
                 return tk.abort(404, _(u'Group not found'))
         return tk.h.redirect_to(u'{}.groups'.format(package_type), id=id)
 
-# TODO: implement index page or redirect to first report
 def reports_index():
-    pass
-    # TODO: return base.redirect_to somewhere
+    return h.redirect_to("fcscopendata.reports_read" )
 
-# TODO: implement report read page
-def reports_read(name):
-    # TODO: conditionally return a different template render based on the name parameter
-    # TODO: analytics
-    if name == "data-request":
-        # TODO
-        # /reports/data-request?page=1&limit=20
-        page = tk.request.args.get("page", 1)
-        limit = tk.request.args.get("limit", 20)
+def reports_read():
+    page_number = h.get_page_number(request.args)
+    limit = tk.request.args.get("limit", 8)
+    q = tk.request.args.get('q', '')
+    q_segments = q.split(' - ')
+    if len(q_segments) == 2:
+        start_date=q_segments[0]
+        end_date=q_segments[1]
+    else:
+        start_date = tk.request.args.get('start_date', '')
+        end_date = tk.request.args.get('end_date', '')
+    if start_date and end_date:
+        q = '{} - {}'.format(start_date,end_date)
+    data_requests = DataRequest.find_all({"page": page_number, "limit": limit},start_date=start_date, end_date=end_date, solved=False)
+    count = DataRequest.find_all({}, is_count=True)
+    page = Page(
+        collection=data_requests,
+        page=page_number,
+        presliced_list=True,
+        url=h.pager_url,
+        item_count=count,
+        items_per_page=limit)
+    return tk.render("reports/data-request.html", extra_vars={"data_requests": data_requests, "page": page, "q": q })
 
-        data_requests = DataRequest.find_all({"page": page, "limit": limit })
-        return tk.render("reports/data-request.html", extra_vars={"data_requests": data_requests, "page": page})
-    elif name == "analytics":
-        
-        page = tk.request.args.get("page", 1)
-        limit = tk.request.args.get("limit", 20)
+def reports_delete_confirm():
+    id = tk.request.args.get("id", None)
+    return tk.render("reports/confirm.html", extra_vars={"id":id})
 
-        analytics = Analytics.find_all({"page": page, "limit": limit })
-        return tk.render("reports/analytics.html", extra_vars={"analytics": analytics, "page": page})
-        # TODO
-        pass
+def reports_delete(id = None):
+    if not id:
+        id = tk.request.args.get("id", None)
+    try:
+        DataRequest.delete(id) 
+    except tk.NotFound:
+        return tk.abort(404, _(u'Report not found'))
+    return h.redirect_to("fcscopendata.reports_read", name="data-request" )
 
-    pass
-def reports_delete(name, id):
-    page = tk.request.args.get("page", 1)
-    limit = tk.request.args.get("limit", 20)
-    if name == "data-request":
-        try:
-            DataRequest.delete(id)  # Call the delete method by ID
-            data_requests = DataRequest.find_all({"page": page, "limit": limit })
-        except tk.NotFound:
-                return tk.abort(404, _(u'Report not found'))
-        return tk.render("reports/data-request.html", extra_vars={"data_requests": data_requests, "page": page})
-    
+def reports_solve(id = None):
+    if not id:
+        id = tk.request.args.get("id", None)
+    try:
+        DataRequest.solve(id) 
+    except tk.NotFound:
+        return tk.abort(404, _(u'Report not found'))
+    return h.redirect_to("fcscopendata.reports_read", name="data-request" )
 
 def generate_csv(data_requests):
     """Helper function to generate CSV from data requests."""
     output = StringIO()
     writer = csv.writer(output)
 
-    # Write CSV header
     writer.writerow(["Email", "Topic", "Date Created", "Phone Number", "Message Content", "Name"])
 
-    # Write each data request to the CSV
     for data_request in data_requests:
         writer.writerow([
             data_request.email,
@@ -135,10 +144,8 @@ def generate_csv(data_requests):
             data_request.name,
         ])
 
-    # Move the cursor to the start of the file for reading
     output.seek(0)
-    
-    # Generate a Flask response with the correct headers for downloading
+
     return Response(
         output,
         mimetype="text/csv",
@@ -150,10 +157,8 @@ def generate_ga_csv(analytics):
     output = StringIO()
     writer = csv.writer(output)
 
-    # Write CSV header
     writer.writerow(["Resource ID", "Date Created", "Date Updated", "Dataset Rating", "Dataset Title", "Resource Title", "Language"])
 
-    # Write each analytics entry to the CSV
     for analytics_entry in analytics:
         writer.writerow([
             analytics_entry.resource_id,
@@ -165,32 +170,24 @@ def generate_ga_csv(analytics):
             analytics_entry.language,
         ])
 
-    # Move the cursor to the start of the file for reading
     output.seek(0)
-
-    # Generate a Flask response with the correct headers for downloading
+    
     return Response(
         output,
         mimetype="text/csv",
         headers={"Content-Disposition": "attachment;filename=analytics_entries.csv"}
     )
 
-def reports_download(name):
-    if name == "data-request":
-        page = tk.request.args.get("page", 1)
-        limit = tk.request.args.get("limit", 1000)  # Optionally, allow more data for CSV
+def requests_download():
+    q = tk.request.args.get('q', '')
+    q_segments = q.split(' - ')
+    if len(q_segments) == 2:
+        start_date=q_segments[0]
+        end_date=q_segments[1]
+    else:
+        start_date = tk.request.args.get('start_date', '')
+        end_date = tk.request.args.get('end_date', '')
+    data_requests = DataRequest.find_all({"pagination": 0} , start_date=start_date, end_date=end_date)
 
-        # Fetch the data requests (you can reuse the find_all method)
-        data_requests = DataRequest.find_all({"page": page, "limit": limit})
+    return generate_csv(data_requests)
 
-        # Generate and return the CSV response
-        return generate_csv(analytics)
-    if name == "analytics":
-        page = tk.request.args.get("page", 1)
-        limit = tk.request.args.get("limit", 1000)  # Optionally, allow more data for CSV
-
-        # Fetch the data requests (you can reuse the find_all method)
-        analytics = Analytics.find_all({"page": page, "limit": limit})
-
-        # Generate and return the CSV response
-        return generate_ga_csv(analytics)

@@ -5,7 +5,7 @@ from flask import Blueprint
 from ckan.lib.plugins import DefaultTranslation
 from ckanext.fcscopendata.models import setup
 
-from ckanext.fcscopendata.views import vocab_tag_autocomplete, GroupManage, reports_index, reports_read, reports_download, reports_delete
+from ckanext.fcscopendata.views import vocab_tag_autocomplete, GroupManage, reports_index, reports_read, requests_download, reports_delete, reports_delete_confirm, reports_solve
 import ckanext.fcscopendata.cli as cli
 from ckanext.fcscopendata.lib.helpers import (
      get_package_download_stats, 
@@ -69,10 +69,12 @@ class FcscopendataPlugin(plugins.SingletonPlugin, DefaultTranslation):
                                 view_func=vocab_tag_autocomplete)
         blueprint.add_url_rule(u'/dataset/groups/<id>', defaults= {u'package_type': u'dataset'},
                                 view_func=GroupManage.as_view(str(u'groups')))
-        blueprint.add_url_rule(u'/reports', view_func=reports_index)
-        blueprint.add_url_rule(u'/reports/<name>', view_func=reports_read)
-        blueprint.add_url_rule(u'/reports/<name>/download', view_func=reports_download)
-        blueprint.add_url_rule(u'/reports/<name>/delete/<id>', view_func=reports_delete,  methods=['POST'])
+        blueprint.add_url_rule(u'/reports', view_func=reports_index, strict_slashes=False)
+        blueprint.add_url_rule(u'/reports/data-request', view_func=reports_read, strict_slashes=False)
+        blueprint.add_url_rule(u'/reports/data-request/download', view_func=requests_download,strict_slashes=False)
+        blueprint.add_url_rule(u'/reports/data-request/delete', view_func=reports_delete, methods=['POST'], strict_slashes=False)
+        blueprint.add_url_rule(u'/reports/data-request/solve', view_func=reports_solve, methods=['POST'], strict_slashes=False)
+        blueprint.add_url_rule(u'/reports/data-request/confirm', view_func=reports_delete_confirm, methods=['POST'], strict_slashes=False )
         return blueprint
 
     # IActions
