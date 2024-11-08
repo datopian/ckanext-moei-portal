@@ -3,7 +3,6 @@ import logging
 
 log = logging.getLogger(__name__)
 
-# TODO: make it create the DataRequest table on setup
 def setup():
     """
     Create Data Request table.

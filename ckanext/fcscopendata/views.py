@@ -92,10 +92,9 @@ def reports_read():
     else:
         start_date = tk.request.args.get('start_date', '')
         end_date = tk.request.args.get('end_date', '')
-    if start_date and end_date:
-        q = '{} - {}'.format(start_date,end_date)
+    q = '{} - {}'.format(start_date,end_date)
     data_requests = DataRequest.find_all({"page": page_number, "limit": limit},start_date=start_date, end_date=end_date, solved=False)
-    count = DataRequest.find_all({}, is_count=True)
+    count = DataRequest.find_all({}, is_count=True, start_date=start_date, end_date=end_date, solved=False)
     page = Page(
         collection=data_requests,
         page=page_number,
@@ -132,16 +131,17 @@ def generate_csv(data_requests):
     output = StringIO()
     writer = csv.writer(output)
 
-    writer.writerow(["Email", "Topic", "Date Created", "Phone Number", "Message Content", "Name"])
+    writer.writerow(["Email", "Topic", "Date Created","Name", "Phone Number", "Message Content", "Solved"])
 
     for data_request in data_requests:
         writer.writerow([
             data_request.email,
             data_request.topic,
             data_request.date_created,
+            data_request.name,
             data_request.phone_number,
             data_request.message_content,
-            data_request.name,
+            data_request.solved,
         ])
 
     output.seek(0)
