@@ -104,6 +104,29 @@ def reports_read():
         items_per_page=limit)
     return tk.render("reports/data-request.html", extra_vars={"data_requests": data_requests, "page": page, "q": q })
 
+def analytics_read():
+    page_number = h.get_page_number(request.args)
+    limit = tk.request.args.get("limit", 8)
+    q = tk.request.args.get('q', '')
+    q_segments = q.split(' - ')
+    if len(q_segments) == 2:
+        start_date=q_segments[0]
+        end_date=q_segments[1]
+    else:
+        start_date = tk.request.args.get('start_date', '')
+        end_date = tk.request.args.get('end_date', '')
+    q = '{} - {}'.format(start_date,end_date)
+    analytics = Analytics.find_all({"page": page_number, "limit": limit},start_date=start_date, end_date=end_date)
+    count = Analytics.find_all({}, is_count=True, start_date=start_date, end_date=end_date)
+    page = Page(
+        collection=analytics,
+        page=page_number,
+        presliced_list=True,
+        url=h.pager_url,
+        item_count=count,
+        items_per_page=limit)
+    return tk.render("reports/analytics.html", extra_vars={"analytics": analytics, "page": page, "q": q })
+
 def reports_delete_confirm():
     id = tk.request.args.get("id", None)
     return tk.render("reports/confirm.html", extra_vars={"id":id})
@@ -157,17 +180,16 @@ def generate_ga_csv(analytics):
     output = StringIO()
     writer = csv.writer(output)
 
-    writer.writerow(["Resource ID", "Date Created", "Date Updated", "Dataset Rating", "Dataset Title", "Resource Title", "Language"])
+    writer.writerow(["Resource ID", "Dataset ID", "Count", "Language", "Dataset Title", "Date Created"])
 
     for analytics_entry in analytics:
         writer.writerow([
             analytics_entry.resource_id,
-            analytics_entry.resource_created.strftime('%Y-%m-%d'),
-            analytics_entry.resource_updated.strftime('%Y-%m-%d'),
-            analytics_entry.dataset_rating,
-            analytics_entry.dataset_title,
-            analytics_entry.resource_title,
+            analytics_entry.dataset_id,
+            analytics_entry.count,
             analytics_entry.language,
+            analytics_entry.dataset_title,
+            analytics_entry.date_created,
         ])
 
     output.seek(0)
@@ -191,3 +213,15 @@ def requests_download():
 
     return generate_csv(data_requests)
 
+def analytics_download():
+    q = tk.request.args.get('q', '')
+    q_segments = q.split(' - ')
+    if len(q_segments) == 2:
+        start_date=q_segments[0]
+        end_date=q_segments[1]
+    else:
+        start_date = tk.request.args.get('start_date', '')
+        end_date = tk.request.args.get('end_date', '')
+    analytics = Analytics.find_all({"pagination": 0} , start_date=start_date, end_date=end_date)
+
+    return generate_ga_csv(analytics)

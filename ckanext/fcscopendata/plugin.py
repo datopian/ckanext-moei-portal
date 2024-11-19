@@ -5,7 +5,7 @@ from flask import Blueprint
 from ckan.lib.plugins import DefaultTranslation
 from ckanext.fcscopendata.models import setup
 
-from ckanext.fcscopendata.views import vocab_tag_autocomplete, GroupManage, reports_index, reports_read, requests_download, reports_delete, reports_delete_confirm, reports_solve
+from ckanext.fcscopendata.views import vocab_tag_autocomplete, GroupManage, reports_index, reports_read, requests_download, reports_delete, reports_delete_confirm, reports_solve, analytics_read, analytics_download
 import ckanext.fcscopendata.cli as cli
 from ckanext.fcscopendata.lib.helpers import (
      get_package_download_stats, 
@@ -75,6 +75,8 @@ class FcscopendataPlugin(plugins.SingletonPlugin, DefaultTranslation):
         blueprint.add_url_rule(u'/reports/data-request/delete', view_func=reports_delete, methods=['POST'], strict_slashes=False)
         blueprint.add_url_rule(u'/reports/data-request/solve', view_func=reports_solve, methods=['POST'], strict_slashes=False)
         blueprint.add_url_rule(u'/reports/data-request/confirm', view_func=reports_delete_confirm, methods=['POST'], strict_slashes=False )
+        blueprint.add_url_rule(u'/reports/analytics', view_func=analytics_read, strict_slashes=False)
+        blueprint.add_url_rule(u'/reports/analytics/download', view_func=analytics_download, strict_slashes=False)
         return blueprint
 
     # IActions

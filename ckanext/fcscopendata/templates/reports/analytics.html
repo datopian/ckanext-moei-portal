@@ -5,31 +5,48 @@
 <p>This page displays the data that Google Analytics computes from dataset downloads in the frontend portal.</p>
 
 
-<a href="/reports/analytics/download" class="btn btn-primary">Download as CSV</a>
+{% set split_character = " - " %}
+{% set q_split = q.split(split_character) if q else [] %}
+{% set start_date = q_split[0] if q_split|length == 2 else request.args.get('start_date', '') %}
+{% set end_date = q_split[1] if q_split|length == 2 else request.args.get('end_date', '') %}
+
+<form method="get" action="/reports/analytics">
+  <div class="form-actions">
+    <label for="start_date">Start Date</label>
+    <input type="date" id="start_date" name="start_date"
+      value="{{ q_split[0] if q_split|length == 2 else request.args.get('start_date', '') }}" />
+
+    <label for="end_date">End Date</label>
+    <input type="date" id="end_date" name="end_date"
+      value="{{ q_split[1] if q_split|length == 2 else request.args.get('end_date', '') }}" />
+
+    <button type="submit" class="btn btn-primary">{{ _('Filter') }}</button>
+    <a href="{{ h.url_for('fcscopendata.analytics_download')}}?start_date={{ start_date }}&end_date={{ end_date }}"
+      class="btn btn-primary">Download as CSV</a>
+  </div>
+</form>
 
 <table class="table table-striped">
   <thead>
     <tr>
       <th>Resource ID</th>
-      <th>Date Created</th>
-      <th>Date Updated</th>
-      <th>Dataset Rating</th>
+      <th>Dataset ID</th>
       <th>Dataset Title</th>
-      <th>Resource Title</th>
       <th>Language</th>
+      <th>Event Count</th>
+      <th>Event date</th>
       <!-- <th>Actions</th> -->
     </tr>
   </thead>
   <tbody>
     {% for analytics_entry in analytics %}
     <tr>
+      <td>{{ analytics_entry.date_created.strftime('%Y-%m-%d') }}</td>
       <td>{{ analytics_entry.resource_id }}</td>
-      <td>{{ analytics_entry.resource_created.strftime('%Y-%m-%d') }}</td>
-      <td>{{ analytics_entry.resource_updated.strftime('%Y-%m-%d') }}</td>
-      <td>{{ analytics_entry.dataset_rating }}</td>
+      <td>{{ analytics_entry.dataset_id }}</td>
       <td>{{ analytics_entry.dataset_title }}</td>
-      <td>{{ analytics_entry.resource_title }}</td>
       <td>{{ analytics_entry.language }}</td>
+      <td>{{ analytics_entry.count }}</td>
       <!-- <td>
         <form method="POST" action="/reports/{{ analytics_entry.id }}/delete">
           <input type="hidden" name="_method" value="DELETE">
@@ -40,5 +57,9 @@
     {% endfor %}
   </tbody>
 </table>
+
+{% block page_pagination %}
+{{ page.pager(q=q or '')}}
+{% endblock %}
 
 {% endblock %}
