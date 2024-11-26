@@ -1,6 +1,7 @@
 import ckan.plugins as plugins
 import ckan.plugins.toolkit as toolkit
 import json
+import logging
 from flask import Blueprint
 from ckan.lib.plugins import DefaultTranslation
 from ckanext.fcscopendata.models import setup
@@ -34,6 +35,19 @@ class FcscopendataPlugin(plugins.SingletonPlugin, DefaultTranslation):
             for tag in tags:
                 tag_list.append(tag['name'])
             pkg_dict['tags'] = tag_list
+        new_fields = {}
+        for key in pkg_dict:
+            if key in ['notes_translated', 'title_translated']:
+                original_field = key.split('_')[0]
+                value = pkg_dict.get(key)
+                if type(value) is str:
+                    value = json.loads(value)
+                logging.info(value)
+                for lng_key in value:
+                    logging.info(lng_key)
+                    new_fields[original_field + "_" + lng_key + "_ngram_translated"] = value[lng_key]
+        logging.info(pkg_dict)
+        pkg_dict.update(new_fields)    
         return pkg_dict
 
     def before_search(self, search_params):
