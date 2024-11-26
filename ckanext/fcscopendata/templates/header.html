@@ -29,6 +29,22 @@
             <span class="badge">{{ new_activities }}</span>
           </a>
         </li>
+        {% block analytics %}
+        <li>
+          <a href="{{ h.url_for('fcscopendata.analytics_read') }}" title="{{ _('Analytics') }}">
+            <i class="fa fa-bar-chart" aria-hidden="true"></i>
+            <span class="text">{{ _('Analytics') }}</span>
+          </a>
+        </li>
+        {% endblock %}
+        {% block data_requests %}
+        <li>
+          <a href="{{ h.url_for('fcscopendata.reports_read') }}" title="{{ _('Data Requests') }}">
+            <i class="fa fa-file-text" aria-hidden="true"></i>
+            <span class="text">{{ _('Data Requests') }}</span>
+          </a>
+        </li>
+        {% endblock %}
         {% block header_account_settings_link %}
         <li>
           <a href="{{ h.url_for('user.edit', id=c.userobj.name) }}" title="{{ _('Profile settings') }}">
