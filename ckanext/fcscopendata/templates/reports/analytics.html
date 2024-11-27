@@ -10,7 +10,7 @@
 {% set start_date = q_split[0] if q_split|length == 2 else request.args.get('start_date', '') %}
 {% set end_date = q_split[1] if q_split|length == 2 else request.args.get('end_date', '') %}
 
-<form method="get" action="/reports/analytics">
+<form method="get" action="{{ h.url_for('fcscopendata.analytics_read')}}">
   <div class="form-actions">
     <label for="start_date">Start Date</label>
     <input type="date" id="start_date" name="start_date"
