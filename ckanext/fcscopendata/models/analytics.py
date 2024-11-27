@@ -11,15 +11,14 @@ log = logging.getLogger(__name__)
 frontend_stats_table = sqlalchemy.Table(
     "frontend_stats",
     meta.metadata,
-    sqlalchemy.Column("id", sqlalchemy.Integer, primary_key=True, autoincrement=True),  # New primary key
     sqlalchemy.Column("resource_id", sqlalchemy.String(length=60), nullable=False, primary_key=True),
     sqlalchemy.Column("dataset_id", sqlalchemy.String(length=60), nullable=False),      
     sqlalchemy.Column("count", sqlalchemy.Integer),
     sqlalchemy.Column("language", sqlalchemy.String(length=2), nullable=False),  # AR or EN
-    sqlalchemy.Column("dataset_title", sqlalchemy.String(length=60)),
+    sqlalchemy.Column("dataset_title", sqlalchemy.Text),
      sqlalchemy.Column(
         "date_created",
-        sqlalchemy.DateTime,
+        sqlalchemy.Date,
         nullable=False,
     ),
 )
