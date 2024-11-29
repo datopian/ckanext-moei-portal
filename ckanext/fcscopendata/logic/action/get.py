@@ -61,6 +61,12 @@ def package_search(up_func, context, data_dict):
         result['search_facets']['tags']['items'] = new_facet_tags
     return result
 
+@p.toolkit.side_effect_free
+def frontend_package_search(context, data_dict):
+    data_dict['show_drafts'] = False
+    return tk.get_action('package_search')({}, data_dict)
+
+
 @p.toolkit.chained_action   
 @tk.side_effect_free
 def package_show(up_func,context,data_dict): 

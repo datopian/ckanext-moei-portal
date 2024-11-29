@@ -57,7 +57,8 @@ class FcscopendataPlugin(plugins.SingletonPlugin, DefaultTranslation):
             user_is_syadmin = False
 
         include_drafts = search_params.get('include_drafts', False)
-        if not include_drafts and not user_is_syadmin:
+        show_drafts = search_params.pop('show_drafts', True)
+        if (not include_drafts and not user_is_syadmin) or not show_drafts:
             search_params.update({
                 'fq': '!(publishing_status:draft)' + search_params.get('fq', '')
             })
