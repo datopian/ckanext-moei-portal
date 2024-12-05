@@ -5,6 +5,7 @@ import ckan.lib.dictization.model_dictize as model_dictize
 import ckan.model as model
 import ckan.plugins as p
 import ckan.plugins.toolkit as tk
+from sqlalchemy import or_
 
 ValidationError = tk.ValidationError
 _get_or_bust = tk.get_or_bust
@@ -12,13 +13,10 @@ _get_or_bust = tk.get_or_bust
 log = logging.getLogger(__name__)
 
 
-@p.toolkit.chained_action
-@tk.side_effect_free
-def package_search(up_func, context, data_dict):
-    result = up_func(context, data_dict)
-
-    # Add bilingual groups
-    datasets = result.get("results", [])
+def _fix_datasets_groups_intl(context, datasets):
+    """
+    Add bilingual groups to a list of datasets
+    """
     groups_names = [g.get("name")
                     for d in datasets for g in d.get("groups", [])]
     unique_groups_names = list(set(groups_names))
@@ -30,26 +28,41 @@ def package_search(up_func, context, data_dict):
         'include_dataset_count': False,
         'include_users': False,
         'include_groups': False,
-        'include_tags': False
+        'include_tags': False,
+        'include_followers': False
     }
     groups = group_list_action(context, group_list_dict)
     groups_cache = {g.get("id"): g for g in groups}
 
-    for pkg in result['results']:
+    for pkg in datasets:
         dataset_groups = pkg.get("groups", [])
         for idx, group in enumerate(dataset_groups):
             group_id = group['id']
             pkg['groups'][idx] = groups_cache[group_id]
 
+
+def _fix_datasets_downloads_count(context, datasets):
+    for pkg in datasets:
         # Get total downloads from db tables.
         try:
-            pkg['total_downloads'] = tk.get_action(
+            count = tk.get_action(
                 'package_stats')(context, {'package_id': pkg['id']})
+            pkg["total_downloads"] = count if count != "" and count != '""' else 0
         except Exception as e:
             log.error(
                 'package {id} download stats not available'.format(id=pkg['id']))
             log.error(e)
             pkg['total_downloads'] = 0
+
+
+@p.toolkit.chained_action
+@tk.side_effect_free
+def package_search(up_func, context, data_dict):
+    result = up_func(context, data_dict)
+
+    datasets = result.get("results", [])
+    _fix_datasets_groups_intl(context, datasets)
+    _fix_datasets_downloads_count(context, datasets)
 
     # Add bilingual tags in facets result
     tags_facet_items = result.get('search_facets', {}).get(
@@ -57,7 +70,8 @@ def package_search(up_func, context, data_dict):
     new_tags_facet_items = []
     if len(tags_facet_items):
         tags_facet_names = [t.get('name') for t in tags_facet_items]
-        tags_q = model.Session.query(model.Tag).filter(model.Tag.name.in_(tags_facet_names))
+        tags_q = model.Session.query(model.Tag).filter(
+            model.Tag.name.in_(tags_facet_names))
         tags = {t.name: t for t in tags_q.all()}
         for tag_facet in tags_facet_items:
             tag = tags.get(tag_facet.get("name"))
@@ -97,19 +111,7 @@ def package_show(up_func, context, data_dict):
         })
         result['organization'] = org_dict
 
-    if result.get('groups', []):
-        for idx, group in enumerate(result.get('groups')):
-            group_dict = tk.get_action('group_show')(context, {
-                'id': group['id'],
-                'include_dataset_count': False,
-                'include_datasets': False,
-                'include_users': False,
-                'include_groups': False,
-                'include_tags': False,
-                'include_followers': False
-            })
-            group_dict.pop('extras', None)
-            result['groups'][idx] = group_dict
+    _fix_datasets_groups_intl(context, [result])
 
     if result.get('tags', []):
         for idx, tag in enumerate(result.get('tags')):
@@ -119,27 +121,7 @@ def package_show(up_func, context, data_dict):
     if result.get('publishing_status', '') == 'draft':
         tk.check_access('package_update', context, {'id': data_dict.get('id')})
 
-    id = result.get('id')
-    try:
-        result['total_downloads'] = tk.get_action(
-            'package_stats')(context, {'package_id': id})
-    except:
-        log.error(f'package {id} download stats not available')
-        result['total_downloads'] = 0
-
-    # resources = result.get('resources')
-    # overall_stat = 0
-    # for i, resource in enumerate(resources):
-    #     resource_id = resource.get('id')
-    #     try:
-    #         stats = logic.get_action('resource_stats')(context, {'resource_id': resource_id})
-    #         result['resources'][i]['total_downloads'] = stats
-    #         overall_stat += int(stats)
-    #     except:
-    #         log.error(f'resource {resource_id} not found')
-
-    # if "total_downloads" not in result:
-    #     result['total_downloads'] = overall_stat
+    _fix_datasets_downloads_count(context, [result])
 
     return result
 
@@ -200,12 +182,9 @@ def tag_show(up_func, context, data_dict):
     model = context['model']
     id = _get_or_bust(data_dict, 'id')
     result = up_func(context, data_dict)
-    query = model.Session.query(model.tag.Tag).filter(model.tag.Tag.id == id)
+    query = model.Session.query(model.tag.Tag).filter(
+        or_(model.tag.Tag.id == id, model.tag.Tag.name == id))
     tag = query.first()
-    if tag is None:
-        query = model.Session.query(model.tag.Tag).filter(
-            model.tag.Tag.name == id)
-        tag = query.first()
 
     if tag._extras:
         extras = model_dictize.extras_dict_dictize(
@@ -226,12 +205,8 @@ def vocabulary_show(up_func, context, data_dict):
     id = _get_or_bust(data_dict, 'id')
     result = up_func(context, data_dict)
     query = model.Session.query(model.vocabulary.Vocabulary).filter(
-        model.vocabulary.Vocabulary.id == id)
+        or_(model.vocabulary.Vocabulary.id == id, model.vocabulary.Vocabulary.name == id))
     vocabulary = query.first()
-    if vocabulary is None:
-        query = model.Session.query(model.vocabulary.Vocabulary).filter(
-            model.vocabulary.Vocabulary.name == id)
-        vocabulary = query.first()
 
     if vocabulary._extras:
         extras = model_dictize.extras_dict_dictize(
