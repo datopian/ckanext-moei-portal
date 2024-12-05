@@ -1,19 +1,18 @@
-import click
 import ckan.model as model
-import ckan.plugins.toolkit as tk
+import click
 from ckan.logic import get_action
 
-from ckanext.fcscopendata.modal import (
-    tag_extra_table,
-    vocabulary_extra_table
-)
+from ckanext.fcscopendata.modal import tag_extra_table, vocabulary_extra_table
+
 
 def get_commands():
     return [fcsc]
 
+
 @click.group()
 def fcsc():
     pass
+
 
 @fcsc.command()
 def initdb():
@@ -29,8 +28,9 @@ def initdb():
     if not vocabulary_extra_table.exists():
         vocabulary_extra_table.create()
         click.secho(u"Vocabulary extras DB tables created", fg=u"green")
-    
-    click.secho(u"Tag and Vocabulary extra DB tables already created", fg=u"green")
+
+    click.secho(
+        u"Tag and Vocabulary extra DB tables already created", fg=u"green")
 
 
 @fcsc.command()
@@ -40,8 +40,8 @@ def removetags():
         fcsc removetags
     """
     context = {
-        'model': model, 
-        'session': model.Session, 
+        'model': model,
+        'session': model.Session,
         'ignore_auth': True,
         'allow_partial_update': True
     }
@@ -57,7 +57,7 @@ def removetags():
         tags = package_dict.get("tags")
         pkg_tag_dicts = []
         pkg_tag_list = []
-        
+
         if tags:
             for tag in tags:
                 name = tag.get('name').lower()
@@ -73,7 +73,6 @@ def removetags():
                         original_tags[name] = tag
                         pkg_tag_dicts.append(tag)
                         pkg_tag_list.append(name)
-    
 
         package_dict['tags'] = pkg_tag_dicts
         package_dict['allow_free_tags'] = True
@@ -83,9 +82,3 @@ def removetags():
         get_action("tag_delete")(context, item)
 
     click.secho(u"Duplicate Tags Removed", fg=u"green")
-
-        
-                        
-        
-
-
