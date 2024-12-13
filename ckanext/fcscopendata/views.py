@@ -6,11 +6,14 @@ from ckan.views.dataset import GroupView
 from ckanext.fcscopendata.models.data_request import DataRequest
 from ckanext.fcscopendata.models.analytics import Analytics
 import csv
-from io import StringIO
+from io import StringIO, BytesIO
 from flask import Response
 from ckan.lib.helpers import helper_functions as h, Page
 import logging
+from openpyxl import Workbook
+from datetime import datetime
 logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
+
 def vocab_tag_autocomplete():
     q = request.args.get(u'incomplete', u'')
     context = {u'model': model, u'session': model.Session,
@@ -147,57 +150,82 @@ def reports_solve(id = None):
         DataRequest.solve(id) 
     except tk.NotFound:
         return tk.abort(404, _(u'Report not found'))
-    return h.redirect_to("fcscopendata.reports_read", name="data-request" )
+    return h.redirect_to("fcscopendata.reports_read", name="data-request" )  
+    
+def generate_xlsx(data_requests):
+    wb = Workbook()
+    ws = wb.active
+    ws.title = "Data Requests"
 
-def generate_csv(data_requests):
-    """Helper function to generate CSV from data requests."""
-    output = StringIO()
-    writer = csv.writer(output)
-
-    writer.writerow(["Email", "Topic", "Date Created","Name", "Phone Number", "Message Content", "Solved"])
+    headers = ["Email", "Topic", "Date Created", "Name", "Phone Number", "Message Content", "Solved"]
+    ws.append(headers)
 
     for data_request in data_requests:
-        writer.writerow([
+        formatted_date = data_request.date_created.strftime("%Y-%m-%d") if isinstance(data_request.date_created, datetime) else data_request.date_created
+        phone_number = str(data_request.phone_number) if data_request.phone_number else ""
+        ws.append([
             data_request.email,
             data_request.topic,
-            data_request.date_created,
+            formatted_date,
             data_request.name,
-            data_request.phone_number,
+            phone_number,
             data_request.message_content,
             data_request.solved,
         ])
 
+    for col in ws.columns:
+        max_length = 0
+        col_letter = col[0].column_letter
+        for cell in col:
+            if cell.value:
+                max_length = max(max_length, len(str(cell.value)))
+        ws.column_dimensions[col_letter].width = max_length + 2
+
+    output = BytesIO()
+    wb.save(output)
     output.seek(0)
 
     return Response(
         output,
-        mimetype="text/csv",
-        headers={"Content-Disposition": "attachment;filename=data_requests.csv"}
+        mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        headers={"Content-Disposition": "attachment; filename=data_requests.xlsx"}
     )
     
-def generate_ga_csv(analytics):
-    """Helper function to generate CSV from analytics entries."""
-    output = StringIO()
-    writer = csv.writer(output)
+def generate_ga_xlsx(analytics):
+    wb = Workbook()
+    ws = wb.active
+    ws.title = "Analytics Entries"
 
-    writer.writerow(["Resource ID", "Dataset ID", "Count", "Language", "Dataset Title", "Date Created"])
+    headers = ["Resource ID", "Dataset ID", "Count", "Language", "Dataset Title", "Date Created"]
+    ws.append(headers)
 
     for analytics_entry in analytics:
-        writer.writerow([
+        formatted_date = analytics_entry.date_created.strftime("%Y-%m-%d") if isinstance(analytics_entry.date_created, datetime) else analytics_entry.date_created
+        ws.append([
             analytics_entry.resource_id,
             analytics_entry.dataset_id,
             analytics_entry.count,
             analytics_entry.language,
             analytics_entry.dataset_title,
-            analytics_entry.date_created,
+            formatted_date,
         ])
 
+    for col in ws.columns:
+        max_length = 0
+        col_letter = col[0].column_letter
+        for cell in col:
+            if cell.value:
+                max_length = max(max_length, len(str(cell.value)))
+        ws.column_dimensions[col_letter].width = max_length + 2
+
+    output = BytesIO()
+    wb.save(output)
     output.seek(0)
-    
+
     return Response(
         output,
-        mimetype="text/csv",
-        headers={"Content-Disposition": "attachment;filename=analytics_entries.csv"}
+        mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        headers={"Content-Disposition": "attachment; filename=analytics_entries.xlsx"}
     )
 
 def requests_download():
@@ -211,7 +239,7 @@ def requests_download():
         end_date = tk.request.args.get('end_date', '')
     data_requests = DataRequest.find_all({"pagination": 0} , start_date=start_date, end_date=end_date)
 
-    return generate_csv(data_requests)
+    return generate_xlsx(data_requests)
 
 def analytics_download():
     q = tk.request.args.get('q', '')
@@ -224,4 +252,4 @@ def analytics_download():
         end_date = tk.request.args.get('end_date', '')
     analytics = Analytics.find_all({"pagination": 0} , start_date=start_date, end_date=end_date)
 
-    return generate_ga_csv(analytics)
+    return generate_ga_xlsx(analytics)
