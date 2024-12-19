@@ -3,6 +3,16 @@ from ckan.common import _, g, request
 import ckan.plugins.toolkit as tk
 from ckan.views.api import _finish_ok
 from ckan.views.dataset import GroupView
+from ckanext.fcscopendata.models.data_request import DataRequest
+from ckanext.fcscopendata.models.analytics import Analytics
+import csv
+from io import StringIO, BytesIO
+from flask import Response
+from ckan.lib.helpers import helper_functions as h, Page
+import logging
+from openpyxl import Workbook
+from datetime import datetime
+logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
 
 def vocab_tag_autocomplete():
     q = request.args.get(u'incomplete', u'')
@@ -70,3 +80,176 @@ class GroupManage(GroupView):
             except tk.NotFound:
                 return tk.abort(404, _(u'Group not found'))
         return tk.h.redirect_to(u'{}.groups'.format(package_type), id=id)
+
+def reports_index():
+    return h.redirect_to("fcscopendata.reports_read" )
+
+def reports_read():
+    page_number = h.get_page_number(request.args)
+    limit = tk.request.args.get("limit", 8)
+    q = tk.request.args.get('q', '')
+    q_segments = q.split(' - ')
+    if len(q_segments) == 2:
+        start_date=q_segments[0]
+        end_date=q_segments[1]
+    else:
+        start_date = tk.request.args.get('start_date', '')
+        end_date = tk.request.args.get('end_date', '')
+    q = '{} - {}'.format(start_date,end_date)
+    data_requests = DataRequest.find_all({"page": page_number, "limit": limit},start_date=start_date, end_date=end_date, solved=False)
+    count = DataRequest.find_all({}, is_count=True, start_date=start_date, end_date=end_date, solved=False)
+    page = Page(
+        collection=data_requests,
+        page=page_number,
+        presliced_list=True,
+        url=h.pager_url,
+        item_count=count,
+        items_per_page=limit)
+    return tk.render("reports/data-request.html", extra_vars={"data_requests": data_requests, "page": page, "q": q })
+
+def analytics_read():
+    page_number = h.get_page_number(request.args)
+    limit = tk.request.args.get("limit", 8)
+    q = tk.request.args.get('q', '')
+    q_segments = q.split(' - ')
+    if len(q_segments) == 2:
+        start_date=q_segments[0]
+        end_date=q_segments[1]
+    else:
+        start_date = tk.request.args.get('start_date', '')
+        end_date = tk.request.args.get('end_date', '')
+    q = '{} - {}'.format(start_date,end_date)
+    analytics = Analytics.find_all({"page": page_number, "limit": limit},start_date=start_date, end_date=end_date)
+    count = Analytics.find_all({}, is_count=True, start_date=start_date, end_date=end_date)
+    page = Page(
+        collection=analytics,
+        page=page_number,
+        presliced_list=True,
+        url=h.pager_url,
+        item_count=count,
+        items_per_page=limit)
+    return tk.render("reports/analytics.html", extra_vars={"analytics": analytics, "page": page, "q": q })
+
+def reports_delete_confirm():
+    id = tk.request.args.get("id", None)
+    return tk.render("reports/confirm.html", extra_vars={"id":id})
+
+def reports_delete(id = None):
+    if not id:
+        id = tk.request.args.get("id", None)
+    try:
+        DataRequest.delete(id) 
+    except tk.NotFound:
+        return tk.abort(404, _(u'Report not found'))
+    return h.redirect_to("fcscopendata.reports_read", name="data-request" )
+
+def reports_solve(id = None):
+    if not id:
+        id = tk.request.args.get("id", None)
+    try:
+        DataRequest.solve(id) 
+    except tk.NotFound:
+        return tk.abort(404, _(u'Report not found'))
+    return h.redirect_to("fcscopendata.reports_read", name="data-request" )  
+    
+def generate_xlsx(data_requests):
+    wb = Workbook()
+    ws = wb.active
+    ws.title = "Data Requests"
+
+    headers = ["Email", "Topic", "Date Created", "Name", "Phone Number", "Message Content", "Solved"]
+    ws.append(headers)
+
+    for data_request in data_requests:
+        formatted_date = data_request.date_created.strftime("%Y-%m-%d") if isinstance(data_request.date_created, datetime) else data_request.date_created
+        phone_number = str(data_request.phone_number) if data_request.phone_number else ""
+        ws.append([
+            data_request.email,
+            data_request.topic,
+            formatted_date,
+            data_request.name,
+            phone_number,
+            data_request.message_content,
+            data_request.solved,
+        ])
+
+    for col in ws.columns:
+        max_length = 0
+        col_letter = col[0].column_letter
+        for cell in col:
+            if cell.value:
+                max_length = max(max_length, len(str(cell.value)))
+        ws.column_dimensions[col_letter].width = max_length + 2
+
+    output = BytesIO()
+    wb.save(output)
+    output.seek(0)
+
+    return Response(
+        output,
+        mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        headers={"Content-Disposition": "attachment; filename=data_requests.xlsx"}
+    )
+    
+def generate_ga_xlsx(analytics):
+    wb = Workbook()
+    ws = wb.active
+    ws.title = "Analytics Entries"
+
+    headers = ["Resource ID", "Dataset ID", "Count", "Language", "Dataset Title", "Date Created"]
+    ws.append(headers)
+
+    for analytics_entry in analytics:
+        formatted_date = analytics_entry.date_created.strftime("%Y-%m-%d") if isinstance(analytics_entry.date_created, datetime) else analytics_entry.date_created
+        ws.append([
+            analytics_entry.resource_id,
+            analytics_entry.dataset_id,
+            analytics_entry.count,
+            analytics_entry.language,
+            analytics_entry.dataset_title,
+            formatted_date,
+        ])
+
+    for col in ws.columns:
+        max_length = 0
+        col_letter = col[0].column_letter
+        for cell in col:
+            if cell.value:
+                max_length = max(max_length, len(str(cell.value)))
+        ws.column_dimensions[col_letter].width = max_length + 2
+
+    output = BytesIO()
+    wb.save(output)
+    output.seek(0)
+
+    return Response(
+        output,
+        mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        headers={"Content-Disposition": "attachment; filename=analytics_entries.xlsx"}
+    )
+
+def requests_download():
+    q = tk.request.args.get('q', '')
+    q_segments = q.split(' - ')
+    if len(q_segments) == 2:
+        start_date=q_segments[0]
+        end_date=q_segments[1]
+    else:
+        start_date = tk.request.args.get('start_date', '')
+        end_date = tk.request.args.get('end_date', '')
+    data_requests = DataRequest.find_all({"pagination": 0} , start_date=start_date, end_date=end_date)
+
+    return generate_xlsx(data_requests)
+
+def analytics_download():
+    q = tk.request.args.get('q', '')
+    q_segments = q.split(' - ')
+    if len(q_segments) == 2:
+        start_date=q_segments[0]
+        end_date=q_segments[1]
+    else:
+        start_date = tk.request.args.get('start_date', '')
+        end_date = tk.request.args.get('end_date', '')
+    analytics = Analytics.find_all({"pagination": 0} , start_date=start_date, end_date=end_date)
+
+    return generate_ga_xlsx(analytics)

@@ -1,10 +1,12 @@
 import ckan.plugins as plugins
 import ckan.plugins.toolkit as toolkit
 import json
+import logging
 from flask import Blueprint
 from ckan.lib.plugins import DefaultTranslation
+from ckanext.fcscopendata.models import setup
 
-from ckanext.fcscopendata.views import vocab_tag_autocomplete, GroupManage
+from ckanext.fcscopendata.views import vocab_tag_autocomplete, GroupManage, reports_index, reports_read, requests_download, reports_delete, reports_delete_confirm, reports_solve, analytics_read, analytics_download
 import ckanext.fcscopendata.cli as cli
 from ckanext.fcscopendata.lib.helpers import (
      get_package_download_stats, 
@@ -33,6 +35,19 @@ class FcscopendataPlugin(plugins.SingletonPlugin, DefaultTranslation):
             for tag in tags:
                 tag_list.append(tag['name'])
             pkg_dict['tags'] = tag_list
+        new_fields = {}
+        for key in pkg_dict:
+            if key in ['notes_translated', 'title_translated']:
+                original_field = key.split('_')[0]
+                value = pkg_dict.get(key)
+                if type(value) is str:
+                    value = json.loads(value)
+                logging.info(value)
+                for lng_key in value:
+                    logging.info(lng_key)
+                    new_fields[original_field + "_" + lng_key + "_ngram_translated"] = value[lng_key]
+        logging.info(pkg_dict)
+        pkg_dict.update(new_fields)    
         return pkg_dict
 
     def before_search(self, search_params):
@@ -42,7 +57,8 @@ class FcscopendataPlugin(plugins.SingletonPlugin, DefaultTranslation):
             user_is_syadmin = False
 
         include_drafts = search_params.get('include_drafts', False)
-        if not include_drafts and not user_is_syadmin:
+        show_drafts = search_params.pop('show_drafts', True)
+        if (not include_drafts and not user_is_syadmin) or not show_drafts:
             search_params.update({
                 'fq': '!(publishing_status:draft)' + search_params.get('fq', '')
             })
@@ -54,6 +70,8 @@ class FcscopendataPlugin(plugins.SingletonPlugin, DefaultTranslation):
         toolkit.add_public_directory(config_, 'public')
         toolkit.add_resource('assets',
                              'fcscopendata')
+         
+        setup()
 
     # IBlueprint
     def get_blueprint(self):
@@ -66,6 +84,14 @@ class FcscopendataPlugin(plugins.SingletonPlugin, DefaultTranslation):
                                 view_func=vocab_tag_autocomplete)
         blueprint.add_url_rule(u'/dataset/groups/<id>', defaults= {u'package_type': u'dataset'},
                                 view_func=GroupManage.as_view(str(u'groups')))
+        blueprint.add_url_rule(u'/reports', view_func=reports_index, strict_slashes=False)
+        blueprint.add_url_rule(u'/reports/data-request', view_func=reports_read, strict_slashes=False)
+        blueprint.add_url_rule(u'/reports/data-request/download', view_func=requests_download,strict_slashes=False)
+        blueprint.add_url_rule(u'/reports/data-request/delete', view_func=reports_delete, methods=['POST'], strict_slashes=False)
+        blueprint.add_url_rule(u'/reports/data-request/solve', view_func=reports_solve, methods=['POST'], strict_slashes=False)
+        blueprint.add_url_rule(u'/reports/data-request/confirm', view_func=reports_delete_confirm, methods=['POST'], strict_slashes=False )
+        blueprint.add_url_rule(u'/reports/analytics', view_func=analytics_read, strict_slashes=False)
+        blueprint.add_url_rule(u'/reports/analytics/download', view_func=analytics_download, strict_slashes=False)
         return blueprint
 
     # IActions

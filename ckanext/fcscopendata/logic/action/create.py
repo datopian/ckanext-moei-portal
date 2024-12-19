@@ -6,12 +6,13 @@ import ckan.lib.dictization.model_dictize as model_dictize
 import ckan.lib.uploader as uploader
 from datetime import datetime
 from sqlalchemy import or_
-
+import uuid
 from ckanext.fcscopendata.lib.util import (
     add_user_as_memeber_on_groups,
     editor_publishing_dataset,
     extras_save
 )
+from ckanext.fcscopendata.models.data_request import DataRequest
 
 _get_or_bust = tk.get_or_bust
 
@@ -259,3 +260,15 @@ def vocabulary_create(up_func,context,data_dict):
             else:
                 raise tk.ValidationError({'message': 'Provied list of tags doesn\'t have valid dictionaries.'})
     return result
+
+def create_data_request(context, data_dict):
+    # Generate a random UUID for the ID (optional)
+    # random_id = str(uuid.uuid4())
+    log.error(data_dict)
+    # Create a new DataRequest object with the random ID (optional) and other provided arguments
+    new_data_request = DataRequest(name=data_dict["name"], date_created=data_dict["date_created"], email=data_dict["email"], topic=data_dict["topic"], phone_number=data_dict["phone_number"], message_content=data_dict["message_content"])
+
+    model = context["model"]  # ... or import ckan.model as model
+    # model.Session.add(new_data_request)
+    DataRequest.create(new_data_request)
+    return None

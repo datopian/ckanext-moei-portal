@@ -877,7 +877,7 @@ msgid "E.g. environment"
 msgstr ""
 
 #: ckanext/fcscopendata/templates/home/snippets/search.html:6
-msgid "Welcome to UAE Open Data"
+msgid "Welcome to MOEI Open Data"
 msgstr ""
 
 #: ckanext/fcscopendata/templates/home/snippets/search.html:16

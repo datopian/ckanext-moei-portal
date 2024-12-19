@@ -1,0 +1,68 @@
+{% extends "page.html" %}
+
+{% import 'macros/form.html' as form %}
+
+{% block main_content %}
+
+<h1>Data Requests Report</h1>
+<p>This page displays all the data request forms submitted to the portal.</p>
+
+
+{% set split_character = " - " %}
+{% set q_split = q.split(split_character) if q else [] %}
+{% set start_date = q_split[0] if q_split|length == 2 else request.args.get('start_date', '') %}
+{% set end_date = q_split[1] if q_split|length == 2 else request.args.get('end_date', '') %}
+
+<form method="get" action="{{ h.url_for('fcscopendata.reports_read')}}">
+  <div class="form-actions">
+    <label for="start_date">Start Date</label>
+    <input type="date" id="start_date" name="start_date"
+      value="{{ q_split[0] if q_split|length == 2 else request.args.get('start_date', '') }}" />
+
+    <label for="end_date">End Date</label>
+    <input type="date" id="end_date" name="end_date"
+      value="{{ q_split[1] if q_split|length == 2 else request.args.get('end_date', '') }}" />
+
+    <button type="submit" class="btn btn-primary">{{ _('Filter') }}</button>
+    <a href="{{ h.url_for('fcscopendata.requests_download')}}?start_date={{ start_date }}&end_date={{ end_date }}"
+      class="btn btn-primary">Download as XLSX</a>
+  </div>
+</form>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Date Created</th>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Phone Number</th>
+      <th>Topic</th>
+      <th>Message Content</th>
+      <!-- <th>Actions</th> -->
+    </tr>
+  </thead>
+  <tbody>
+    {% for data_request in data_requests %}
+    <tr>
+      <td>{{ data_request.date_created.strftime('%Y-%m-%d') }}</td>
+      <td>{{ data_request.name }}</td>
+      <td>{{ data_request.email }}</td>
+      <td>{{ data_request.phone_number }}</td>
+      <td>{{ data_request.topic }}</td>
+      <td>{{ data_request.message_content }}</td>
+      <td>
+        <form method="POST" action="{{ h.url_for('fcscopendata.reports_delete_confirm', id=data_request.id)  }}">
+          <input type="hidden" name="_method" value="DELETE">
+          <button type="submit" class="btn btn-primary">Resolve</button>
+        </form>
+
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% block page_pagination %}
+{{ page.pager(q=q or '')}}
+{% endblock %}
+
+{% endblock %}
