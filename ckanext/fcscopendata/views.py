@@ -157,7 +157,7 @@ def generate_xlsx(data_requests):
     ws = wb.active
     ws.title = "Data Requests"
 
-    headers = ["Email", "Topic", "Date Created", "Name", "Phone Number", "Message Content", "Solved"]
+    headers = ["Email", "Topic", "Date Created", "Name", "Phone Number", "Message Content", "Resolution"]
     ws.append(headers)
 
     for data_request in data_requests:
@@ -170,7 +170,7 @@ def generate_xlsx(data_requests):
             data_request.name,
             phone_number,
             data_request.message_content,
-            data_request.solved,
+            "Resolved" if data_request.solved else "Not Resolved"
         ])
 
     for col in ws.columns:
@@ -196,7 +196,7 @@ def generate_ga_xlsx(analytics):
     ws = wb.active
     ws.title = "Analytics Entries"
 
-    headers = ["Resource ID", "Dataset ID", "Count", "Language", "Dataset Title", "Date Created"]
+    headers = ["Resource ID", "Dataset ID", "Download Count", "Language", "Dataset Title", "Date Created"]
     ws.append(headers)
 
     for analytics_entry in analytics:
