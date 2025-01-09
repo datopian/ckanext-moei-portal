@@ -4,6 +4,10 @@ import ckan.plugins.toolkit as tk
 import ckan.plugins as p
 import ckan.lib.dictization.model_dictize as model_dictize
 import ckan.lib.uploader as uploader
+import ckan.logic as logic
+import ckan.lib.navl.dictization_functions as dictization_functions
+from ckan.common import request
+
 
 from ckanext.fcscopendata.lib.util import (
     add_user_as_memeber_on_groups,
@@ -23,6 +27,14 @@ def package_update(up_func, context, data_dict):
     # Get the translated title field value in the original title field so that 
     # core features do not break. eg. solr search with title 
     model = context['model']
+
+    try:
+        data_dict.update(logic.clean_dict(
+            dictization_functions.unflatten(
+                logic.tuplize_dict(logic.parse_params(request.files)))
+        ))
+    except Exception as e:
+        pass
 
     if data_dict.get('title_translated-en', False):
         data_dict['title'] =  data_dict.get('title_translated-en', '')
@@ -72,6 +84,16 @@ def package_update(up_func, context, data_dict):
                 resources['description'] =  resources.get('notes_translated-en', '')
             else:
                 resources['description'] =  resources.get('notes_translated', {}).get('en', '')
+
+    upload = uploader.get_uploader('dataset')
+    upload.update_data_dict(data_dict, 'image_url',
+                            'image_upload', 'clear_upload')
+    upload.upload(uploader.get_max_image_size())
+    image_url = data_dict.get("image_url", None)
+    if image_url and not image_url.startswith("http"):
+        data_dict['image_url'] = tk.h.url_for_static(
+        'uploads/dataset/%s' % image_url, qualified=True)
+
     result = up_func(context, data_dict)
 
     # Update package member for groups

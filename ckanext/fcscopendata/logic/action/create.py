@@ -13,6 +13,9 @@ from ckanext.fcscopendata.lib.util import (
     extras_save
 )
 from ckanext.fcscopendata.models.data_request import DataRequest
+import ckan.logic as logic
+import ckan.lib.navl.dictization_functions as dictization_functions
+from ckan.common import request
 
 _get_or_bust = tk.get_or_bust
 
@@ -23,6 +26,15 @@ def package_create(up_func, context, data_dict):
     # Get the translated title field value in the original title field so that 
     # core features do not break. eg. solr search with title
     model = context['model']
+
+    try:
+        data_dict.update(logic.clean_dict(
+            dictization_functions.unflatten(
+                logic.tuplize_dict(logic.parse_params(request.files)))
+        ))
+    except Exception as e:
+        pass
+
     data_dict['title'] =  data_dict.get('title_translated-en', '')
     data_dict['notes'] =  data_dict.get('notes_translated-en', '')
     start_period = data_dict.get('start_period', False)
@@ -94,8 +106,17 @@ def package_create(up_func, context, data_dict):
         data_dict['groups'] = group_dict
     else:
         data_dict['groups'] = []
-        
+
+    upload = uploader.get_uploader('dataset')
+    upload.update_data_dict(data_dict, 'image_url',
+                            'image_upload', 'clear_upload')
+    upload.upload(uploader.get_max_image_size())
+    image_url = data_dict.get("image_url", None)
+    if image_url and not image_url.startswith("http"):
+        data_dict['image_url'] = tk.h.url_for_static(
+        'uploads/dataset/%s' % image_url, qualified=True)
     result = up_func(context, data_dict)
+
     return result
 
 

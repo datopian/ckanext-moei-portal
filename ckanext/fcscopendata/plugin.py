@@ -47,7 +47,7 @@ class FcscopendataPlugin(plugins.SingletonPlugin, DefaultTranslation):
                     logging.info(lng_key)
                     new_fields[original_field + "_" + lng_key + "_ngram_translated"] = value[lng_key]
         logging.info(pkg_dict)
-        pkg_dict.update(new_fields)    
+        pkg_dict.update(new_fields)
         return pkg_dict
 
     def before_search(self, search_params):
@@ -70,7 +70,7 @@ class FcscopendataPlugin(plugins.SingletonPlugin, DefaultTranslation):
         toolkit.add_public_directory(config_, 'public')
         toolkit.add_resource('assets',
                              'fcscopendata')
-         
+
         setup()
 
     # IBlueprint
